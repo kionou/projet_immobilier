@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/ViewClient/HomeView.vue'
 
 const routes = [
+  // router client debut
   {
     path: '/',
     name: 'home',
@@ -22,6 +23,25 @@ const routes = [
     name: 'sign',
     component: () => import('../views/ViewClient/SignView.vue')
   },
+  {
+    path: '/agent',
+    name: 'agent',
+    component: () => import('../views/ViewClient/LoginAgent.vue')
+  },
+  // router client fin
+
+
+  // router   admin debut
+
+  {
+    path: '/dashbord',
+    name: 'dashbord',
+    component: () => import('../views/ViewAdmin/HomeAdmin.vue')
+  },
+
+
+
+  // router admin fin
  
 ]
 

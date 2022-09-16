@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  import ComponentNavbar from '@/components/ComoponentClient/ComponentNavbar.vue';
+  import ComponentNavbar from '@/components/ComponentClient/ComponentNavbar.vue';
   import ComponentHome from '@/components/ComponentClient/ComponentHome.vue';
 export default {
   name:"HomeView",

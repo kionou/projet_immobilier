@@ -1,18 +1,20 @@
 <template>
   <div>
-    <ComponentNavbar/>
-    <ComponentLogin/>
+<ComponentNavbar/>
+<ComponentLoginAgent/>
   </div>
 </template>
 
 <script>
     import ComponentNavbar from '@/components/ComponentClient/ComponentNavbar.vue';
-    import ComponentLogin from '@/components/ComponentClient/ComponentLogin.vue';
+    import ComponentLoginAgent from '@/components/ComponentClient/ComponentLoginAgent.vue';
+;
 export default {
-    name:"LoginView",
+    name:"LoginAgent",
     components:{
     ComponentNavbar,
-    ComponentLogin,
+    ComponentLoginAgent,
+
 }
 
 }

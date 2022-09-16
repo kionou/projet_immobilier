@@ -9,7 +9,7 @@
                 </div>
                 <div class="ImageHeader">
                     <div class="image">
-                        <img src="@/" alt="">
+                        <img src="@/assets/images/1.jpg" alt="">
                     </div>
                 </div>
             </div>

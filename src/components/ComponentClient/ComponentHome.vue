@@ -136,7 +136,7 @@ export default {
 <style lang="css" scoped>
 
 .ImageHeader{
-    background: url('../assets/images/1.jpg') no-repeat center;
+    background: url('@/assets/images/1.jpg') no-repeat center;
     background-attachment: fixed;
     background-size: cover;
     height: 100vh;
