@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="toi">
     <div class="ImageHeader">
         <section class="content">
           <div class="cadre">
@@ -52,6 +52,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
+    .toi{
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
     .ImageHeader {
     background: url('@/assets/images/4.jpg') no-repeat center;
     background-size: cover;
@@ -66,7 +71,7 @@ export default {
 
 .cadre{
     width: 780px;
-    height: 627px;
+    height: auto;
     border: 1px solid #2288ff;
     position: absolute;
     left: 50%;
@@ -282,10 +287,7 @@ button:hover {
         height: 100%;
     }
 
-    .cadre {
-      top: 58%;
-
-    }
+  
 
 }
 

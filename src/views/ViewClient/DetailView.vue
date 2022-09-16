@@ -7,8 +7,8 @@
 </template>
 
 <script>
-    import ComponentNavbar from '@/components/ComponentNavbar.vue';
-    import ComponentDetail from '@/components/ComponentDetail.vue';
+    import ComponentNavbar from '@/components/ComponentClient/ComponentNavbar';
+    import ComponentDetail from '@/components/ComponentClient/ComponentDetail';
 export default {
     name:"DetailView",
     components:{

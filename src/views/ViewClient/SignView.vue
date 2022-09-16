@@ -7,8 +7,9 @@
 </template>
 
 <script>
-    import ComponentNavbar from '@/components/ComponentNavbar.vue';
-    import ComponentSign from '@/components/ComponentSign.vue';
+    import ComponentNavbar from '@/components/ComponentClient/ComponentNavbar';
+    import ComponentSign from '@/components/ComponentClient/ComponentSign';
+    
 export default {
     name:"SignView",
     components:{
