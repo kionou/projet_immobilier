@@ -10,7 +10,7 @@
                     <router-link class="link" :to="{name:'home'}">Accueil</router-link>
                 </li>
                 <li>
-                    <router-link class="link" :to="{name:'agent'}">Agent</router-link>
+                    <router-link class="link" :to="{name:'agentlogin'}">Agent</router-link>
                 </li>
                 <li>
                     <router-link class="link" :to="{name:'login'}">Mon Compte</router-link>

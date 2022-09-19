@@ -72,22 +72,26 @@
             </div>
           
             <div class="container-message">
-                <h3>Pour plus de detail contactez-nous</h3>
+                <div class="message-content">
+                     <h3>Pour plus de detail contactez-nous</h3>
                 <div class="message">
                   
                     <form action="/contact " method="post">
                         <input type="text" name="nom" placeholder="Nom">
                         <input type="email" name="email" placeholder="Adresse Email">
                         <input type="tel" name="numero" placeholder="Numero">
-                        <textarea name="description" id="" cols="41" rows="6" >Bonjour,J'ai vu votre annonce sur le site Je souhaiterais obtenir des informations complémentaires sur ce bien et, éventuellement, convenir d'un rendez-vous pour une visite
- Merci, par avance, de bien vouloir me contacter dès que possible.
-Cordialement,
-</textarea>
+                       <textarea name="description" id="" cols="41" rows="6" >Bonjour,J'ai vu votre annonce sur le site Je souhaiterais obtenir des informations complémentaires sur ce bien et, éventuellement, convenir d'un rendez-vous pour une visite
+                        Merci, par avance, de bien vouloir me contacter dès que possible.
+                        Cordialement,
+                        </textarea>
                         <input type="hidden" name="idbien" value="<%= bien.id %>">
                         <button type="submit" value="Submit">Demander des infos</button>
                     </form>
         
                 </div>
+                </div>
+                <div class="info-agent"></div>
+               
             </div>
         </div>
   </div>
@@ -271,23 +275,31 @@ export default {
 
 .container-message {
     margin-top: 30px;
-    width: 80%;
+    width: 100%;
     height: auto;
-    /* border: 1px solid red; */
+    border: 1px solid red;
     display: flex;
     /* flex-direction: row;
     flex-wrap: wrap; */
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    
     /* box-shadow: 0 3px 10px rgb(0 0 0 / 20%); */
     
     padding: 20px;
 
 }
+.message-content{
+    border: 1px solid blue;
+    width:50%;
+}
+
+.info-agent{
+    border: 1px solid black;
+    width: 50%;
+    height: 87vh;
+}
 
 .message {
-    width: 45%;
+    /* width: 45%; */
     height: auto;
     border: 1px solid #2288ff;
     padding: 20px;
@@ -365,7 +377,7 @@ button:hover {
 
 @media (max-width:1165px) {
     .message {
-        width: 52%;
+        /* width: 52%; */
     }
 }
 

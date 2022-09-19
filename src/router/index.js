@@ -24,9 +24,14 @@ const routes = [
     component: () => import('../views/ViewClient/SignView.vue')
   },
   {
+    path: '/agentlogin',
+    name: 'agentlogin',
+    component: () => import('../views/ViewClient/LoginAgent.vue')
+  },
+    {
     path: '/agent',
     name: 'agent',
-    component: () => import('../views/ViewClient/LoginAgent.vue')
+    component: () => import('../views/ViewClient/AgentView.vue')
   },
   // router client fin
 
