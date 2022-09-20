@@ -1,5 +1,6 @@
 <template>
   <div>
+   
         <div class="container">
         <div class="menu">
             <div class="image">
@@ -33,13 +34,15 @@
 <script>
   import ComponentBien from './ComponentBien.vue';
   import ComponentAgent from './ComponentAgent.vue';
+  
+
  
 export default {
   name:"ComponentDashbord",
   components:{
-   'bien':ComponentBien,
-    'agent':ComponentAgent,
-    
+    "bien": ComponentBien,
+    "agent": ComponentAgent,
+   
 },
   data (){
     return{

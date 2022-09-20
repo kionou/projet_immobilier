@@ -9,9 +9,10 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/detail',
+    path: '/detail/:id',
     name: 'detail',
-    component: () => import('../views/ViewClient/DetailView.vue')
+    component: () => import('../views/ViewClient/DetailView.vue'),
+    props:true
   },
   {
     path: '/login',
@@ -42,6 +43,12 @@ const routes = [
     path: '/dashbord',
     name: 'dashbord',
     component: () => import('../views/ViewAdmin/HomeAdmin.vue')
+  },
+  {
+    path: '/dashbord/updatebien/:id',
+    name: 'dashbord/updatebien',
+    component: () => import('../views/ViewAdmin/UpdateBien.vue'),
+    props:true
   },
 
 

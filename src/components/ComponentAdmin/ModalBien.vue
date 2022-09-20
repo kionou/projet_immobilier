@@ -1,43 +1,41 @@
 <template>
   <div>
-     <div class="modal-container" id="modal" v-if="revele" @click="submit">
+     <div class="modal-container" id="modal" v-if="revele" @click.self="submit">
         <div class="modal">
            <h1>Enregistrement des biens immobiliers</h1>
            <form action="">
             <div class="form_groupe">
-                <input type="text" placeholder="Non du bien">
-                <input type="text" placeholder="Prix du bien">
+                <input type="text" placeholder="Non du bien" v-model="nom_bien">
+                <input type="text" placeholder="Prix du bien" v-model="prix">
             </div>
              <div class="form_groupe">
-                <input type="text" placeholder="Nombre de pieces">
+                <input type="text" placeholder="Nombre de pieces" v-model="piece">
                 <input type="text" placeholder="superficie">
             </div>
              <div class="form_groupe">
-                <input type="text" placeholder="Nombre de chambre">
-                <input type="text" placeholder="Nombre de douche">
+                <input type="text" placeholder="Nombre de chambre" v-model="chambre">
+                <input type="text" placeholder="Nombre de douche" v-model="douche">
             </div>
              <div class="form_groupe">
-                <input type="text" placeholder="Ville ">
-                <input type="text" placeholder="Commune">
+                <input type="text" placeholder="Ville " v-model="ville">
+                <input type="text" placeholder="Commune" v-model="commune">
             </div>
             <div class="textArea">
-                <textarea name="" id="" cols="71" rows="4"></textarea>
+                <textarea name="" id="" cols="71" rows="4" placeholder="Description" v-model="description"></textarea>
             </div>
             <div class="textArea">
-                <textarea name="" id="" cols="71" rows="4"></textarea>
+                <textarea name="" id="" cols="71" rows="4"  placeholder="service" v-model="service"></textarea>
             </div>
-            <div class="textArea">
-                <textarea name="" id="" cols="71" rows="4"></textarea>
-            </div>
+            <input type="hidden"   v-model="user_id">
 
            <label class="custom-file-upload">
-            <input type="file"/>
+            <input type="file" @change="upload" multiple/>
             <i class="fa fa-cloud-upload"></i> 
                 Téléchargement personnalisé
             </label>
 
             <div class="boutton">
-                    <button>Ajouter un bien</button>
+                    <button @click.prevent="valider">Ajouter un bien</button>
                 </div>
            </form>
         
@@ -47,9 +45,121 @@
 </template>
 
 <script>
+import dataBien  from '@/database/requeteBien'
+import {storage} from '@/database/Connect'
+import { ref,  uploadBytes, getDownloadURL } from "firebase/storage";
 export default {
+    
     name:'ModalBien',
-    props:['revele','submit']
+    props:['revele','submit'
+   ],
+   data() {
+    return {
+        nom_bien:'',
+        prix:'',
+        piece:'',
+        chambre:'',
+        douche:'',
+        ville:'',
+        commune:'',
+        description:'',
+        service:'',
+        image:''
+        
+    }
+   },
+   methods: {
+   async valider(){
+        let DataBien={
+           nom_bien:this.nom_bien,
+           prix:this.prix,
+           piece:this.piece,
+           chambre:this.chambre,
+           douche:this.douche,
+           ville:this.ville,
+           commune:this.commune,
+           description:this.description,
+           service:this.service,
+           images:this.image,
+           user_id:'001'
+        }
+        console.log(DataBien);
+     let bien =  await dataBien.InsertionBien(DataBien)
+     if (bien.success) {
+        this.$router.push('/')
+        
+     } else {
+        console.log('error 404');
+        
+     }
+
+    },
+   
+
+async upload (e)  {
+    const promises = [];
+   Object.values(e.target.files).forEach((element)=>{
+    console.log(element.name);
+    const file=element
+    const metadata = {
+      contentType: "image/jpeg",
+    }
+    const storageRef = ref(storage, "temp/" + file.name);
+    promises.push(uploadBytes(storageRef, file, metadata).then(uploadResult => {return getDownloadURL(uploadResult.ref)}))
+
+}); 
+  
+  const photos = await Promise.all(promises);
+  this.image = photos
+  console.log(this.image);
+
+
+
+
+    
+    
+  
+
+
+
+
+//     let file =e.target.files[0]
+//       const name = new Date().getTime() + file.name;
+
+//       console.log(name);
+//       const storageRef = ref(storage, file.name)
+//       const uploadTask = uploadBytesResumable(storageRef,file);
+
+//       uploadTask.on('state_changed', 
+//      (snapshot) => {
+   
+//     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//     console.log('Upload is ' + progress + '% done');
+//     switch (snapshot.state) {
+//       case 'paused':
+//         console.log('Upload is paused');
+//         break;
+//       case 'running':
+//         console.log('Upload is running');
+//         break;
+//     }
+//   }, 
+//   (error) => {
+   
+//   }, 
+//   () => {
+ 
+//     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+//       console.log('File available at', downloadURL);
+//     });
+//   }
+// );
+
+
+    }
+   
+   },
+
 
 }
 </script>
@@ -137,7 +247,7 @@ button{
             serif;
 }
 
-boutton:hover {
+button:hover {
     background-color: white;
     color: #2288ff;
     border: 1px solid #2288ff;
