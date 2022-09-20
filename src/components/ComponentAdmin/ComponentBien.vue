@@ -26,24 +26,27 @@
                                                  <th>Action</th>
                                              </tr>
                                          </thead>
-                                         <tbody>
+                                         <tbody v-for="bien in biens" :key="bien.id">
                                              <tr >
-                                                 <td  data-label="date de l'acte" class="doctor">
-                                                    <div class="images">
-                                                        <img src="@/assets/images/1.jpg" alt="">
+                                                 <td  data-label="date de l'acte">
+                                                    <div  class="doctor">
+                                                        <div class="images">
+                                                        <img :src="bien.images[0]" alt="">
                                                     </div>
-                                                    <p>Immeuble</p>
+                                                    <p>{{bien.nom_bien}}</p>
+                                                    </div>
+                                                   
 
                                                  </td>
-                                                 <td data-label="Vaccin utilisé">500.000 FCFA
+                                                 <td data-label="Vaccin utilisé">{{bien.prix}}FCFA
 
                                                     
                                                  </td>
-                                                 <td data-label="Protège contre">Abidjan Cocody-angre</td>
+                                                 <td data-label="Protège contre">{{bien.ville}} {{bien.commune}}</td>
                                                 
                                                  <td class="doctor" >
                                                     <i class="fa-solid fa-eye"  v-on:click="component='detail'" ></i>
-                                                    <i class="fa-solid fa-pen-to-square"></i>
+                                                    <i class="fa-solid fa-pen-to-square" @click="redirect(bien.id)"></i>
                                                     <i class="fa-solid fa-trash"></i>
                                                  </td>
                                                
@@ -66,21 +69,25 @@
 </template>
 
 <script>
-
+import dataBien from '@/database/requeteBien';
 import ModalBien from './ModalBien.vue';
-import BienDetail from './BienDetail.vue'
+import BienDetail from './BienDetail.vue';
+import UpdateBien from './ComponentUpdateBien.vue';
 
 export default {
     name:'ComponentBien',
+    props:['bien'],
     components:{
     ModalBien,
+    UpdateBien,
     'detail':BienDetail
 
 },
     data(){
     return{
         revele:false,
-        component:''
+        component:'',
+        biens:''
        
     }
 },
@@ -88,8 +95,22 @@ methods:{
     submit(){
         this.revele = !this.revele
     },
+    redirect(id){
+        this.$router.push(`/dashbord/updatebien/${id}`)
+            console.log(id);
+       
+    },
  
-}
+},
+async mounted(){
+    let bien = await dataBien.AfficherBien()
+    if (bien.success) {
+        console.log(bien.success)
+        this.biens=bien.success
+        
+    }
+   
+    }
 
 }
 </script>
@@ -210,6 +231,7 @@ methods:{
   .doctor{
      display: flex;
      justify-content: space-around;
+     align-items: center;
   
   }
   .alert{

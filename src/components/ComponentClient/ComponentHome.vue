@@ -25,7 +25,7 @@
        </div>
        <div class="content-info">
      
-        
+       
      
         <div class="content-card">
             <div class="card-image">
@@ -67,6 +67,50 @@
                          </button>
                     </div>
             </div>
+        </div>
+
+        <div class="content-card" v-for="bien in biens" :key="bien.id">
+            <div class="card-image">
+               <img :src="bien.images[0]" alt="">   
+             
+           </div>
+           <div class="card-body">
+               <div class="body-text">
+               <h3>{{bien.ville}}</h3>
+               </div>
+               <div class="body-text">
+                
+               <p>{{bien.nom_bien}} </p>
+               </div>
+               <div class="body-text">
+               <p> {{bien.piece}}/{{bien.superficie}}</p>
+               </div>
+               <div class="icon">
+                   <div class="icon-content">
+                       <i class="fas fa-door-closed"></i>
+                       <samp>{{bien.chambre}}</samp>
+                   </div>
+                   <div class="icon-content">
+                       <i class="fas fa-bath"></i>
+                       <samp> {{bien.douche}}</samp>
+                   </div>
+               </div>
+                   <div class="">
+                       <div id="trait_dessus">
+                           <!-- <hr> -->
+                       </div>
+                   </div>
+                   <div class="">
+                       <p>loyer {{bien.prix}} CFA/mois</p>
+                   </div>
+                   <div class="btn">
+                        <button class="btncard">
+                             <p @click="redirect(bien.id)">Détail</p>
+                        </button>
+                   </div>
+           </div>
+        </div>>
+         
         </div>
       
         
@@ -113,22 +157,35 @@
 
     </div>     
    </div>
-  </div>
+
 </template>
 
 <script>
+    import dataBien from '@/database/requeteBien';
 export default {
     name:"ComponentHome",
     data() {
         return {
+            biens:""
             
         }
     },
     methods:{
-        redirect(){
-            this.$router.push('/detail')
+        redirect(id){
+             this.$router.push(`/detail/${id}`)
+            console.log(id);
         }
+    },
+   async mounted(){
+    let bien = await dataBien.AfficherBien()
+    if (bien.success) {
+        console.log(bien.success)
+        this.biens=bien.success
+        
     }
+   
+    }
+    
 
 }
 </script>

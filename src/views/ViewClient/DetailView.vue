@@ -1,7 +1,7 @@
 <template>
   <div>
     <ComponentNavbar/>
-    <ComponentDetail/>
+    <ComponentDetail :id="id"/>
 
   </div>
 </template>
@@ -11,6 +11,7 @@
     import ComponentDetail from '@/components/ComponentClient/ComponentDetail';
 export default {
     name:"DetailView",
+    props:['id'],
     components:{
         ComponentNavbar,
         ComponentDetail

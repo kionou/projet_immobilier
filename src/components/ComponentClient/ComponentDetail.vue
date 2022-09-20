@@ -1,72 +1,75 @@
 <template>
   <div>
     <div class="trait-blue"></div>
-        <div class="container-fluid">
-              
+        <div class="container-fluid" >
+           
+  
+           
             <div class="container">
                 <div class="texte">
-                    <p>Location Appartement 100 m2, Abidjan Cocody-angre </p>
+                    <p>Location {{bien.bien_nom}} {{bien.superficie}}m2, {{bien.ville}} {{bien.commune}}</p>
                 </div>
                 <div class="ImageHeader">
                     <div class="image">
-                        <img src="@/assets/images/1.jpg" alt="">
+                        <img :src='bien.images' alt="">
                     </div>
                 </div>
             </div>
             <div class="container-info">
                 <div class="info-right">
-                    <h1 class="info-texte">LOCATION Appartement Abidjan</h1>
-                    <h3  class="info-texte">Cocody-angre - Immeuble</h3>
-                    <p  class="info-texte">Appartement 3pieces</p>
+                    <h1 class="info-texte">LOCATION {{bien.bien_nom}} {{bien.ville}} Appartement Abidjan</h1>
+                    <h3  class="info-texte">{{bien.commune}} - Immeuble</h3>
+                    <p  class="info-texte">{{bien.nom}} {{bien.piece}}pieces</p>
                     <div class="icon">
                         <div class="icon-content">
                             <i class="fas fa-door-closed"></i>
-                            <samp> 5 chambres </samp>
+                            <samp> {{bien.chambre}} chambres </samp>
                         </div>
                         <div class="icon-content">
                             <i class="fas fa-bath"></i>
-                            <samp> 3 douches</samp>
+                            <samp> {{bien.douche}} douches</samp>
                         </div>
+                      
                     </div>
                     <div class="icon">
                         <div class="icon-content">
                           <i class="fas fa-window-frame"></i>
-                            <samp> 3 pieces</samp>
+                            <samp> {{bien.piece}} pieces</samp>
                         </div>
                         <div class="icon-content">
                              <i class="fas fa-expand"></i>
-                            <samp> 100 m2</samp>
+                            <samp> {{bien.superficie}} m2</samp>
                         </div>
                     </div>
                 </div>
                 <div class="info-left">
-                    <h5>Loyer 500.000 F CFA/mois charges comprises</h5>
+                    <h5>Loyer {{bien.prix}}F CFA/mois charges comprises</h5>
                 </div>
             </div>
             <div class="container-desc">
                 <div class="description">
                     <h5>Description du bien</h5>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea at quam accusantium consectetur amet. Numquam ratione placeat et illum vel.</p>
+                    <p>{{bien.description}}</p>
                 </div>
                 <div id="trait_dessus">
                     <!-- <hr> -->
                 </div>
-                <div class="plus-biens">
+                <!-- <div class="plus-biens">
                     <h5>Les + du bien</h5>
                     <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea, nam.</p>
                 </div>
-                <div id="trait_dessus">
+                <div id="trait_dessus"> -->
                     <!-- <hr> -->
-                </div>
+                <!-- </div> -->
                 <div class="proximite">
                     <h5>Services à proximité</h5>
-                    <p>Lorem ipsum dolor sit amet. </p>
+                    <p>{{bien.service}}</p>
                 </div>
             </div>
             <div class="container-image">
               
-                <div class="Images">
-                    <img src="@/assets/images/2.jpg" alt="">
+                <div class="Images" v-for="image in bien.images" :key="image.id">
+                    <img :src="image" alt="">
                 </div>
             
             </div>
@@ -99,8 +102,27 @@
 </template>
 
 <script>
+   import dataBien from '@/database/requeteBien';
 export default {
-    name:"ComponentDetail"
+    name:"ComponentDetail",
+    props:['id'],
+    data() {
+        return {
+            bien:""
+            
+        }
+    },
+   async mounted() {
+        let bien = await dataBien.GetBienId(this.id)
+        console.log(bien.success.user_id);
+        if (bien.success) {
+            this.bien = bien.success
+            
+        } else {
+            
+        }
+        
+    },
 
 }
 </script>
