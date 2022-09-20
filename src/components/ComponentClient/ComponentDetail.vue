@@ -78,6 +78,7 @@
                   
                     <form action="/contact " method="post">
                         <input type="text" name="nom" placeholder="Nom">
+                        <div>hrfefldkl</div>
                         <input type="email" name="email" placeholder="Adresse Email">
                         <input type="tel" name="numero" placeholder="Numero">
                        <textarea name="description" id="" cols="41" rows="6" >Bonjour,J'ai vu votre annonce sur le site Je souhaiterais obtenir des informations complémentaires sur ce bien et, éventuellement, convenir d'un rendez-vous pour une visite
@@ -302,7 +303,7 @@ export default {
     /* width: 45%; */
     height: auto;
     border: 1px solid #2288ff;
-    padding: 20px;
+    padding: 0 0 20px;
     margin-top: 30px;
     background-color: white;
     border-radius: 10px;
@@ -320,11 +321,12 @@ form{
 textarea{
     font-family: 'Roboto Serif',
     serif;
+    margin-top:2rem;
 }
 
 
 input {
-    margin-bottom: 2rem;
+    margin-top: 2rem;
     height: 3rem;
     width: 20rem;
     padding: 5px;
