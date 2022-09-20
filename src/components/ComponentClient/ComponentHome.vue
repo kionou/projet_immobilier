@@ -109,7 +109,7 @@
                         </button>
                    </div>
            </div>
-        </div>>
+        </div>
          
         </div>
       
@@ -286,7 +286,7 @@ select{
 } */
 .content-card{
     width: 290px;
-    height: 440px;
+    height: auto;
     border: 1px solid #ccc;
     background-color: white;
     border-radius: 10px;
@@ -300,11 +300,14 @@ select{
     transform: translateY(-10px);
     transition: 0.5s;
 }
-
-.content-info .card-image img{
-    width: 100%;
+.card-image {
     height: 200px;
     padding: 5px;
+}
+.card-image img{
+    width: 100%;
+    height: 100%;
+   
     object-fit: cover;
     vertical-align: middle;
 }

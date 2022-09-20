@@ -75,6 +75,7 @@
             </div>
           
             <div class="container-message">
+            <div class="message-detail">
                 <div class="message-content">
                      <h3>Pour plus de detail contactez-nous</h3>
                 <div class="message">
@@ -94,7 +95,36 @@
         
                 </div>
                 </div>
-                <div class="info-agent"></div>
+                <div class="message-content">
+                    <h3>Les informations de l'agent immobilier</h3>
+                    <div class="contenaire_card">
+                    <div class="content-card">
+                        <div class="card-image">
+                           
+                            <img src="@/assets/images/image.jpg" alt="">   
+                             
+                        </div>
+                        <div class="card-body">
+                            <div class="body-text">
+                                <i class="fa-solid fa-user"></i>
+                            <p>Kionou Mamadou</p>
+                            </div>
+                            <div class="body-text">
+                                <i class="fa-solid fa-envelope"></i>
+                            <p>Kionoumama@gma.com</p>
+                            </div>
+                            <div class="body-text">
+                            <i class="fa-solid fa-phone"></i>
+                            <p> 85899568945886</p>
+                            </div>
+                         
+                        </div>
+                    </div>
+                  
+                </div>
+                </div>
+            </div>
+               
                
             </div>
         </div>
@@ -237,6 +267,14 @@ export default {
     font-size: 26px;
     color: #2288ff;
 }
+.message-detail{
+    /* border: 1px solid blue; */
+    width: 84%;
+    display: flex;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+    background-color: white;
+    padding: 26px 0;
+}
 
 .container-desc {
     margin-top: 30px;
@@ -300,8 +338,9 @@ export default {
     margin-top: 30px;
     width: 100%;
     height: auto;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
+    justify-content: center;
     /* flex-direction: row;
     flex-wrap: wrap; */
     
@@ -311,8 +350,11 @@ export default {
 
 }
 .message-content{
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     width:50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .info-agent{
@@ -322,9 +364,10 @@ export default {
 }
 
 .message {
-    /* width: 45%; */
+    max-width:420px;
+    width: 98%;
     height: auto;
-    border: 1px solid #2288ff;
+    border: 1px solid #ccc;
     padding: 0 0 20px;
     margin-top: 30px;
     background-color: white;
@@ -344,6 +387,7 @@ textarea{
     font-family: 'Roboto Serif',
     serif;
     margin-top:2rem;
+    padding: 5px;
 }
 
 
@@ -400,15 +444,11 @@ button:hover {
 }
 
 @media (max-width:1165px) {
-    .message {
-        /* width: 52%; */
-    }
+  
 }
 
 @media (max-width:900px) {
-    .message {
-        width: auto;
-    }
+  
 }
 
 @media (max-width:700px) {
@@ -421,6 +461,56 @@ button:hover {
         font-size: 23px;
     }
 } 
+
+.content-card{
+    width: 300px;
+    height: 535px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 30px;
+    overflow: hidden;
+    text-align: center;
+    font-family: 'Roboto Serif', serif;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+.content-card:hover{
+    transform: translateY(-10px);
+    transition: 0.5s;
+}
+
+.card-image {
+    width: 100%;
+    height: 300px;
+    padding: 5px;
+  
+}
+.card-image img{
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover;
+    vertical-align: middle; */
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 10px 10px 10px;
+    height: 24vh;
+}
+
+.body-text {
+    display: flex;
+    margin-bottom: 11px;
+    justify-content: center;
+    border: 1px solid red;
+    flex-direction: column;
+
+}
+
+
+ 
 
 
 </style>
