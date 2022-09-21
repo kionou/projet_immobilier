@@ -9,13 +9,14 @@
               <div class="texte">
                   <h2>CONNEXION</h2>
               </div>
-              <form action="/connexion
-              " method="post">
-                    
-                  <input type="email" name="email" placeholder="Adresse Email">
-                        
-                  <input type="password" name="password" placeholder="Mot de passe">
-                  <button type="submit" value="Submit">Connecter</button>
+              <form >
+                     <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
+                  <input type="email" name="email" placeholder="Adresse Email" v-model="email">
+                  
+                     <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>    
+                  <input type="password" name="password" placeholder="Mot de passe" v-model="password">
+                  
+                  <button  @click.prevent="submit">Connecter</button>
               </form>
              
           </div>
@@ -24,14 +25,47 @@
   </template>
   
   <script>
+    import useVuelidate from '@vuelidate/core'
+    import {require, lgmin,lgmax,ValidEmail} from '@/functions/rules'
   export default {
       name:"ComponentLoginAgent",
       data() {
           return {
+             email:'',
+             password:'',
+             v$:useVuelidate(),
               
           }
       },
+         validations: {
+             email:{
+               require,
+                ValidEmail
+            },
+            password:{
+              require,
+                lgmin:lgmin(6),
+                lgmax:lgmax(12)
+         
+                
+            },
+    },
       methods: {
+
+          submit(){
+            console.log('rrr')
+            console.log('fsqjfblqkf',this.v$.$errors.length);
+            // this.v$.$validate()
+            this.v$.$touch()
+            if (this.v$.$errors.length == 0 ) {
+                // this.revele = !this.revele
+             let   DataUser={
+                    email:this.email,
+                    password:this.password
+                }
+    
+            }
+        }
         
       },
   
@@ -49,7 +83,9 @@
       border-radius: 10px;
       position: relative;
   }
-  
+  small{
+    color: #f8001b;
+  }
   input {
       margin-bottom: 2rem;
       height: 3rem;

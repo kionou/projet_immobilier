@@ -11,11 +11,11 @@
             </div>
             <form action="/connexion
             " method="post">
-                  
+                     <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
                 <input type="email" name="email" placeholder="Adresse Email">
-                      
+                     <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>        
                 <input type="password" name="password" placeholder="Mot de passe">
-                <button type="submit" value="Submit">Connecter</button>
+                <button  @click.prevent="submit">Connecter</button>
             </form>
             <div class="texte">
                 <p>Vous aviez pas de compte? <span class="sanp" @click="redirect">Cliquer ici</span> </p>
@@ -26,16 +26,48 @@
 </template>
 
 <script>
+     import useVuelidate from '@vuelidate/core'
+    import {require, lgmin,lgmax,ValidEmail} from '@/functions/rules'
 export default {
     name:"Componentlogin",
     data() {
         return {
+                email:'',
+             password:'',
+             v$:useVuelidate(),
             
         }
+    },
+          validations: {
+             email:{
+               require,
+                ValidEmail
+            },
+            password:{
+              require,
+                lgmin:lgmin(6),
+                lgmax:lgmax(12)
+         
+                
+            },
     },
     methods: {
         redirect(){
             this.$router.push('/sign')
+        },
+            submit(){
+            console.log('rrr')
+            console.log('fsqjfblqkf',this.v$.$errors.length);
+            // this.v$.$validate()
+            this.v$.$touch()
+            if (this.v$.$errors.length == 0 ) {
+                // this.revele = !this.revele
+             let   DataUser={
+                    email:this.email,
+                    password:this.password
+                }
+    
+            }
         }
     },
 
@@ -53,6 +85,9 @@ export default {
     border-radius: 10px;
     position: relative;
 }
+  small{
+    color: #f8001b;
+  }
 
 input {
     margin-bottom: 2rem;

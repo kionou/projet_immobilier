@@ -437,11 +437,7 @@ button:hover {
     cursor: pointer;
 }
 
- @media (min-width:1875px) {
-   .message{
-       width: 30%;
-   }
-}
+
 
 @media (max-width:1165px) {
   
