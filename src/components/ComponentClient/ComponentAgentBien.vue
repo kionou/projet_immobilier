@@ -1,0 +1,355 @@
+<template>
+    <div>
+          <div class="container-fluid"  >
+            <div class="containers" ref="scroll">
+                <div class="container">
+                  <div class="texte">
+                      <p>Location Appartement 100 m2, Abidjan Cocody-angre </p>
+                  </div>
+                  <div class="ImageHeader">
+                      <div class="image">
+                          <img src="@/assets/images/1.jpg" alt="">
+                      </div>
+                  </div>
+              </div>
+              <div class="container-info">
+                  <div class="info-right">
+                      <h1 class="info-texte">LOCATION Appartement Abidjan</h1>
+                      <h3  class="info-texte">Cocody-angre - Immeuble</h3>
+                      <p  class="info-texte">Appartement 3pieces</p>
+                      <div class="icon">
+                          <div class="icon-content">
+                              <i class="fas fa-door-closed"></i>
+                              <samp> 5 chambres </samp>
+                          </div>
+                          <div class="icon-content">
+                              <i class="fas fa-bath"></i>
+                              <samp> 3 douches</samp>
+                          </div>
+                      </div>
+                      <div class="icon">
+                          <div class="icon-content">
+                            <i class="fas fa-window-frame"></i>
+                              <samp> 3 pieces</samp>
+                          </div>
+                          <div class="icon-content">
+                               <i class="fas fa-expand"></i>
+                              <samp> 100 m2</samp>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="info-left">
+                      <h5>Loyer 500.000 F CFA/mois charges comprises</h5>
+                  </div>
+              </div>
+              <div class="container-desc">
+                  <div class="description">
+                      <h5>Description du bien</h5>
+                      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea at quam accusantium consectetur amet. Numquam ratione placeat et illum vel.</p>
+                  </div>
+                  <div id="trait_dessus">
+                      <!-- <hr> -->
+                  </div>
+                  <div class="plus-biens">
+                      <h5>Les + du bien</h5>
+                      <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea, nam.</p>
+                  </div>
+                  <div id="trait_dessus">
+                      <!-- <hr> -->
+                  </div>
+                  <div class="proximite">
+                      <h5>Services à proximité</h5>
+                      <p>Lorem ipsum dolor sit amet. </p>
+                  </div>
+              </div>
+              <div class="container-image">
+                
+                  <div class="Images">
+                      <img src="@/assets/images/2.jpg" alt="">
+                  </div>
+              
+              </div>
+
+              <div class="boutton">
+                <button class="update">Modifier</button>
+                <button class="delete">Supprimer</button>
+              </div>
+
+            </div>
+                
+           
+            
+             
+          </div>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+      name:"BienDetail",
+      data() {
+        return {
+            
+        }
+      },
+      methods: {
+   
+      },
+      mounted() {
+  
+        this.$refs.scroll.scrollTop= this.$refs.scroll.scrollHeight;
+        this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
+   
+      },
+      
+  
+  }
+  </script>
+  
+  <style lang="css" scoped>
+      .ImageHeader{
+      /* border: 1px solid red; */
+      width: 100%;
+      height: auto;
+      bottom: 0;
+      border-radius: 10px;
+  
+  }
+  
+  .container-fluid{
+    
+      width: 100%;
+      height: 93vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    background-color: #f4f4fa;
+      overflow-y: scroll;
+      scrollbar-width: thin;
+      /* border: 1px solid red; */
+  
+  }
+  .containers{
+    /* border: 1px solid blue; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    padding: 10px 0;
+
+  }
+  .trait-blue{
+      height: 50px;
+      background-color: #2288ff;
+      width: 100%;
+  }
+  
+  .container{
+      width: 80%;
+      height: auto;
+      /* border: 1px solid blue; */
+      background-color: white;
+      padding: 10px;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+      margin-bottom: 30px;
+  }
+  
+  .texte{
+      font-family: 'Roboto Serif', serif;
+      height: 42px;
+      text-align: left;
+  }
+  
+  .texte p{
+      font-size: large;
+      margin-top: revert;
+  }
+  
+  .image img{
+      width: 100%;
+      /* height: 100vh; */
+      vertical-align: middle;
+      border-radius: 10px;
+  }
+  
+  .container-info{
+      margin-top: 30px;
+      width: 80%;
+      height: auto;
+      /* border: 1px solid red; */
+      display: flex;
+      align-items: center;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+      background-color: white;
+  
+  }
+  
+  .info-right{
+      width: 70%;
+      height: auto;
+      /* border: 1px solid green; */
+      text-align: center;
+      padding: 10PX;
+  }
+  .icon {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+     
+  }
+  
+  .icon-content {
+      display: flex;
+      font-size: 17px;
+      font-family: 'Roboto Serif', serif;
+      margin-right: 16px;
+      width: 161px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: white;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 20%);
+  
+  }
+  
+  .info-texte{
+      margin-bottom: 10px;
+      text-transform: uppercase;
+  }
+  
+  .info-left {
+      width: 30%;
+      height: 110%;
+      /* border: 1px solid blueviolet; */
+      padding: 10px;
+      font-size: 26px;
+      color: #2288ff;
+  }
+  
+  .container-desc {
+      margin-top: 30px;
+      width: 80%;
+      height: auto;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+      background-color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 20px;
+  
+  }
+  
+  #trait_dessus {
+      border-top: 1px solid #d2d2d4;
+      width: 100%;
+      padding: 6px;
+      margin-top: 20px;
+  
+  }
+  
+  .container-desc h5{
+      text-decoration: underline;
+      margin-bottom: 10px;
+  }
+  
+  .container-image {
+      margin-top: 30px;
+      width: 80%;
+      height: auto;
+      /* border: 1px solid red; */
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+      background-color: white;
+      padding: 20px;
+  
+  }
+  
+  .Images{
+      width: 400px;
+      height: 400px;
+      border: 1px solid #2288ff;
+      margin-right: 9px;
+      margin-bottom: 20px;
+      padding: 5px;
+  }
+  
+  .Images img {
+      width: 100%;
+      height: 100%;
+  }
+.boutton{
+      margin-top: 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 80%;
+      padding: 15px 0;
+      justify-content: space-evenly;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+      background-color: white;
+
+}
+.update {
+    width: 8rem;
+    height: 3rem;
+    text-align: center;
+    border: none;
+    background-color: #2288ff;
+    color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: 'Roboto Serif',
+        serif;
+}
+
+.update:hover {
+    background-color: white;
+    color: #2288ff;
+    border: 1px solid #2288ff;
+    cursor: pointer;
+}
+
+.delete {
+    width: 8rem;
+    height: 3rem;
+    text-align: center;
+    border: none;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: 'Roboto Serif',
+        serif;
+}
+
+.delete:hover {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    cursor: pointer;
+}
+  
+ 
+
+  @media (max-width:700px) {
+      .container-info{
+          flex-direction: column;
+      }
+  
+      .info-left{
+          width: 54%;
+          font-size: 23px;
+      }
+  } 
+  
+  
+  </style>

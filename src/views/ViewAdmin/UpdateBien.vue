@@ -1,6 +1,6 @@
 <template>
    <ComponentUpdateBien :id="id"/>
-   <p>jkkj</p>
+  
 </template>
 
 <script>

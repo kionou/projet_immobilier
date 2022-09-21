@@ -1,14 +1,14 @@
 <template>
   <div>
-     <div class="modal-container" id="modal" v-if="revele" @click="submit">
+     <div class="modal-container" id="modal" v-if="revele" @click.self="submit">
         <div class="modal">
-           <h1>Enregistrement d'Agnent immobilier</h1>
+         
             <div class="container">
           
          
            
-            <form action="/connexion
-            " method="post">
+            <form >
+                    <h3>Ajouter un agent</h3>
                 <input type="text " placeholder="Nom">
                 <input type="text" placeholder="Prenom">
                 <input type="email" name="email" placeholder="Adresse Email">   
@@ -49,8 +49,7 @@ export default {
 }
 
 .modal-container .modal {
-    height: 97vh;
-    width: 57%;
+  
     margin: 0 10px;
     padding: 20px;
     background: #fff;
@@ -120,7 +119,11 @@ button:hover {
    
 }
 
+h3{
 
+    padding: 13px;
+    font-size: 18px
+}
 
 
 

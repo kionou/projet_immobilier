@@ -80,17 +80,21 @@
                      <h3>Pour plus de detail contactez-nous</h3>
                 <div class="message">
                   
-                    <form action="/contact " method="post">
-                        <input type="text" name="nom" placeholder="Nom">
-                        <div>hrfefldkl</div>
-                        <input type="email" name="email" placeholder="Adresse Email">
-                        <input type="tel" name="numero" placeholder="Numero">
-                       <textarea name="description" id="" cols="41" rows="6" >Bonjour,J'ai vu votre annonce sur le site Je souhaiterais obtenir des informations complémentaires sur ce bien et, éventuellement, convenir d'un rendez-vous pour une visite
-                        Merci, par avance, de bien vouloir me contacter dès que possible.
-                        Cordialement,
+                    <form >
+                        <input type="text" name="nom" placeholder="Nom" v-model="nom">
+                        <small v-if="v$.nom.$error">{{v$.nom.$errors[0].$message}} </small>
+
+                        <input type="email" name="email" placeholder="Adresse Email" v-model="email">
+                        <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
+
+                        <input type="tel" name="numero" placeholder="Numero" v-model="numero">
+                        <small v-if="v$.numero.$error">{{v$.numero.$errors[0].$message}} </small>
+                       <textarea name="description" id="" cols="41" rows="6" v-model="this.descriptions" >
+                       
                         </textarea>
-                        <input type="hidden" name="idbien" value="<%= bien.id %>">
-                        <button type="submit" value="Submit">Demander des infos</button>
+                        <small v-if="v$.descriptions.$error">{{v$.descriptions.$errors[0].$message}} </small>
+                        <input type="hidden" name="idbien" v-model="id_bien">
+                        <button @click.prevent="submit">Demander des infos</button>
                     </form>
         
                 </div>
@@ -133,15 +137,79 @@
 
 <script>
    import dataBien from '@/database/requeteBien';
+   import dataUser from '@/database/requeteClient';
+   import useVuelidate from '@vuelidate/core'
+    import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
 export default {
     name:"ComponentDetail",
     props:['id'],
     data() {
         return {
-            bien:""
+            bien:"",
+            nom:'',
+            email:'',
+            numero:'',
+            descriptions:'Bonjour,J\'ai vu votre annonce sur le site Je souhaiterais obtenir des informations complémentaires sur ce bien et, éventuellement, convenir d\'un rendez-vous pour une visite Merci, par avance, de bien vouloir me contacter dès que possible.Cordialement',
+            v$:useVuelidate(),
             
         }
     },
+    validations: {
+            nom:{
+                require,
+                lgmin:lgmin(4),
+                lgmax:lgmax(20)
+
+            },
+             email:{
+               require,
+                ValidEmail
+            },
+            numero:{
+                require,
+                ValidNumeri,
+                lgmin:lgmin(10),
+                lgmax:lgmax(12)
+
+            },
+            descriptions:{
+              require,
+                lgmin:lgmin(50),
+                lgmax:lgmax(1000)
+         
+                
+            }
+    },
+    methods: {
+
+ async submit(){
+  console.log('rrr')
+  console.log('fsqjfblqkf',this.v$.$errors.length);
+  // this.v$.$validate()
+  this.v$.$touch()
+  if (this.v$.$errors.length == 0 ) {
+      // this.revele = !this.revele
+   let   DataUser={
+         nom:this.nom,
+          email:this.email,
+          numero:this.numero,
+          description:this.descriptions,
+          bien_id:this.id
+         
+      }
+      console.log(DataUser);
+      let user = await dataUser.InsertionUser(DataUser)
+        if (user.success) {
+            this.$router.push('/')
+            
+        } else {
+            
+        }
+
+  }
+}
+
+},
    async mounted() {
         let bien = await dataBien.GetBienId(this.id)
         console.log(bien.success.user_id);
@@ -166,7 +234,9 @@ export default {
     border-radius: 10px;
 
 }
-
+small{
+    color: red;
+}
 .container-fluid{
     /* border: 1px solid red; */
     width: 100%;

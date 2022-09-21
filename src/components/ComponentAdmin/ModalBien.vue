@@ -115,14 +115,6 @@ async upload (e)  {
 
 
 
-
-    
-    
-  
-
-
-
-
 //     let file =e.target.files[0]
 //       const name = new Date().getTime() + file.name;
 
@@ -178,8 +170,8 @@ async upload (e)  {
 }
 
 .modal-container .modal {
-    height: 97vh;
-    width: 70%;
+   max-width: 900px;
+    width: 98%;
     margin: 0 10px;
     padding: 20px;
     background: #fff;
@@ -187,7 +179,7 @@ async upload (e)  {
     text-align: center;
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 52%;
     transform: translate(-50%, -50%);
 }
 

@@ -1,6 +1,8 @@
 <template>
   <div>
     <ModalBien v-bind:revele="revele" v-bind:submit="submit"></ModalBien>
+    <DeleteBien v-bind:toggle="toggle" v-bind:bienDelete="bienDelete"></DeleteBien>
+
       <component v-bind:is="component"></component>
       <div class="contenu">
                 <div class="boutton" @click="submit">
@@ -47,7 +49,7 @@
                                                  <td class="doctor" >
                                                     <i class="fa-solid fa-eye"  v-on:click="component='detail'" ></i>
                                                     <i class="fa-solid fa-pen-to-square" @click="redirect(bien.id)"></i>
-                                                    <i class="fa-solid fa-trash"></i>
+                                                    <i class="fa-solid fa-trash" @click="bienDelete"></i>
                                                  </td>
                                                
                                              </tr>
@@ -73,6 +75,7 @@ import dataBien from '@/database/requeteBien';
 import ModalBien from './ModalBien.vue';
 import BienDetail from './BienDetail.vue';
 import UpdateBien from './ComponentUpdateBien.vue';
+import DeleteBien from './DeleteBien.vue';
 
 export default {
     name:'ComponentBien',
@@ -80,12 +83,14 @@ export default {
     components:{
     ModalBien,
     UpdateBien,
+    DeleteBien,
     'detail':BienDetail
 
 },
     data(){
     return{
         revele:false,
+        toggle:false,
         component:'',
         biens:''
        
@@ -100,6 +105,11 @@ methods:{
             console.log(id);
        
     },
+    bienDelete(){
+        console.log('st');
+        this.toggle = !this.toggle
+
+    }
  
 },
 async mounted(){

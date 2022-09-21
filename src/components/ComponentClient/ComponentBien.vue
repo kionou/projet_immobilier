@@ -6,6 +6,16 @@
                     <p>Ajouter un Bien</p>
                 </div>
                 <div class="contenaire_card">
+                    <!-- <div class="messages">
+                        <div class="message">
+                            <span>Vous n'aviez pas de bien immobilier pour l'instant!</span>
+                            <div class="boutton" @click="submit">
+                            <p>Ajouter un Bien</p>
+                            </div>
+                        </div>
+                       
+
+                    </div> -->
                    
         <div class="content-card">
             <div class="card-image"> 
@@ -33,7 +43,7 @@
                 </div>
                     <div class="">
                         <div id="trait_dessus">
-                            <!-- <hr> -->
+                         
                         </div>
                     </div>
                     <div class="">
@@ -84,7 +94,7 @@ export default {
     flex-direction: column;
     align-items: center;
     height: auto;
-    height: 89vh;
+    height: 93vh;
 }
 
 .boutton{
@@ -98,6 +108,26 @@ export default {
     color: white;
     font-family: 'Roboto Serif', serif;
 }
+.messages{
+    /* border: 1px solid blue; */
+    width: 80%;
+    height: 80vh;
+    display: flex;
+   
+    align-items: center;
+    justify-content: center;
+}
+.messages span{
+    margin-bottom: 10px;
+    font-size: 25px;
+}
+.message{
+    border: 1px solid #ccc;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .boutton:hover{
     background-color: white;
@@ -108,7 +138,7 @@ export default {
 .contenaire_card{
 
     width: 99%;
-    height: auto;
+    height: 93vh;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, auto));
     gap: 3rem;

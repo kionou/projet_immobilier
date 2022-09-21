@@ -28,7 +28,7 @@
                   <textarea name="" id="" cols="71" rows="4"  placeholder="service" v-model="service"></textarea>
               </div>
               <input type="hidden"   v-model="user_id">
-              {{id}}
+             
   
              <label class="custom-file-upload">
               <input type="file" @change="upload" multiple/>
@@ -194,26 +194,24 @@
   .modal-container {
       height: 100vh;
       width: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      /* background: rgba(0, 0, 0, .3);
-      z-index: 6;
-      opacity: 1; */
+      border: 1px solid red;
+  
   }
   
   .modal-container .modal {
-      height: 97vh;
-      width: 70%;
+     
+    max-width: 900px;
+    width: 98%;
       margin: 0 10px;
       padding: 20px;
-      background: #fff;
       border-radius: 5px;
       text-align: center;
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+    background-color: white;
   }
   
   input {

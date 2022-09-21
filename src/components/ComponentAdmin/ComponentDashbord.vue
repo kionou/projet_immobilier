@@ -9,7 +9,7 @@
             <nav>
                 <p v-on:click="component='bien'">Liste des Biens</p>
                 <p v-on:click="component='agent'">Liste des Agents</p>
-                <p v-on:click="component='detail'">Liste des Clients</p>
+                <p v-on:click="component='client'">Liste des Clients</p>
             </nav>
          
         </div>
@@ -34,7 +34,7 @@
 <script>
   import ComponentBien from './ComponentBien.vue';
   import ComponentAgent from './ComponentAgent.vue';
-  
+  import ComponentClient from './ComponentClient.vue';
 
  
 export default {
@@ -42,6 +42,7 @@ export default {
   components:{
     "bien": ComponentBien,
     "agent": ComponentAgent,
+    "client":ComponentClient
    
 },
   data (){

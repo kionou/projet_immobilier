@@ -12,9 +12,9 @@
             <form action="/connexion
             " method="post">
                      <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
-                <input type="email" name="email" placeholder="Adresse Email">
+                <input type="email" name="email" placeholder="Adresse Email" v-model="email">
                      <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>        
-                <input type="password" name="password" placeholder="Mot de passe">
+                <input type="password" name="password" placeholder="Mot de passe" v-model="password">
                 <button  @click.prevent="submit">Connecter</button>
             </form>
             <div class="texte">
@@ -66,6 +66,7 @@ export default {
                     email:this.email,
                     password:this.password
                 }
+                console.log(DataUser);
     
             }
         }

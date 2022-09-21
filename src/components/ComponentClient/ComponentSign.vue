@@ -11,33 +11,37 @@
               <p>Inscrivez vous pour beneficier de nos produits.</p>
             </div>
           
-            <form action="" method="post">
+            <form >
               <div class="name"> 
-                <div>
-                    <input type="text" class="input" name="nom" placeholder="Nom">
-                   
+            
+                <div id="inputs">
+                    <input type="text" class="input" name="nom" placeholder="Nom" v-model="nom">
+                    <small v-if="v$.nom.$error">{{v$.nom.$errors[0].$message}} </small>
                 </div>
-               <div>
-                <input type="text" class="input" name="prenom" placeholder="Premon">
+               <div id="inputs">
+                <input type="text" class="input" name="prenom" placeholder="Premon" v-model="prenom">
+                <small v-if="v$.prenom.$error">{{v$.prenom.$errors[0].$message}} </small>
                 
                </div>
               </div>
               <div class="mail">
                 <div class="mail1">
-                  <input type="email" class="input1" name="email" placeholder="Adresse Email">
+                  <input type="email" class="input1" name="email" placeholder="Adresse Email" v-model="email">
+                  <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
                 
                 </div>
                 <div class="mail1">
-                 <input type="tel" class="input1" name="numero" placeholder="Numéro téléphone">
+                 <input type="tel" class="input1" name="numero" placeholder="Numéro téléphone" v-model="numero">
+                 <small v-if="v$.numero.$error">{{v$.numero.$errors[0].$message}} </small>
                  
                 </div>
               </div>
               <div class="name">
-                  <input type="password" class="input" name="password" placeholder="Mot de passe">
+                  <input type="password" class="input" name="password" placeholder="Mot de passe" v-model="password">
                    <input type="password" class="input" name="confirmer_password" placeholder="Confirmer le Mot de passe">
               </div>
-               
-                <button name="modal" value="true" id="open" >Enregister</button>
+              <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>
+                <button @click.prevent="submit" id="open" >Enregister</button>
             </form>
           </div>
         </section>
@@ -46,7 +50,74 @@
 </template>
 
 <script>
+import useVuelidate from '@vuelidate/core'
+import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
 export default {
+    data() {
+        return {
+                nom:'',
+                prenom:'',
+                email:'',
+                numero:'',
+                password:'',
+              v$:useVuelidate(),
+            
+        }
+    },
+    validations: {
+        
+             
+          
+        nom:{
+           require,
+           lgmin:lgmin(4),
+           lgmax:lgmax(20)
+       },
+       prenom:{
+           require,
+           lgmin:lgmin(4),
+           lgmax:lgmax(20)
+           
+       },
+       email:{
+           require,
+           ValidEmail
+          
+       },
+       numero:{
+           require,
+           ValidNumeri,
+           lgmin:lgmin(10),
+           lgmax:lgmax(12)
+
+       },
+       password:{
+           require,
+           lgmin:lgmin(6),
+           lgmax:lgmax(12)
+       },
+},
+methods: {
+    submit(){
+         
+            // this.v$.$validate()
+            this.v$.$touch()
+            if (this.v$.$errors.length == 0 ) {
+               
+             let   DataUser={
+                    nom:this.nom,
+                    prenom:this.prenom,
+                    email:this.email,
+                    numero:this.numero,
+                    password:this.password
+                }
+                console.log(DataUser);
+    
+            }
+           
+
+        }
+},
 
 }
 </script>
@@ -68,7 +139,9 @@ export default {
     position: relative;
     transition: all .2s linear
 }
-
+small{
+    color: #f8001b;
+}
 .cadre{
     width: 780px;
     height: auto;
@@ -111,6 +184,10 @@ form{
     padding: 18px;
     
 }
+#inputs{
+    display: flex;
+    flex-direction: column;
+}
 
 .input{
     margin-bottom: 0;
@@ -145,6 +222,8 @@ input:focus {
 }
 .mail1{
     margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
 }
 
 .validation{
@@ -154,7 +233,7 @@ input:focus {
 button {
     width: 9rem;
     height: 3rem;
-    /* margin: 10px 0; */
+    margin: 10px 0;
     text-align: center;
     border: none;
     background-color: #2288ff;
@@ -202,69 +281,6 @@ button:hover {
     align-content: center; */
 }
 
-.modal-container{
-    display:none;
-    /* justify-content: center;
-    align-items: center; */
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, .3);
-    /* transform: scale(0); */
-    z-index: 6;
-    opacity: 1;
-}
-
-.modal-container .modal{
-    height: 300px;
-    max-width: 350px;
-    margin: 0 10px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 5px;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-}
-
-.modal-container .modal p {
-    font-size: 19px;
-    margin-top: 23px;
-}
-
-.modal-container .modal .fa-times{
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 25px;
-    cursor: pointer;
-    color: #2288ff;
-}
-
-.btnredirect{
-    width: 9rem;
-    height: 3rem;
-    margin-top: 32px ;
-    text-align: center;
-    border: none;
-    background-color: #2288ff;
-    color: white;
-    border-radius: 5px;
-    font-size: 23px;
-    font-family: 'Roboto Serif',
-    serif;
-}
-
-.btnredirect:hover{
-    background-color: white;
-    color: #2288ff;
-    border: 1px solid #2288ff;
-    cursor: pointer;
-}
 
 
 
