@@ -1,20 +1,25 @@
 <template>
   <div>
-    <ModalBien v-bind:revele="revele" v-bind:submit="submit"></ModalBien>
-    <DeleteBien v-bind:toggle="toggle" v-bind:bienDelete="bienDelete"></DeleteBien>
+    <ModalBien v-bind:revele="revele" v-bind:submit="submit" :agentId="agentId"></ModalBien>
+    <DeleteBien v-bind:toggle="toggle" v-bind:bienDelete="bienDelete" :Iddelete="Iddelete"></DeleteBien>
 
       <component v-bind:is="component"></component>
       <div class="contenu">
-                <div class="boutton" @click="submit">
+                <div class="boutton" @click="submit()">
                     <p>Ajouter un bien</p>
                 </div>
                 <div class="contenu_card">
+                 
                    
                        
                        
                          <div class="carnet">
+
+                         <div class="alert" v-if="alert">
+                           {{alert}}
+                          </div>
                             
-                             <div class="table-container">
+                             <div class="table-container" v-else>
                                  <h1 class="heading">
                                      La liste des biens Immobiliers
                                  </h1>
@@ -47,7 +52,7 @@
                                                  <td data-label="Protège contre">{{bien.ville}} {{bien.commune}}</td>
                                                 
                                                  <td class="doctor" >
-                                                    <i class="fa-solid fa-eye"  v-on:click="component='detail'" ></i>
+                                                    <i class="fa-solid fa-eye"  @click="detail(bien.id)" ></i>
                                                     <i class="fa-solid fa-pen-to-square" @click="redirect(bien.id)"></i>
                                                     <i class="fa-solid fa-trash" @click="bienDelete(bien.id)"></i>
                                                  </td>
@@ -73,18 +78,16 @@
 <script>
 import dataBien from '@/database/requeteBien';
 import ModalBien from './ModalBien.vue';
-import BienDetail from './BienDetail.vue';
 import UpdateBien from './ComponentUpdateBien.vue';
 import DeleteBien from './DeleteBien.vue';
 
 export default {
     name:'ComponentBien',
-    props:['bien'],
+    props:['bien','Iddelete','agentId'],
     components:{
     ModalBien,
     UpdateBien,
     DeleteBien,
-    'detail':BienDetail
 
 },
     data(){
@@ -92,31 +95,44 @@ export default {
         revele:false,
         toggle:false,
         component:'',
-        biens:''
+        biens:'',
+        Iddelete:'',
+        alert:'',
+        agentId:''
        
     }
 },
 methods:{
     submit(){
         this.revele = !this.revele
+        this.agentId = "001"
     },
     redirect(id){
-        this.$router.push(`/dashbord/updatebien/${id}`)
-            console.log(id);
-       
+        this.$router.push(`/dashbord/updatebien/${id}`)  
     },
     bienDelete(id){
-        console.log('st',id);
         this.toggle = !this.toggle
+        this.Iddelete = id
+
+    },
+    detail(id){
+        this.$router.push(`/dashbord/bien/${id}`)
 
     }
  
 },
 async mounted(){
     let bien = await dataBien.AfficherBien()
+    console.log(bien);
     if (bien.success) {
         console.log(bien.success)
         this.biens=bien.success
+        
+    } else if (bien.alert) {
+        this.alert=bien.alert
+        
+    } else {
+        console.log('err 404');
         
     }
    
@@ -132,7 +148,7 @@ async mounted(){
     display: flex;
     flex-direction: column;
     align-items: center;
-    height:89vh;
+    height:93vh;
 }
 
 .boutton{
@@ -158,8 +174,9 @@ async mounted(){
 .contenu_card{
     width: 100%;
     height: 100%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin-top: 10px;
+    padding: 3px 3Px 0;
 }
 
 .content {
@@ -179,8 +196,6 @@ async mounted(){
       display: flex;
       flex-direction: column;
       align-items: center;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
       justify-content: space-between;
       align-items: center;
   }
@@ -246,11 +261,13 @@ async mounted(){
   }
   .alert{
       border: 1px solid #B3B3B3;
-      padding: 20px 50px;
       text-align: center;
-      margin-top: 90px;
       font-size: 30px;
-      border-radius: 8px;
+      position: absolute;
+      top: 44%;
+      width: 100%;
+      max-width: 900px;
+      padding: 60px 0;
   }
 
   .fa-trash{

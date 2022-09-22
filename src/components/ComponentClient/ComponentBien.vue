@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <ModalAgent v-bind:revele="revele" v-bind:submit="submit"></ModalAgent> -->
+    <ModalBien v-bind:revele="revele" v-bind:submit="submit" :agentId="agentId"></ModalBien> 
      <div class="contenu1">
                 <div class="boutton" @click="submit">
                     <p>Ajouter un Bien</p>
@@ -64,23 +64,26 @@
 
 <script>
 
-// import ModalAgent from './ModalAgent.vue';
+import ModalBien from '../ComponentAdmin/ModalBien.vue';
 export default {
     name:'ComponentBien',
+    props:['agentId'],
     components:{
-    // ModalAgent,
+        ModalBien,
   
 },
-// data(){
-//     return{
-//         revele:false
-//     }
-// },
-// methods:{
-//     submit(){
-//         this.revele = !this.revele
-//     }
-// }
+data(){
+    return{
+        revele:false,
+        agentId:''
+    }
+},
+methods:{
+    submit(){
+        this.revele = !this.revele
+        this.agentId = "999"
+    }
+}
 
 }
 </script>

@@ -4,8 +4,11 @@
                   <div class="contenu_card">
 
                            <div class="carnet">
+                            <div class="alert" v-if="alert">
+                                    {{alert}}
+                            </div>
                               
-                               <div class="table-container">
+                               <div class="table-container" v-else>
                                    <h1 class="heading">
                                        La liste des clients
                                    </h1>
@@ -74,7 +77,8 @@
       return{
           revele:false,
           component:'',
-          users:''
+          users:'',
+          alert:''
          
       }
   },
@@ -89,12 +93,14 @@
   },
   async mounted(){
       let user = await dataUser.AfficherUser()
-      console.log(user);
+
       if (user.success) {
-          console.log(user.success)
           this.users=user.success   
-      }else{
-        console.log('fsdfkbh');
+      }else if (user.alert) {
+        this.alert = user.alert
+        
+      } else {
+        console.log('eeeq');
       }
     
      
@@ -111,6 +117,7 @@
       flex-direction: column;
       align-items: center;
       height:93vh;
+      padding-top: 10px;
   }
   
   .boutton{
@@ -138,7 +145,7 @@
       height: 100%;
       /* border: 1px solid black; */
       margin-top: 10px;
-      padding-right: 10px;
+      padding:3px;
   }
   
   .content {
@@ -210,12 +217,14 @@
   
  
     .alert{
-        border: 1px solid #B3B3B3;
-        padding: 20px 50px;
-        text-align: center;
-        margin-top: 90px;
-        font-size: 30px;
-        border-radius: 8px;
+    border: 1px solid #B3B3B3;
+    width: 100%;
+    max-width: 900px;
+    padding: 60px 0;
+    font-size: 30px;
+    position: absolute;
+    top: 44%;
+
     }
 
     .fa-eye{

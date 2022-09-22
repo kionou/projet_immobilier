@@ -11,7 +11,7 @@
             </div>
              <div class="form_groupe">
                 <input type="text" placeholder="Nombre de pieces" v-model="piece">
-                <input type="text" placeholder="superficie">
+                <input type="text" placeholder="superficie" v-model="superficie">
             </div>
              <div class="form_groupe">
                 <input type="text" placeholder="Nombre de chambre" v-model="chambre">
@@ -28,7 +28,6 @@
                 <textarea name="" id="" cols="71" rows="4"  placeholder="service" v-model="service"></textarea>
             </div>
             <input type="hidden"   v-model="user_id">
-
            <label class="custom-file-upload">
             <input type="file" @change="upload" multiple/>
             <i class="fa fa-cloud-upload"></i> 
@@ -52,13 +51,14 @@ import { ref,  uploadBytes, getDownloadURL } from "firebase/storage";
 export default {
     
     name:'ModalBien',
-    props:['revele','submit'
+    props:['revele','submit','agentId'
    ],
    data() {
     return {
         nom_bien:'',
         prix:'',
         piece:'',
+        superficie:'',
         chambre:'',
         douche:'',
         ville:'',
@@ -75,6 +75,7 @@ export default {
            nom_bien:this.nom_bien,
            prix:this.prix,
            piece:this.piece,
+           superficie:this.superficie,
            chambre:this.chambre,
            douche:this.douche,
            ville:this.ville,
@@ -82,7 +83,7 @@ export default {
            description:this.description,
            service:this.service,
            images:this.image,
-           user_id:'001'
+           user_id:this.agentId
         }
         console.log(DataBien);
      let bien =  await dataBien.InsertionBien(DataBien)

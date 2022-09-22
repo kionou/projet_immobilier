@@ -4,9 +4,7 @@
        
          
             <div class="container">
-          
-         
-           
+
             <form >
                     <h3>Ajouter un agent</h3>
 
@@ -20,7 +18,7 @@
                 <input type="email" name="email" placeholder="Adresse Email" v-model="email"> 
 
                 <small v-if="v$.numero.$error">{{v$.numero.$errors[0].$message}} </small>
-                <input type="text" placeholder="Numero Téléphonique" v-model="numero">
+                <input type="tel" placeholder="Numero Téléphonique" v-model="numero">
 
                 <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>
                 <input type="password" name="password" placeholder="Mot de passe" v-model="password">
@@ -37,6 +35,7 @@
 </template>
 
 <script>
+    import dataAgent from '@/database/requeteAgent'
     import useVuelidate from '@vuelidate/core'
 import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
 export default {
@@ -86,7 +85,7 @@ export default {
 },
 methods: {
 
-     valider(){
+   async  valider(){
          
             // this.v$.$validate()
             this.v$.$touch()
@@ -100,6 +99,14 @@ methods: {
                     password:this.password
                 }
                 console.log(DataUser);
+                let agent = await dataAgent.InsertionAgent(DataUser)
+                console.log(agent);
+                if (agent.success) {
+                    this.$router.push('/')
+                    
+                } else {
+                    
+                }
     
             }
            

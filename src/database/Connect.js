@@ -23,3 +23,4 @@ export const storage = getStorage(app);
 
 export const bienCollection = collection(data,'bien')
 export const usercollection = collection(data,'users')
+export const agentcollection = collection(data,'agents')

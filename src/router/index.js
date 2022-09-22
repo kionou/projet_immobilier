@@ -37,7 +37,8 @@ const routes = [
   {
     path: '/agent/bien/detail',
     name: 'agent/bien/detail',
-    component: () => import('../views/ViewClient/DetailBienAgent.vue')
+    component: () => import('../views/ViewClient/DetailBienAgent.vue'),
+    props:true
   },
   // router client fin
 
@@ -53,6 +54,12 @@ const routes = [
     path: '/dashbord/updatebien/:id',
     name: 'dashbord/updatebien',
     component: () => import('../views/ViewAdmin/UpdateBien.vue'),
+    props:true
+  },
+  {
+    path: '/dashbord/bien/:id',
+    name: 'dashbord/bien',
+    component: () => import('../views/ViewAdmin/DetailBien.vue'),
     props:true
   },
 

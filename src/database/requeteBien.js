@@ -1,5 +1,5 @@
-import { bienCollection } from "./Connect";
-import {  addDoc , getDocs,getDoc,doc,setDoc } from 'firebase/firestore'
+import { bienCollection} from "./Connect";
+import {  addDoc , getDocs,getDoc,doc,setDoc,deleteDoc ,updateDoc} from 'firebase/firestore'
 
 const dataBien = class{
 
@@ -23,13 +23,19 @@ const dataBien = class{
         return new Promise(async (next)=>{
       await getDocs(bienCollection)
         .then(docRef=>{
-            docRef.forEach((doc) => {
-            let data = doc.data()
-            data.id =doc.id,
-            array.push(data)
-            console.log('ssss',array);
-            next({success:array})
-           });
+          if (docRef.docs.length > 0) {
+               docRef.forEach((doc) => {
+               let data = doc.data()
+               data.id =doc.id,
+               array.push(data)
+               console.log('ssss',array);
+               next({success:array})
+                   });
+          } else {
+               next({alert:"Aucun bien immobilier disponible pour le moment !"})
+               
+          }
+         
                
         }).catch(error=>{
                  console.log("eee",error);
@@ -70,6 +76,45 @@ const dataBien = class{
          })
        
     }
+    static DeleteBien = (id)=>{
+     console.log('sqfQSD',id);
+     return new Promise(async (next)=>{
+     await deleteDoc(doc(bienCollection, id))
+     .then(resultat=>{
+              console.log('ss',resultat);
+              next({success:'supprimer avec success'})
+     }).catch(error=>{
+              console.log("eee",error);
+              next ({ erreur:error})
+         })
+      })
+    
+ }
+
+
+ static UpdateBienVendu = async (id)=>{
+     console.log('sqfQSD',id);
+
+     return new Promise(async (next)=>{
+          const docRef = doc(bienCollection, id);
+           await getDoc(docRef)
+          .then(docRef=>{
+                   let data = {...docRef.data()}
+                   data.status = "true"
+                   const update = doc(bienCollection, id);
+                    setDoc(update,data,{ merge:true })
+                    next({success:docRef.data()})
+          }).catch(error=>{
+                   console.log("eee",error);
+                   next ({ erreur:error})
+              })
+           })
+
+
+  
+    
+ }
+
 
 }
 

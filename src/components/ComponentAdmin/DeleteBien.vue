@@ -4,14 +4,13 @@
         
            
               <div class="container">
+               
                 <p>vous voulez-vous supprimer cette article ?</p>
                 <div class="boutton">
-                    <button>Oui</button>
+                    <button @click="supp">Oui</button>
                     <button>Non</button>
                 </div>
-            
-       
-            
+
           </div>
           
         
@@ -20,9 +19,22 @@
   </template>
   
   <script>
+    import dataBien from '@/database/requeteBien'
   export default {
       name:'DeleteBien',
-      props:['toggle','bienDelete']
+      props:['toggle','bienDelete','Iddelete'],
+      methods: {
+     async supp(){
+            console.log('sqqf',this.Iddelete);
+            let bien = await dataBien.DeleteBien(this.Iddelete)
+            if(bien.success){
+               location.reload()
+              
+            }
+
+        }
+        
+      },
   
   }
   </script>

@@ -24,10 +24,13 @@
            <h2>Les biens qui pourraient vous intéresser</h2>
        </div>
        <div class="content-info">
-     
+        <div class="alert" v-if="alert">
+         {{alert}}
+
+        </div>
        
      
-        <div class="content-card">
+        <!-- <div class="content-card">
             <div class="card-image">
                
                 <img src="@/assets/images/1.jpg" alt="">   
@@ -55,7 +58,7 @@
                 </div>
                     <div class="">
                         <div id="trait_dessus">
-                            <!-- <hr> -->
+                          
                         </div>
                     </div>
                     <div class="">
@@ -67,10 +70,11 @@
                          </button>
                     </div>
             </div>
-        </div>
-
+        </div> -->
+        
         <div class="content-card" v-for="bien in biens" :key="bien.id">
-            <div class="card-image">
+            <div class="vendu" v-if="bien.status == 'true'">
+                <div class="card-image">
                <img :src="bien.images[0]" alt="">   
              
            </div>
@@ -97,7 +101,47 @@
                </div>
                    <div class="">
                        <div id="trait_dessus">
-                           <!-- <hr> -->
+                       </div>
+                   </div>
+                   <div class="">
+                       <p>loyer {{bien.prix}} CFA/mois</p>
+                   </div>
+                   <div class="btn">
+                        <button class="btncard">
+                             <p @click="redirect(bien.id)" v:bind:disabled="btn" >Détail</p>
+                        </button>
+                   </div>
+           </div>
+            </div>
+
+            <div class="non-vendu" v-else>
+                <div class="card-image">
+               <img :src="bien.images[0]" alt="">   
+             
+           </div>
+           <div class="card-body">
+               <div class="body-text">
+               <h3>{{bien.ville}}</h3>
+               </div>
+               <div class="body-text">
+                
+               <p>{{bien.nom_bien}} </p>
+               </div>
+               <div class="body-text">
+               <p> {{bien.piece}}/{{bien.superficie}}</p>
+               </div>
+               <div class="icon">
+                   <div class="icon-content">
+                       <i class="fas fa-door-closed"></i>
+                       <samp>{{bien.chambre}}</samp>
+                   </div>
+                   <div class="icon-content">
+                       <i class="fas fa-bath"></i>
+                       <samp> {{bien.douche}}</samp>
+                   </div>
+               </div>
+                   <div class="">
+                       <div id="trait_dessus">
                        </div>
                    </div>
                    <div class="">
@@ -109,6 +153,8 @@
                         </button>
                    </div>
            </div>
+            </div>
+           
         </div>
          
         </div>
@@ -166,7 +212,9 @@ export default {
     name:"ComponentHome",
     data() {
         return {
-            biens:""
+            biens:"",
+            alert:'',
+            btn:true
             
         }
     },
@@ -178,9 +226,16 @@ export default {
     },
    async mounted(){
     let bien = await dataBien.AfficherBien()
+    console.log(bien);
     if (bien.success) {
         console.log(bien.success)
         this.biens=bien.success
+        
+    }else if (bien.alert) {
+        this.alert = bien.alert
+        
+    } else {
+        console.log('erreur 404');
         
     }
    
@@ -232,6 +287,13 @@ select{
     font-family: 'Roboto Serif',  serif;
     font-size: 15px;
 }
+.vendu{
+    border: 1px solid red;
+}
+
+.non-vendu{
+    border: 1px solid blue;
+}
 
 .boutton{
     width: 261px;
@@ -280,6 +342,12 @@ select{
     justify-items: center;
     border-radius: 10px;
 
+}
+.alert{
+    width: 100%;
+    padding: 60px 0;
+    font-size: 30px;
+    border: 1px solid #ccc;
 }
 /* p{
     color: black;

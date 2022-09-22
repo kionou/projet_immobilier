@@ -18,7 +18,7 @@
             <div class="container-info">
                 <div class="info-right">
                     <h1 class="info-texte">LOCATION {{bien.bien_nom}} {{bien.ville}} Appartement Abidjan</h1>
-                    <h3  class="info-texte">{{bien.commune}} - Immeuble</h3>
+                    <h3  class="info-texte">{{bien.commune}}</h3>
                     <p  class="info-texte">{{bien.nom}} {{bien.piece}}pieces</p>
                     <div class="icon">
                         <div class="icon-content">
@@ -112,15 +112,15 @@
                         <div class="card-body">
                             <div class="body-text">
                                 <i class="fa-solid fa-user"></i>
-                            <p>Kionou Mamadou</p>
+                            <p>{{agent.nom}} {{agent.prenom}}</p>
                             </div>
                             <div class="body-text">
                                 <i class="fa-solid fa-envelope"></i>
-                            <p>Kionoumama@gma.com</p>
+                            <p>{{agent.email}}</p>
                             </div>
                             <div class="body-text">
                             <i class="fa-solid fa-phone"></i>
-                            <p> 85899568945886</p>
+                            <p> {{agent.numero}}</p>
                             </div>
                          
                         </div>
@@ -140,6 +140,7 @@
 
 <script>
    import dataBien from '@/database/requeteBien';
+   import dataAgent from '@/database/requeteAgent';
    import dataUser from '@/database/requeteClient';
    import useVuelidate from '@vuelidate/core'
     import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
@@ -154,7 +155,7 @@ export default {
             numero:'',
             descriptions:'Bonjour,J\'ai vu votre annonce sur le site Je souhaiterais obtenir des informations complémentaires sur ce bien et, éventuellement, convenir d\'un rendez-vous pour une visite Merci, par avance, de bien vouloir me contacter dès que possible.Cordialement',
             v$:useVuelidate(),
-            user:false
+            agent:''
             
         }
     },
@@ -219,6 +220,11 @@ export default {
         console.log(bien.success.user_id);
         if (bien.success) {
             this.bien = bien.success
+            let id_agent = bien.success.user_id
+            let agent = await  dataAgent.GetAgnetId(id_agent)
+            console.log('agent',agent.success);
+            this.agent = agent.success
+           
             
         } else {
             

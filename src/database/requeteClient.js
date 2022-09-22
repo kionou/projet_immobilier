@@ -22,30 +22,21 @@ const dataUser = class{
     static AfficherUser = ()=>{
         let array =[]
         return new Promise(async (next)=>{
-       await getDocs(usercollection)
+         await getDocs(usercollection)
         .then(docRef=>{
-          console.log('of',docRef.length);
-          if (docRef) {
-            console.log('of');
-            
-          } else {
-            console.log('non');
-            
-          }
-          
-            console.log('ssss',docRef.doc); 
-            docRef.forEach((doc) => {
-              console.log('dd',doc);
-           
+          console.log('offf',docRef.docs);
+          if (docRef.docs.length > 0) {
 
-            let data = doc.data()
-            data.id =doc.id,
-            array.push(data)
-            console.log('ssss',array);
-            next({success:array})  
-          })
-       
-      
+            docRef.forEach((doc) => {
+              let data = doc.data()
+              data.id =doc.id,
+              array.push(data)
+              console.log('ssss',array);
+              next({success:array})  
+            }) 
+          } else {
+            next({alert:"Aucun client n'\a posté pour le moment !"})   
+          }
         }).catch(error=>{
                  console.log("eee",error);
                  next ({ erreur:error})

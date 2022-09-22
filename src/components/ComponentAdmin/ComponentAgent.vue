@@ -6,7 +6,10 @@
                     <p>Ajouter un Agent</p>
                 </div>
                 <div class="contenaire_card">
-                    <div class="content-card">
+                    <div class="alert" v-if="alert">
+                        {{alert}}
+                    </div>
+                    <div class="content-card" v-for="agent in agents " :key="agent.id" v-else>
                         <div class="card-image">
                            
                             <img src="@/assets/images/image.jpg" alt="">   
@@ -15,15 +18,15 @@
                         <div class="card-body">
                             <div class="body-text">
                                 <i class="fa-solid fa-user"></i>
-                            <p>Kionou Mamadou</p>
+                            <p>{{agent.nom}} {{agent.prenom}}</p>
                             </div>
                             <div class="body-text">
                                 <i class="fa-solid fa-envelope"></i>
-                            <p>Kionoumama@gma.com</p>
+                            <p>{{agent.email}}</p>
                             </div>
                             <div class="body-text">
                             <i class="fa-solid fa-phone"></i>
-                            <p> 85899568945886</p>
+                            <p> {{agent.numero}}</p>
                             </div>
                             <div class="icon">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -39,7 +42,7 @@
 </template>
 
 <script>
-
+import dataAgent from '@/database/requeteAgent';
 import ModalAgent from './ModalAgent.vue';
 export default {
     name:'ComponentAgent',
@@ -49,14 +52,30 @@ export default {
 },
 data(){
     return{
-        revele:false
+        revele:false,
+        agents:"",
+        alert:''
     }
 },
 methods:{
     submit(){
         this.revele = !this.revele
     }
-}
+},
+async mounted() {
+    let agent = await dataAgent.AfficherAgent()
+    console.log(agent);
+    if (agent.success) {
+        this.agents=agent.success   
+    }else if (agent.alert) {
+        this.alert =agent.alert
+        
+    } else {
+        console.log('erreu 404');
+        
+    }
+    
+},
 
 }
 </script>
@@ -64,13 +83,12 @@ methods:{
 <style lang="css" scoped>
 
     
-  .contenu1{
-    border: 1px solid red;
+.contenu1{
     display: flex;
     flex-direction: column;
     align-items: center;
     height: auto;
-    height: 89vh;
+    height: 93vh;
 }
 
 .boutton{
@@ -94,17 +112,25 @@ methods:{
 .contenaire_card{
 
     width: 99%;
-    height: auto;
+    height: 93vh;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, auto));
     gap: 3rem;
     background-color: white;
     padding: 10px 21px;
     justify-items: center;
-    border-radius: 10px;
-    border: 1px solid red;
+    border: 1px solid #ccc;
     
 
+}
+.alert{
+    width: 100%;
+    max-width: 900px;
+    padding: 60px 0;
+    font-size: 30px;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 44%;
 }
 
 .content-card{

@@ -4,73 +4,72 @@
             <div class="containers" ref="scroll">
                 <div class="container">
                   <div class="texte">
-                      <p>Location Appartement 100 m2, Abidjan Cocody-angre </p>
+                      <p>Location {{bien.nom_bien}} {{bien.superficie}}m2, {{bien.ville}} {{bien.commune}} </p>
                   </div>
                   <div class="ImageHeader">
                       <div class="image">
-                          <img src="@/assets/images/1.jpg" alt="">
+                          <img :src="bien.images" alt="">
                       </div>
                   </div>
               </div>
               <div class="container-info">
                   <div class="info-right">
-                      <h1 class="info-texte">LOCATION Appartement Abidjan</h1>
-                      <h3  class="info-texte">Cocody-angre - Immeuble</h3>
-                      <p  class="info-texte">Appartement 3pieces</p>
+                      <h1 class="info-texte">LOCATION {{bien.nom_bien}} {{bien.ville}}</h1>
+                      <h3  class="info-texte">{{bien.commune}}</h3>
+                      <p  class="info-texte">{{bien.nom_bien}} {{bien.piece}}pieces</p>
                       <div class="icon">
                           <div class="icon-content">
                               <i class="fas fa-door-closed"></i>
-                              <samp> 5 chambres </samp>
+                              <samp> {{bien.chambre}} chambres </samp>
                           </div>
                           <div class="icon-content">
                               <i class="fas fa-bath"></i>
-                              <samp> 3 douches</samp>
+                              <samp> {{bien.douche}} douches</samp>
                           </div>
                       </div>
                       <div class="icon">
                           <div class="icon-content">
                             <i class="fas fa-window-frame"></i>
-                              <samp> 3 pieces</samp>
+                              <samp> {{bien.piece}} pieces</samp>
                           </div>
                           <div class="icon-content">
                                <i class="fas fa-expand"></i>
-                              <samp> 100 m2</samp>
+                              <samp> {{bien.superficie}} m2</samp>
                           </div>
                       </div>
                   </div>
                   <div class="info-left">
-                      <h5>Loyer 500.000 F CFA/mois charges comprises</h5>
+                      <h5>Loyer {{bien.prix}} F CFA/mois charges comprises</h5>
                   </div>
               </div>
               <div class="container-desc">
                   <div class="description">
                       <h5>Description du bien</h5>
-                      <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea at quam accusantium consectetur amet. Numquam ratione placeat et illum vel.</p>
+                      <p>{{bien.description}}</p>
                   </div>
                   <div id="trait_dessus">
-                      <!-- <hr> -->
-                  </div>
-                  <div class="plus-biens">
-                      <h5>Les + du bien</h5>
-                      <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea, nam.</p>
+        
                   </div>
                   <div id="trait_dessus">
-                      <!-- <hr> -->
+                
                   </div>
                   <div class="proximite">
                       <h5>Services à proximité</h5>
-                      <p>Lorem ipsum dolor sit amet. </p>
+                      <p>{{bien.service}} </p>
                   </div>
               </div>
               <div class="container-image">
                 
-                  <div class="Images">
-                      <img src="@/assets/images/2.jpg" alt="">
+                  <div class="Images" v-for="image in bien.images" :key="image.id">
+                      <img :src="image" alt="">
                   </div>
               
               </div>
+              <div class="boutton" v-if="bien.user_id == '001'">
+                <button class="update" @click="vendre()">Vendu</button>
+              </div>
 
-              <div class="boutton">
+              <div class="boutton" v-else>
                 <button class="update">Modifier</button>
                 <button class="delete">Supprimer</button>
               </div>
@@ -85,20 +84,36 @@
   </template>
   
   <script>
+    import dataBien from '@/database/requeteBien';
   export default {
       name:"BienDetail",
+      props:['id'],
       data() {
         return {
+            bien:''
             
         }
       },
       methods: {
+      async  vendre(){
+            console.log(this.id);
+            let bien = await dataBien.UpdateBienVendu(this.id)
+            console.log('sdd',bien)
+
+        }
    
       },
-      mounted() {
+    async  mounted() {
+
   
         this.$refs.scroll.scrollTop= this.$refs.scroll.scrollHeight;
         this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
+
+        let bien = await dataBien.GetBienId(this.id)
+        if (bien.success) {
+            this.bien = bien.success
+            
+        }
    
       },
       
@@ -225,7 +240,7 @@
   
   .info-left {
       width: 30%;
-      height: 110%;
+      /* height: 110%; */
       /* border: 1px solid blueviolet; */
       padding: 10px;
       font-size: 26px;
