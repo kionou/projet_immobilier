@@ -49,7 +49,7 @@
                                                  <td class="doctor" >
                                                     <i class="fa-solid fa-eye"  v-on:click="component='detail'" ></i>
                                                     <i class="fa-solid fa-pen-to-square" @click="redirect(bien.id)"></i>
-                                                    <i class="fa-solid fa-trash" @click="bienDelete"></i>
+                                                    <i class="fa-solid fa-trash" @click="bienDelete(bien.id)"></i>
                                                  </td>
                                                
                                              </tr>
@@ -105,8 +105,8 @@ methods:{
             console.log(id);
        
     },
-    bienDelete(){
-        console.log('st');
+    bienDelete(id){
+        console.log('st',id);
         this.toggle = !this.toggle
 
     }

@@ -1,7 +1,7 @@
 <template>
   <div>
      <div class="modal-container" id="modal" v-if="revele" @click.self="submit">
-        <div class="modal">
+       
          
             <div class="container">
           
@@ -9,27 +9,104 @@
            
             <form >
                     <h3>Ajouter un agent</h3>
-                <input type="text " placeholder="Nom">
-                <input type="text" placeholder="Prenom">
-                <input type="email" name="email" placeholder="Adresse Email">   
-                <input type="text" placeholder="Numero Téléphonique">
-                <input type="password" name="password" placeholder="Mot de passe">
+
+                <small v-if="v$.nom.$error">{{v$.nom.$errors[0].$message}} </small>
+                <input type="text " placeholder="Nom" v-model="nom">
+
+                <small v-if="v$.prenom.$error">{{v$.prenom.$errors[0].$message}} </small>
+                <input type="text" placeholder="Prenom" v-model="prenom">
+
+                <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
+                <input type="email" name="email" placeholder="Adresse Email" v-model="email"> 
+
+                <small v-if="v$.numero.$error">{{v$.numero.$errors[0].$message}} </small>
+                <input type="text" placeholder="Numero Téléphonique" v-model="numero">
+
+                <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>
+                <input type="password" name="password" placeholder="Mot de passe" v-model="password">
               
                   
-                <button >Enregistrer</button>
+                <button @click.prevent='valider' >Enregistrer</button>
             </form>
           
         </div>
         
-        </div>
+      
     </div>
   </div>
 </template>
 
 <script>
+    import useVuelidate from '@vuelidate/core'
+import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
 export default {
     name:'ModalAgent',
-    props:['revele','submit']
+    props:['revele','submit'],
+        data() {
+        return {
+                nom:'',
+                prenom:'',
+                email:'',
+                numero:'',
+                password:'',
+              v$:useVuelidate(),
+            
+        }
+    },
+    validations: {
+             
+        nom:{
+           require,
+           lgmin:lgmin(4),
+           lgmax:lgmax(20)
+       },
+       prenom:{
+           require,
+           lgmin:lgmin(4),
+           lgmax:lgmax(20)
+           
+       },
+       email:{
+           require,
+           ValidEmail
+          
+       },
+       numero:{
+           require,
+           ValidNumeri,
+           lgmin:lgmin(10),
+           lgmax:lgmax(12)
+
+       },
+       password:{
+           require,
+           lgmin:lgmin(6),
+           lgmax:lgmax(12)
+       },
+},
+methods: {
+
+     valider(){
+         
+            // this.v$.$validate()
+            this.v$.$touch()
+            if (this.v$.$errors.length == 0 ) {
+               
+             let   DataUser={
+                    nom:this.nom,
+                    prenom:this.prenom,
+                    email:this.email,
+                    numero:this.numero,
+                    password:this.password
+                }
+                console.log(DataUser);
+    
+            }
+           
+
+        }
+
+}
 
 }
 </script>
@@ -47,19 +124,10 @@ export default {
     z-index: 6;
     opacity: 1;
 }
-
-.modal-container .modal {
-  
-    margin: 0 10px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 5px;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+small{
+    color: #f8001b;
 }
+
 
 input {
     margin-bottom: 2rem;
@@ -107,8 +175,9 @@ button:hover {
     left: 50%;
     top: 56%;
     transform: translate(-50%, -50%);
-    width: 370px;
-    height: 555px;
+    max-width: 370px;
+    width: 98%;
+    height: auto;
     border: 1px solid #2288ff;
     background-color: white;
     border-radius: 5px;
@@ -116,6 +185,7 @@ button:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 15px 0;
    
 }
 

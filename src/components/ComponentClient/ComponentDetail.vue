@@ -99,7 +99,8 @@
         
                 </div>
                 </div>
-                <div class="message-content">
+                
+                 <div class="message-content" v-if="bien.user_id != '001'">
                     <h3>Les informations de l'agent immobilier</h3>
                     <div class="contenaire_card">
                     <div class="content-card">
@@ -127,6 +128,8 @@
                   
                 </div>
                 </div>
+                
+                
             </div>
                
                
@@ -151,6 +154,7 @@ export default {
             numero:'',
             descriptions:'Bonjour,J\'ai vu votre annonce sur le site Je souhaiterais obtenir des informations complémentaires sur ce bien et, éventuellement, convenir d\'un rendez-vous pour une visite Merci, par avance, de bien vouloir me contacter dès que possible.Cordialement',
             v$:useVuelidate(),
+            user:false
             
         }
     },
@@ -341,6 +345,7 @@ small{
     /* border: 1px solid blue; */
     width: 84%;
     display: flex;
+    justify-content: center;
     box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
     background-color: white;
     padding: 26px 0;

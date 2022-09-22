@@ -3,9 +3,10 @@
      <div class="modal-container" id="modal" v-if="revele" @click.self="submit">
         <div class="modal">
            <h1>Enregistrement des biens immobiliers</h1>
-           <form action="">
+           <form >
             <div class="form_groupe">
                 <input type="text" placeholder="Non du bien" v-model="nom_bien">
+            
                 <input type="text" placeholder="Prix du bien" v-model="prix">
             </div>
              <div class="form_groupe">

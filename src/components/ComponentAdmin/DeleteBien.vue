@@ -1,20 +1,20 @@
 <template>
     <div>
        <div class="modal-container" id="modal" v-if="toggle" @click.self="bienDelete">
-          <div class="modal">
+        
            
               <div class="container">
                 <p>vous voulez-vous supprimer cette article ?</p>
                 <div class="boutton">
-                    <button>oui</button>
-                    <button>nom</button>
+                    <button>Oui</button>
+                    <button>Non</button>
                 </div>
             
        
             
           </div>
           
-          </div>
+        
       </div>
     </div>
   </template>
@@ -40,27 +40,16 @@
       z-index: 6;
       opacity: 1;
   }
+.boutton{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px 0;
+}
   
-  .modal-container .modal {
-    
-      margin: 0 10px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 5px;
-      text-align: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-  }
-  
-
-  
-  
-  button {
-      width: 9rem;
+button {
+      width: 4rem;
       height: 3rem;
-      margin-bottom: 10px;
       text-align: center;
       border: none;
       background-color: #2288ff;
@@ -84,8 +73,9 @@
       left: 50%;
       top: 56%;
       transform: translate(-50%, -50%);
-      width: 370px;
-      height: 555px;
+      max-width: 330px;
+      width:98%;
+      height: 270px;
       border: 1px solid #2288ff;
       background-color: white;
       border-radius: 5px;
@@ -93,6 +83,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 10px;
      
   }
 
