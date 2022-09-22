@@ -78,6 +78,9 @@
                <img :src="bien.images[0]" alt="">   
              
            </div>
+           <div class="vendu-text">
+            Vendu
+           </div>
            <div class="card-body">
                <div class="body-text">
                <h3>{{bien.ville}}</h3>
@@ -290,7 +293,9 @@ select{
 .vendu{
     border: 1px solid red;
 }
-
+.vendu-text{
+    position: absolute;
+}
 .non-vendu{
     border: 1px solid blue;
 }
