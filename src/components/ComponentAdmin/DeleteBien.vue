@@ -8,7 +8,7 @@
                 <p>vous voulez-vous supprimer cette article ?</p>
                 <div class="boutton">
                     <button @click="supp">Oui</button>
-                    <button>Non</button>
+                    <button @click='close'>Non</button>
                 </div>
 
           </div>
@@ -25,12 +25,16 @@
       props:['toggle','bienDelete','Iddelete'],
       methods: {
      async supp(){
-            console.log('sqqf',this.Iddelete);
             let bien = await dataBien.DeleteBien(this.Iddelete)
             if(bien.success){
                location.reload()
               
             }
+
+        },
+        close(){
+            this.toggle = false
+            console.log('ddd')
 
         }
         
