@@ -541,7 +541,7 @@ button:hover {
 
 .content-card{
     width: 300px;
-    height: 535px;
+    height: auto;
     border: 1px solid #ccc;
     background-color: white;
     border-radius: 10px;
@@ -574,15 +574,16 @@ button:hover {
     flex-direction: column;
     justify-content: space-around;
     padding: 0 10px 10px 10px;
-    height: 24vh;
+    height: 20vh;
 }
 
 .body-text {
     display: flex;
     margin-bottom: 11px;
     justify-content: center;
-    border: 1px solid red;
+    border: 1px solid #ccc;
     flex-direction: column;
+    padding: 3px;
 
 }
 

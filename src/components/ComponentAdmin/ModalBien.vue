@@ -83,7 +83,8 @@ export default {
            description:this.description,
            service:this.service,
            images:this.image,
-           user_id:this.agentId
+           user_id:this.agentId,
+           status:false
         }
         console.log(DataBien);
      let bien =  await dataBien.InsertionBien(DataBien)

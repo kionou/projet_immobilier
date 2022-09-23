@@ -6,39 +6,39 @@
                     <p>Ajouter un Bien</p>
                 </div>
                 <div class="contenaire_card">
-                    <!-- <div class="messages">
+                    <div class="messages" v-if="alert">
                         <div class="message">
-                            <span>Vous n'aviez pas de bien immobilier pour l'instant!</span>
+                            <span>{{alert}}</span>
                             <div class="boutton" @click="submit">
                             <p>Ajouter un Bien</p>
                             </div>
                         </div>
                        
 
-                    </div> -->
+                    </div>
                    
-        <div class="content-card">
+        <div class="content-card" v-for="bien in biens" :key="bien.id" v-else>
             <div class="card-image"> 
-                <img src="@/assets/images/1.jpg" alt="">         
+                <img :src="bien.images[0]" alt="">         
             </div>
             <div class="card-body">
                 <div class="body-text">
-                <h3>fsqgjhqg</h3>
+                <h3>{{bien.ville}} - {{bien.commune}}</h3>
                 </div>
                 <div class="body-text">
-                <p>fdjkbdkb</p>
+                <p>{{bien.nom_bien}}</p>
                 </div>
                 <div class="body-text">
-                <p> 4/300m</p>
+                <p> {{bien.piece}}pièces/{{bien.superficie}} m2</p>
                 </div>
                 <div class="icon">
                     <div class="icon-content">
                         <i class="fas fa-door-closed"></i>
-                        <samp>4</samp>
+                        <samp>{{bien.chambre}} chambres</samp>
                     </div>
                     <div class="icon-content">
                         <i class="fas fa-bath"></i>
-                        <samp> 2</samp>
+                        <samp>{{bien.douche}} douches</samp>
                     </div>
                 </div>
                     <div class="">
@@ -47,11 +47,11 @@
                         </div>
                     </div>
                     <div class="">
-                        <p>loyer 1000F CFA/mois</p>
+                        <p>loyer {{bien.prix}}F CFA/mois</p>
                     </div>
                     <div class="btn">
                          <button class="btncard">
-                              <p @click="redirect">Détail</p>
+                              <p @click="redirect((bien.id))">Détail</p>
                          </button>
                     </div>
             </div>
@@ -63,27 +63,50 @@
 </template>
 
 <script>
-
+import dataBien from '@/database/requeteBien';
 import ModalBien from '../ComponentAdmin/ModalBien.vue';
 export default {
     name:'ComponentBien',
     props:['agentId'],
     components:{
         ModalBien,
+        
   
 },
 data(){
     return{
         revele:false,
-        agentId:''
+        agentId:'',
+        biens:'',
+        alert:''
     }
 },
 methods:{
     submit(){
         this.revele = !this.revele
         this.agentId = "999"
+    },
+    redirect(id){
+        this.$router.push(`/agent/bien/detail/${id}`)
+
     }
-}
+},
+async mounted() {
+    let bien = await dataBien.GetBienUser("mzpf7yEJmNBskKNQbgRc")
+    console.log(bien);
+    if (bien.success) {
+        console.log(bien.success);
+        this.biens = bien.success
+        
+    }else if(bien.alert){
+        this.alert = bien.alert
+
+    }else{
+        console.log('erreur404')
+
+    }
+    
+},
 
 }
 </script>
@@ -92,7 +115,6 @@ methods:{
 
     
   .contenu1{
-    border: 1px solid red;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -101,7 +123,7 @@ methods:{
 }
 
 .boutton{
-   /* margin-top: 10px; */
+   margin: 10px;
     text-align: center;
     border: 1px solid;
     padding: 1rem 1.5rem;
@@ -148,8 +170,7 @@ methods:{
     background-color: white;
     padding: 10px;
     justify-items: center;
-    border-radius: 10px;
-    border: 1px solid red;
+    border: 1px solid #ccc;
     
 
 }

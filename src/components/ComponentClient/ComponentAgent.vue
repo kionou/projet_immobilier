@@ -6,9 +6,8 @@
                 <img src="@/assets/images/logopng.png" alt="">
             </div>
             <nav>
-                <p >Liste des Biens</p>
-                <p >Mon profil</p>
-                <!-- <p >Liste des Clients</p> -->
+                <p v-on:click="component='bien'">Liste des Biens</p>
+                <p v-on:click="component='profil'">Mon profil</p>
             </nav>
          
         </div>
@@ -21,7 +20,8 @@
                     <p>Deconnecter</p>
                 </div>
             </div>
-            <ComponentBien></ComponentBien>
+            
+            <component v-bind:is="component"></component>
            
             
            
@@ -34,13 +34,16 @@
  
 
 import ComponentBien from './ComponentBien.vue'
+import ComponentProfil from './ComponentProfil.vue'
 export default {
   name:"ComponentAgent",
   components:{
-    ComponentBien
+   "bien": ComponentBien,
+   'profil':ComponentProfil
 },
   data (){
     return{
+        component:'bien'
      
     }
   }

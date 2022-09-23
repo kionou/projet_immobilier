@@ -1,17 +1,17 @@
 <template>
     <div>
-        <ComponentAgent :id="id"/>
+        <BienDetail :id="id"/>
     </div>
   
 </template>
 
 <script>
-    import ComponentAgent from '@/components/ComponentClient/ComponentAgentBien.vue';
+    import BienDetail from '@/components/ComponentAdmin/BienDetail.vue';
 export default {
     name:'DetailBien',
     props:['id'],
     components:{
-        ComponentAgent
+        BienDetail
     }
 
 }

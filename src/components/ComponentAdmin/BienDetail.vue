@@ -1,342 +1,357 @@
 <template>
-  <div>
-        <div class="container-fluid" >
-              
-            <div class="container">
-                <div class="texte">
-                    <p>Location Appartement 100 m2, Abidjan Cocody-angre </p>
-                </div>
-                <div class="ImageHeader">
-                    <div class="image">
-                        <img src="@/assets/images/1.jpg" alt="">
+    <div>
+          <div class="container-fluid"  >
+            <div class="containers" ref="scroll">
+                <div class="modifier" v-if="bien.status == 'true'">
+                    <div class="boutton">
+                    <p class="text">Ce bien est déjà vendu</p>
+
                     </div>
                 </div>
-            </div>
-            <div class="container-info">
-                <div class="info-right">
-                    <h1 class="info-texte">LOCATION Appartement Abidjan</h1>
-                    <h3  class="info-texte">Cocody-angre - Immeuble</h3>
-                    <p  class="info-texte">Appartement 3pieces</p>
-                    <div class="icon">
-                        <div class="icon-content">
-                            <i class="fas fa-door-closed"></i>
-                            <samp> 5 chambres </samp>
-                        </div>
-                        <div class="icon-content">
-                            <i class="fas fa-bath"></i>
-                            <samp> 3 douches</samp>
-                        </div>
-                    </div>
-                    <div class="icon">
-                        <div class="icon-content">
-                          <i class="fas fa-window-frame"></i>
-                            <samp> 3 pieces</samp>
-                        </div>
-                        <div class="icon-content">
-                             <i class="fas fa-expand"></i>
-                            <samp> 100 m2</samp>
-                        </div>
-                    </div>
-                </div>
-                <div class="info-left">
-                    <h5>Loyer 500.000 F CFA/mois charges comprises</h5>
-                </div>
-            </div>
-            <div class="container-desc">
-                <div class="description">
-                    <h5>Description du bien</h5>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea at quam accusantium consectetur amet. Numquam ratione placeat et illum vel.</p>
-                </div>
-                <div id="trait_dessus">
-                    <!-- <hr> -->
-                </div>
-                <div class="plus-biens">
-                    <h5>Les + du bien</h5>
-                    <p> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea, nam.</p>
-                </div>
-                <div id="trait_dessus">
-                    <!-- <hr> -->
-                </div>
-                <div class="proximite">
-                    <h5>Services à proximité</h5>
-                    <p>Lorem ipsum dolor sit amet. </p>
-                </div>
-            </div>
-            <div class="container-image">
-              
-                <div class="Images">
-                    <img src="@/assets/images/2.jpg" alt="">
-                </div>
-            
-            </div>
-          
-            <div class="container-message">
-                <h3>Pour plus de detail contactez-nous</h3>
-                <div class="message">
-                  
-                    <form action="/contact " method="post">
-                        <input type="text" name="nom" placeholder="Nom">
-                        <input type="email" name="email" placeholder="Adresse Email">
-                        <input type="tel" name="numero" placeholder="Numero">
-                        <textarea name="description" id="" cols="41" rows="6" >Bonjour,J'ai vu votre annonce sur le site Je souhaiterais obtenir des informations complémentaires sur ce bien et, éventuellement, convenir d'un rendez-vous pour une visite
- Merci, par avance, de bien vouloir me contacter dès que possible.
-Cordialement,
-</textarea>
-                        <input type="hidden" name="idbien" value="<%= bien.id %>">
-                        <button type="submit" value="Submit">Demander des infos</button>
-                    </form>
+                <div class="container">
+                  <div class="texte">
+                      <p>Location {{bien.nom_bien}} {{bien.superficie}}m2, {{bien.ville}} {{bien.commune}} </p>
+                  </div>
+                  <div class="ImageHeader">
+                      <div class="image">
+                          <img :src="bien.images" alt="">
+                      </div>
+                  </div>
+              </div>
+              <div class="container-info">
+                  <div class="info-right">
+                      <h1 class="info-texte">LOCATION {{bien.nom_bien}} {{bien.ville}}</h1>
+                      <h3  class="info-texte">{{bien.commune}}</h3>
+                      <p  class="info-texte">{{bien.nom_bien}} {{bien.piece}}pieces</p>
+                      <div class="icon">
+                          <div class="icon-content">
+                              <i class="fas fa-door-closed"></i>
+                              <samp> {{bien.chambre}} chambres </samp>
+                          </div>
+                          <div class="icon-content">
+                              <i class="fas fa-bath"></i>
+                              <samp> {{bien.douche}} douches</samp>
+                          </div>
+                      </div>
+                      <div class="icon">
+                          <div class="icon-content">
+                            <i class="fas fa-window-frame"></i>
+                              <samp> {{bien.piece}} pieces</samp>
+                          </div>
+                          <div class="icon-content">
+                               <i class="fas fa-expand"></i>
+                              <samp> {{bien.superficie}} m2</samp>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="info-left">
+                      <h5>Loyer {{bien.prix}} F CFA/mois charges comprises</h5>
+                  </div>
+              </div>
+              <div class="container-desc">
+                  <div class="description">
+                      <h5>Description du bien</h5>
+                      <p>{{bien.description}}</p>
+                  </div>
+                  <div id="trait_dessus">
         
-                </div>
+                  </div>
+                  <div id="trait_dessus">
+                
+                  </div>
+                  <div class="proximite">
+                      <h5>Services à proximité</h5>
+                      <p>{{bien.service}} </p>
+                  </div>
+              </div>
+              <div class="container-image">
+                
+                  <div class="Images" v-for="image in bien.images" :key="image.id">
+                      <img :src="image" alt="">
+                  </div>
+              
+              </div>
+              <div class="modifier">
+                <div class="boutton vendu" v-if="bien.status == 'true'">
+                <button class="update" :disabled="isActive"  @click="vendre()">Vendu</button>
+              </div>
+              <div class="boutton" v-else>
+                <button class="update"  @click="vendre()">Vendu</button>
+              </div>
+              </div>
+             
+
+     
+
             </div>
-        </div>
-  </div>
-</template>
+                
+           
+            
+             
+          </div>
+    </div>
+  </template>
+  
+  <script>
+    import dataBien from '@/database/requeteBien';
+  export default {
+      name:"BienDetail",
+      props:['id'],
+      data() {
+        return {
+            bien:'',
+            isActive:true
+            
+        }
+      },
+      methods: {
+      async  vendre(){
+            console.log(this.id);
+            let bien = await dataBien.UpdateBienVendu(this.id)
+            console.log('sdd',bien)
 
-<script>
-export default {
-    name:"BienDetail",
+        },
+        update(){
+            this.$router.push(`/dashbord/updatebien/${this.id}`) 
+
+        }
+   
+      },
+    async  mounted() {
+
+  
+        this.$refs.scroll.scrollTop= this.$refs.scroll.scrollHeight;
+        this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
+
+        let bien = await dataBien.GetBienId(this.id)
+        if (bien.success) {
+            this.bien = bien.success
+            console.log('sdd',bien.success.user_id)
+            
+        }
+   
+      },
+      
+  
+  }
+  </script>
+  
+  <style lang="css" scoped>
+      .ImageHeader{
+      /* border: 1px solid red; */
+      width: 100%;
+      height: auto;
+      bottom: 0;
+      border-radius: 10px;
+  
+  }
+  
+  .container-fluid{
     
-
-}
-</script>
-
-<style lang="css" scoped>
-    .ImageHeader{
-    /* border: 1px solid red; */
-    width: 100%;
-    height: auto;
-    bottom: 0;
-    border-radius: 10px;
-
-}
-
-.container-fluid{
-    /* border: 1px solid red; */
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 10px;
-
-}
-.trait-blue{
-    height: 50px;
-    background-color: #2288ff;
-    width: 100%;
-}
-
-.container{
-    width: 80%;
-    height: auto;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    background-color: #f4f4fa;
+      overflow-y: scroll;
+      scrollbar-width: thin;
+      /* border: 1px solid red; */
+  
+  }
+  .containers{
     /* border: 1px solid blue; */
-    background-color: white;
-    padding: 10px;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-    margin-bottom: 30px;
-}
-
-.texte{
-    font-family: 'Roboto Serif', serif;
-    height: 42px;
-    text-align: left;
-}
-
-.texte p{
-    font-size: large;
-    margin-top: revert;
-}
-
-.image img{
-    width: 100%;
-    /* height: 100vh; */
-    vertical-align: middle;
-    border-radius: 10px;
-}
-
-.container-info{
-    margin-top: 30px;
-    width: 80%;
-    height: auto;
-    /* border: 1px solid red; */
-    display: flex;
-    align-items: center;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
-    background-color: white;
-
-}
-
-.info-right{
-    width: 70%;
-    height: auto;
-    /* border: 1px solid green; */
-    text-align: center;
-    padding: 10PX;
-}
-.icon {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.icon-content {
-    display: flex;
-    font-size: 17px;
-    font-family: 'Roboto Serif', serif;
-    margin-right: 16px;
-    width: 161px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: white;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 20%);
-
-}
-
-.info-texte{
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-
-.info-left {
-    width: 30%;
-    height: 110%;
-    /* border: 1px solid blueviolet; */
-    padding: 10px;
-    font-size: 26px;
-    color: #2288ff;
-}
-
-.container-desc {
-    margin-top: 30px;
-    width: 80%;
-    height: auto;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
-    background-color: white;
-    padding: 10px;
-    text-align: center;
-    font-size: 20px;
-
-}
-
-#trait_dessus {
-    border-top: 1px solid #d2d2d4;
-    width: 100%;
-    padding: 6px;
-    margin-top: 20px;
-
-}
-
-.container-desc h5{
-    text-decoration: underline;
-    margin-bottom: 10px;
-}
-
-.container-image {
-    margin-top: 30px;
-    width: 80%;
-    height: auto;
-    /* border: 1px solid red; */
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
-    background-color: white;
-    padding: 20px;
-
-}
-
-.Images{
-    width: 400px;
-    height: 400px;
-    border: 1px solid #2288ff;
-    margin-right: 9px;
-    margin-bottom: 20px;
-    padding: 5px;
-}
-
-.Images img {
     width: 100%;
     height: 100%;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    padding: 10px 0;
 
-.container-message {
-    margin-top: 30px;
+  }
+  .trait-blue{
+      height: 50px;
+      background-color: #2288ff;
+      width: 100%;
+  }
+  
+  .container{
+      width: 80%;
+      height: auto;
+      /* border: 1px solid blue; */
+      background-color: white;
+      padding: 10px;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+      margin: 30px 0;
+  }
+
+  .texte{
+      font-family: 'Roboto Serif', serif;
+      height: 42px;
+      text-align: left;
+}
+  
+  .texte p{
+      font-size: large;
+      margin-top: revert;
+  }
+  
+  .image img{
+      width: 100%;
+      /* height: 100vh; */
+      vertical-align: middle;
+      border-radius: 10px;
+  }
+  
+  .container-info{
+      margin-top: 30px;
+      width: 80%;
+      height: auto;
+      /* border: 1px solid red; */
+      display: flex;
+      align-items: center;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+      background-color: white;
+  
+  }
+  
+  .info-right{
+      width: 70%;
+      height: auto;
+      /* border: 1px solid green; */
+      text-align: center;
+      padding: 10PX;
+  }
+  .icon {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+     
+  }
+  
+  .icon-content {
+      display: flex;
+      font-size: 17px;
+      font-family: 'Roboto Serif', serif;
+      margin-right: 16px;
+      width: 161px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: white;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 20%);
+  
+  }
+  
+  .info-texte{
+      margin-bottom: 10px;
+      text-transform: uppercase;
+  }
+  
+  .info-left {
+      width: 30%;
+      /* height: 110%; */
+      /* border: 1px solid blueviolet; */
+      padding: 10px;
+      font-size: 26px;
+      color: #2288ff;
+  }
+  
+  .container-desc {
+      margin-top: 30px;
+      width: 80%;
+      height: auto;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+      background-color: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 20px;
+  
+  }
+  
+  #trait_dessus {
+      border-top: 1px solid #d2d2d4;
+      width: 100%;
+      padding: 6px;
+      margin-top: 20px;
+  
+  }
+  
+  .container-desc h5{
+      text-decoration: underline;
+      margin-bottom: 10px;
+  }
+  
+  .container-image {
+      margin-top: 30px;
+      width: 80%;
+      height: auto;
+      /* border: 1px solid red; */
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+      background-color: white;
+      padding: 20px;
+  
+  }
+  
+  .Images{
+      width: 400px;
+      height: 400px;
+      border: 1px solid #2288ff;
+      margin-right: 9px;
+      margin-bottom: 20px;
+      padding: 5px;
+  }
+  
+  .Images img {
+      width: 100%;
+      height: 100%;
+  }
+  .modifier{
     width: 80%;
-    height: auto;
-    /* border: 1px solid red; */
     display: flex;
-    /* flex-direction: row;
-    flex-wrap: wrap; */
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    /* box-shadow: 0 3px 10px rgb(0 0 0 / 20%); */
-    
-    padding: 20px;
+  }
+.modifier .text{
+   font-size: larger;
+    color: red;
+}
+.vendu .update{
+    background-color: hsla(206,100%,73.3%,1);
+}
+.vendu .update:hover{
+    background-color: hsla(206,100%,73.3%,1);
+    color:white ;
+   cursor: not-allowed;
+   pointer-events: all !important;
+   border: none;
 
 }
 
-.message {
-    width: 45%;
-    height: auto;
-    border: 1px solid #2288ff;
-    padding: 20px;
-    margin-top: 30px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-   
+.boutton{
+      margin-top: 30px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      padding: 15px 0;
+      justify-content: space-evenly;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+      background-color: white;
+
 }
-
-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-   
-}
-
-textarea{
-    font-family: 'Roboto Serif',
-    serif;
-}
-
-
-input {
-    margin-bottom: 2rem;
+.update {
+    width: 8rem;
     height: 3rem;
-    width: 20rem;
-    padding: 5px;
-    font-size: 18px;
-    outline: none;
-    border: 1px solid;
-    font-family: 'Roboto Serif',
-        serif;
-}
-
-input:focus {
-    border: 1px solid #2288ff;
-    outline-offset: 0px;
-    outline: none;
-}
-textarea:focus{
-
-    border: 1px solid #2288ff;
-    outline-offset: 0px;
-    outline: none;
-}
-
-
-button {
-    width: 18rem;
-    height: 3rem;
-    margin-top: 2rem;
     text-align: center;
     border: none;
     background-color: #2288ff;
@@ -347,41 +362,45 @@ button {
         serif;
 }
 
-button:hover {
+.update:hover {
     background-color: white;
     color: #2288ff;
     border: 1px solid #2288ff;
     cursor: pointer;
 }
 
- @media (min-width:1875px) {
-   .message{
-       width: 30%;
-   }
+.delete {
+    width: 8rem;
+    height: 3rem;
+    text-align: center;
+    border: none;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: 'Roboto Serif',
+        serif;
 }
 
-@media (max-width:1165px) {
-    .message {
-        width: 52%;
-    }
+.delete:hover {
+    background-color: white;
+    color: red;
+    border: 1px solid red;
+    cursor: pointer;
 }
+  
+ 
 
-@media (max-width:900px) {
-    .message {
-        width: auto;
-    }
-}
-
-@media (max-width:700px) {
-    .container-info{
-        flex-direction: column;
-    }
-
-    .info-left{
-        width: 54%;
-        font-size: 23px;
-    }
-} 
-
-
-</style>
+  @media (max-width:700px) {
+      .container-info{
+          flex-direction: column;
+      }
+  
+      .info-left{
+          width: 54%;
+          font-size: 23px;
+      }
+  } 
+  
+  
+  </style>

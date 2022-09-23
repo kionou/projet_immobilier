@@ -6,9 +6,9 @@
                   <img src="@/assets/images/logopng.png" alt="">
               </div>
               <nav>
-                  <p >Liste des Biens</p>
-                  <p >Mon profil</p>
-                  <!-- <p >Liste des Clients</p> -->
+                <p @click="bien">Liste des Biens</p>
+                <p v-on:click="profil">Mon profil</p>
+              
               </nav>
            
           </div>
@@ -22,9 +22,7 @@
                   </div>
               </div>
               
-             <ComponentAgentBien/>
-              
-             
+             <ComponentAgentBien :id="id" />
           </div>
       </div>
     </div>
@@ -37,14 +35,29 @@ import ComponentAgentBien from '@/components/ComponentClient/ComponentAgentBien.
 
   export default {
     name:"DetailBienAgent",
+    props:['id'],
     components:{
     ComponentAgentBien,
 },
     data (){
       return{
+
+        
+     
        
       }
-    }
+    },
+    data() {
+        return {
+          
+        }
+    },
+    methods: {
+        bien(){
+                this.$router.push('/agent')
+            }
+        
+    },
   
   }
   </script>

@@ -75,31 +75,31 @@
         <div class="content-card" v-for="bien in biens" :key="bien.id">
             <div class="vendu" v-if="bien.status == 'true'">
                 <div class="card-image">
-               <img :src="bien.images[0]" alt="">   
+               <img :src="bien.images" alt="">   
              
            </div>
            <div class="vendu-text">
-            Vendu
+            Bien déjà en location
            </div>
            <div class="card-body">
                <div class="body-text">
-               <h3>{{bien.ville}}</h3>
+               <h3>{{bien.ville}} - {{bien.commune}}</h3>
                </div>
                <div class="body-text">
                 
                <p>{{bien.nom_bien}} </p>
                </div>
                <div class="body-text">
-               <p> {{bien.piece}}/{{bien.superficie}}</p>
+               <p> {{bien.piece}} pièces/ {{bien.superficie}} m2</p>
                </div>
                <div class="icon">
                    <div class="icon-content">
                        <i class="fas fa-door-closed"></i>
-                       <samp>{{bien.chambre}}</samp>
+                       <samp>{{bien.chambre}} chambres</samp>
                    </div>
                    <div class="icon-content">
                        <i class="fas fa-bath"></i>
-                       <samp> {{bien.douche}}</samp>
+                       <samp> {{bien.douche}} douches </samp>
                    </div>
                </div>
                    <div class="">
@@ -110,8 +110,8 @@
                        <p>loyer {{bien.prix}} CFA/mois</p>
                    </div>
                    <div class="btn">
-                        <button class="btncard">
-                             <p @click="redirect(bien.id)" v:bind:disabled="btn" >Détail</p>
+                        <button class="btncard" :disabled="isActive"  @click="redirect(bien.id)">
+                             Détail
                         </button>
                    </div>
            </div>
@@ -124,23 +124,23 @@
            </div>
            <div class="card-body">
                <div class="body-text">
-               <h3>{{bien.ville}}</h3>
+               <h3>{{bien.ville}} - {{bien.commune}}</h3>
                </div>
                <div class="body-text">
                 
                <p>{{bien.nom_bien}} </p>
                </div>
                <div class="body-text">
-               <p> {{bien.piece}}/{{bien.superficie}}</p>
+               <p> {{bien.piece}} pièces/ {{bien.superficie}} m2</p>
                </div>
                <div class="icon">
                    <div class="icon-content">
                        <i class="fas fa-door-closed"></i>
-                       <samp>{{bien.chambre}}</samp>
+                       <samp>{{bien.chambre}} chambres</samp>
                    </div>
                    <div class="icon-content">
                        <i class="fas fa-bath"></i>
-                       <samp> {{bien.douche}}</samp>
+                       <samp> {{bien.douche}} douches</samp>
                    </div>
                </div>
                    <div class="">
@@ -217,8 +217,8 @@ export default {
         return {
             biens:"",
             alert:'',
-            btn:true
-            
+            isActive: true,
+  
         }
     },
     methods:{
@@ -241,9 +241,9 @@ export default {
         console.log('erreur 404');
         
     }
-   
-    }
-    
+
+
+    },
 
 }
 </script>
@@ -291,13 +291,28 @@ select{
     font-size: 15px;
 }
 .vendu{
-    border: 1px solid red;
+    opacity: 0.6;
+    background-color: hsl(240deg 7% 97%);
+    position:relative;
 }
 .vendu-text{
     position: absolute;
+    left: 22%;
+    font-size: 18px;
+    color: red;
 }
-.non-vendu{
-    border: 1px solid blue;
+
+
+.vendu .btncard{
+    background-color: hsla(206,100%,73.3%,1);
+}
+.vendu .btncard:hover{
+    background-color: hsla(206,100%,73.3%,1);
+    color:white ;
+   cursor: not-allowed;
+   pointer-events: all !important;
+   border: none;
+
 }
 
 .boutton{
@@ -369,10 +384,10 @@ select{
     font-family: 'Roboto Serif', serif;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
-.content-card:hover{
+/* .content-card:hover{
     transform: translateY(-10px);
     transition: 0.5s;
-}
+} */
 .card-image {
     height: 200px;
     padding: 5px;

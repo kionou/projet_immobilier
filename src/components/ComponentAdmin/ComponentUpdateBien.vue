@@ -84,17 +84,17 @@
              description:this.description,
              service:this.service,
              images:this.image,
-             user_id:'001'
+             user_id:this.user_id
           }
           console.log(DataBien);
-       let bien =  await dataBien.UpdateBien(this.id,DataBien)
-       if (bien.success) {
-          this.$router.push('/')
+    //    let bien =  await dataBien.UpdateBien(this.id,DataBien)
+    //    if (bien.success) {
+    //       this.$router.push('/')
           
-       } else {
-          console.log('error 404');
+    //    } else {
+    //       console.log('error 404');
           
-       }
+    //    }
   
       },
      
@@ -176,7 +176,8 @@
             this.ville = bien.success.ville,
             this.commune = bien.success.commune,
             this.description = bien.success.description,
-            this.service = bien.success.service
+            this.service = bien.success.service,
+            this.user_id = bien.success.user_id
             
           
             

@@ -2,6 +2,12 @@
     <div>
           <div class="container-fluid"  >
             <div class="containers" ref="scroll">
+                <div class="modifier" v-if="bien.status == 'true'">
+                    <div class="boutton">
+                    <p class="text">Ce bien est déjà vendu</p>
+
+                    </div>
+                </div>
                 <div class="container">
                   <div class="texte">
                       <p>Location {{bien.nom_bien}} {{bien.superficie}}m2, {{bien.ville}} {{bien.commune}} </p>
@@ -69,9 +75,19 @@
                 <button class="update" @click="vendre()">Vendu</button>
               </div>
 
-              <div class="boutton" v-else>
-                <button class="update">Modifier</button>
-                <button class="delete">Supprimer</button>
+              <div v-else class="modifier">
+                <div  class="boutton" v-if="bien.status == 'false' " >
+                    <button class="update"  @click="vendre()">vendu</button>
+                    <button class="update" @click="update()">Modifier</button>
+                    <button class="delete" >Supprimer</button>
+                </div>
+                <div  class="boutton vendu" v-else >
+                   
+                    <button class="update" :disabled="isActive"   @click="vendre()">vendu</button>
+                    <button class="update" :disabled="isActive"  @click="update()">Modifier</button>
+                    <button class="delete" :disabled="isActive"  >Supprimer</button>
+                </div>
+               
               </div>
 
             </div>
@@ -90,7 +106,8 @@
       props:['id'],
       data() {
         return {
-            bien:''
+            bien:'',
+            isActive:true
             
         }
       },
@@ -99,6 +116,10 @@
             console.log(this.id);
             let bien = await dataBien.UpdateBienVendu(this.id)
             console.log('sdd',bien)
+
+        },
+        update(){
+            this.$router.push(`/dashbord/updatebien/${this.id}`) 
 
         }
    
@@ -112,6 +133,7 @@
         let bien = await dataBien.GetBienId(this.id)
         if (bien.success) {
             this.bien = bien.success
+            console.log('sdd',bien.success.user_id)
             
         }
    
@@ -169,14 +191,14 @@
       background-color: white;
       padding: 10px;
       box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-      margin-bottom: 30px;
+      margin: 30px 0;
   }
-  
+
   .texte{
       font-family: 'Roboto Serif', serif;
       height: 42px;
       text-align: left;
-  }
+}
   
   .texte p{
       font-size: large;
@@ -301,12 +323,43 @@
       width: 100%;
       height: 100%;
   }
+  .modifier{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+  }
+.modifier .text{
+   font-size: larger;
+    color: red;
+}
+.vendu .update{
+    background-color: hsla(206,100%,73.3%,1);
+}
+.vendu .update:hover{
+    background-color: hsla(206,100%,73.3%,1);
+    color:white ;
+   cursor: not-allowed;
+   pointer-events: all !important;
+   border: none;
+
+}
+.vendu .delete{
+    background-color: hsl(11deg 92% 73%);
+}
+.vendu .delete:hover{
+    background-color: hsl(11deg 92% 73%);
+    color:white ;
+   cursor: not-allowed;
+   pointer-events: all !important;
+   border: none;
+
+}
 .boutton{
       margin-top: 30px;
       display: flex;
       flex-direction: row;
       align-items: center;
-      width: 80%;
+      width: 100%;
       padding: 15px 0;
       justify-content: space-evenly;
       box-shadow: 0 3px 10px rgb(0 0 0 / 20%);

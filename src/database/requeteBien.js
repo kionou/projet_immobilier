@@ -1,5 +1,5 @@
 import { bienCollection} from "./Connect";
-import {  addDoc , getDocs,getDoc,doc,setDoc,deleteDoc ,updateDoc} from 'firebase/firestore'
+import {  addDoc , getDocs,getDoc,doc,setDoc,deleteDoc ,updateDoc, query, where} from 'firebase/firestore'
 
 const dataBien = class{
 
@@ -46,7 +46,7 @@ const dataBien = class{
     }
 
     static GetBienId = (id)=>{
-        // console.log('sqfQSD',id);
+        console.log('sqfQSD',id);
         return new Promise(async (next)=>{
         const docRef = doc(bienCollection, id);
          await getDoc(docRef)
@@ -60,6 +60,34 @@ const dataBien = class{
          })
        
     }
+    static GetBienUser = (id)=>{
+     let array =[]
+     console.log('sqfQSD',id);
+     return new Promise(async (next)=>{
+     const q = query(bienCollection, where("user_id", "==", id));
+     await getDocs(q)
+     .then(docRef=>{
+          console.log('rrf',docRef)
+          if (docRef.docs.length > 0) {
+               docRef.forEach((doc) => {
+               let data = doc.data()
+               data.id =doc.id,
+               array.push(data)
+               console.log('ssss',array);
+               next({success:array})
+                   });
+          } else {
+               console.log('df<df');
+               next({alert: 'Vous n\'aviez pas de bien immobilier pour l\'instant!'})     
+          }
+             
+     }).catch(error=>{
+              console.log("eee",error);
+              next ({ erreur:error})
+         })
+      })
+    
+ }
 
     static UpdateBien = (id,into)=>{
         console.log('sqfQSD',id,into);
@@ -119,6 +147,10 @@ const dataBien = class{
 }
 
 export default dataBien
+
+
+
+
 
 
 

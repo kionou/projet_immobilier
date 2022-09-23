@@ -35,7 +35,7 @@ const routes = [
     component: () => import('../views/ViewClient/AgentView.vue')
   },
   {
-    path: '/agent/bien/detail',
+    path: '/agent/bien/detail/:id',
     name: 'agent/bien/detail',
     component: () => import('../views/ViewClient/DetailBienAgent.vue'),
     props:true

@@ -1,5 +1,5 @@
 <template>
-  <ComponentAgent/>
+  <ComponentAgent :id="id" />
   
 </template>
 
@@ -8,6 +8,7 @@ import ComponentAgent from '@/components/ComponentClient/ComponentAgent.vue';
 
 export default {
     name:'AgentView',
+    props:['id'],
     components: { ComponentAgent }
 }
 </script>
