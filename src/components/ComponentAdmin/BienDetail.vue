@@ -71,6 +71,42 @@
                   </div>
               
               </div>
+              <div class="container-message">
+              
+                 <div class="message-content" v-if="bien.user_id != '001'">
+                    <h3>Les informations de l'agent immobilier</h3>
+                    <div class="contenaire_card">
+                    <div class="content-card">
+                        <div class="card-image">
+                           
+                            <img src="@/assets/images/image.jpg" alt="">   
+                             
+                        </div>
+                        <div class="card-body">
+                            <div class="body-text">
+                                <i class="fa-solid fa-user"></i>
+                            <p>{{agent.nom}} {{agent.prenom}}</p>
+                            </div>
+                            <div class="body-text">
+                                <i class="fa-solid fa-envelope"></i>
+                            <p>{{agent.email}}</p>
+                            </div>
+                            <div class="body-text">
+                            <i class="fa-solid fa-phone"></i>
+                            <p> {{agent.numero}}</p>
+                            </div>
+                         
+                        </div>
+                    </div>
+                  
+                </div>
+                </div>
+                
+                
+           
+               
+               
+            </div>
               <div class="modifier">
                 <div class="boutton vendu" v-if="bien.status == 'true'">
                 <button class="update" :disabled="isActive"  @click="vendre()">Vendu</button>
@@ -100,7 +136,8 @@
       data() {
         return {
             bien:'',
-            isActive:true
+            isActive:true,
+            agent:''
             
         }
       },
@@ -123,12 +160,23 @@
         this.$refs.scroll.scrollTop= this.$refs.scroll.scrollHeight;
         this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
 
+       
         let bien = await dataBien.GetBienId(this.id)
+        console.log(bien.success.user_id);
         if (bien.success) {
             this.bien = bien.success
-            console.log('sdd',bien.success.user_id)
+            let id_agent = bien.success.user_id
+            let agent = await  dataAgent.GetAgnetId(id_agent)
+            console.log('agent',agent.success);
+            this.agent = agent.success
+           
+            
+        } else {
             
         }
+        
+    
+
    
       },
       
@@ -402,5 +450,102 @@
       }
   } 
   
+
+  .container-message {
+    margin-top: 30px;
+    width: 80%;
+    height: auto;
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    /* box-shadow: 0 3px 10px rgb(0 0 0 / 20%); */
+    
+    padding: 20px;
+
+}
+.message-content{
+    /* border: 1px solid blue; */
+    width:50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-agent{
+    border: 1px solid black;
+    width: 50%;
+    height: 87vh;
+}
+
+.message {
+    max-width:420px;
+    width: 98%;
+    height: auto;
+    border: 1px solid #ccc;
+    padding: 0 0 20px;
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+   
+}
+
+
+
+
+
+
+
+
+
+
+.content-card{
+    width: 300px;
+    height: auto;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 10px;
+    margin-top: 30px;
+    overflow: hidden;
+    text-align: center;
+    font-family: 'Roboto Serif', serif;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+}
+.content-card:hover{
+    transform: translateY(-10px);
+    transition: 0.5s;
+}
+
+.card-image {
+    width: 100%;
+    height: 300px;
+    padding: 5px;
+  
+}
+.card-image img{
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover;
+    vertical-align: middle; */
+}
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 10px 10px 10px;
+    height: 20vh;
+}
+
+.body-text {
+    display: flex;
+    margin-bottom: 11px;
+    justify-content: center;
+    border: 1px solid #ccc;
+    flex-direction: column;
+    padding: 3px;
+
+}
+
   
   </style>
