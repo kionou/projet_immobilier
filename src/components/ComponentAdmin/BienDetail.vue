@@ -74,7 +74,7 @@
               <div class="container-message">
               
                  <div class="message-content" v-if="bien.user_id != '001'">
-                    <h3>Les informations de l'agent immobilier</h3>
+                    <h3>Les informations de l'agent immobilier qui a publié ce bien .</h3>
                     <div class="contenaire_card">
                     <div class="content-card">
                         <div class="card-image">
@@ -130,6 +130,7 @@
   
   <script>
     import dataBien from '@/database/requeteBien';
+    import dataAgent from '@/database/requeteAgent'
   export default {
       name:"BienDetail",
       props:['id'],
@@ -185,17 +186,15 @@
   </script>
   
   <style lang="css" scoped>
-      .ImageHeader{
-      /* border: 1px solid red; */
+.ImageHeader{
       width: 100%;
       height: auto;
       bottom: 0;
       border-radius: 10px;
   
-  }
+}
   
-  .container-fluid{
-    
+.container-fluid{
       width: 100%;
       height: 100vh;
       display: flex;
@@ -205,11 +204,8 @@
     background-color: #f4f4fa;
       overflow-y: scroll;
       scrollbar-width: thin;
-      /* border: 1px solid red; */
-  
   }
   .containers{
-    /* border: 1px solid blue; */
     width: 100%;
     height: 100%;
     display: flex;
@@ -219,13 +215,13 @@
     padding: 10px 0;
 
   }
-  .trait-blue{
+.trait-blue{
       height: 50px;
       background-color: #2288ff;
       width: 100%;
-  }
+}
   
-  .container{
+.container{
       width: 80%;
       height: auto;
       /* border: 1px solid blue; */
@@ -326,11 +322,10 @@
       border-top: 1px solid #d2d2d4;
       width: 100%;
       padding: 6px;
-      margin-top: 20px;
+      margin-top: 20px;  
+}
   
-  }
-  
-  .container-desc h5{
+.container-desc h5{
       text-decoration: underline;
       margin-bottom: 10px;
   }
@@ -364,102 +359,16 @@
       width: 100%;
       height: 100%;
   }
-  .modifier{
-    width: 80%;
-    display: flex;
-    justify-content: center;
-  }
-.modifier .text{
-   font-size: larger;
-    color: red;
-}
-.vendu .update{
-    background-color: hsla(206,100%,73.3%,1);
-}
-.vendu .update:hover{
-    background-color: hsla(206,100%,73.3%,1);
-    color:white ;
-   cursor: not-allowed;
-   pointer-events: all !important;
-   border: none;
 
-}
-
-.boutton{
-      margin-top: 30px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
-      padding: 15px 0;
-      justify-content: space-evenly;
-      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
-      background-color: white;
-
-}
-.update {
-    width: 8rem;
-    height: 3rem;
-    text-align: center;
-    border: none;
-    background-color: #2288ff;
-    color: white;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: 'Roboto Serif',
-        serif;
-}
-
-.update:hover {
-    background-color: white;
-    color: #2288ff;
-    border: 1px solid #2288ff;
-    cursor: pointer;
-}
-
-.delete {
-    width: 8rem;
-    height: 3rem;
-    text-align: center;
-    border: none;
-    background-color: red;
-    color: white;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: 'Roboto Serif',
-        serif;
-}
-
-.delete:hover {
-    background-color: white;
-    color: red;
-    border: 1px solid red;
-    cursor: pointer;
-}
-  
- 
-
-  @media (max-width:700px) {
-      .container-info{
-          flex-direction: column;
-      }
-  
-      .info-left{
-          width: 54%;
-          font-size: 23px;
-      }
-  } 
-  
-
-  .container-message {
+.container-message {
     margin-top: 30px;
     width: 80%;
     height: auto;
-    border: 1px solid red;
+    /* border: 1px solid red; */
     display: flex;
     justify-content: center;
-    /* box-shadow: 0 3px 10px rgb(0 0 0 / 20%); */
-    
+    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+    background-color: white;
     padding: 20px;
 
 }
@@ -469,34 +378,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px;
 }
-
-.info-agent{
-    border: 1px solid black;
-    width: 50%;
-    height: 87vh;
-}
-
-.message {
-    max-width:420px;
-    width: 98%;
-    height: auto;
-    border: 1px solid #ccc;
-    padding: 0 0 20px;
-    margin-top: 30px;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-   
-}
-
-
-
-
-
-
-
-
 
 
 .content-card{
@@ -509,11 +392,6 @@
     overflow: hidden;
     text-align: center;
     font-family: 'Roboto Serif', serif;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-}
-.content-card:hover{
-    transform: translateY(-10px);
-    transition: 0.5s;
 }
 
 .card-image {
@@ -547,5 +425,61 @@
 
 }
 
+
+.modifier{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+    background-color: white;
+    margin-top: 30px;
+    padding: 15px 0;
+  }
+.modifier .text{
+   font-size: larger;
+    color: red;
+}
+.vendu .update{
+    background-color: hsla(206,100%,73.3%,1);
+}
+.vendu .update:hover{
+    background-color: hsla(206,100%,73.3%,1);
+    color:white ;
+   cursor: not-allowed;
+   pointer-events: all !important;
+   border: none;
+
+}
+
+.update {
+    width: 8rem;
+    height: 3rem;
+    text-align: center;
+    border: none;
+    background-color: #2288ff;
+    color: white;
+    border-radius: 5px;
+    font-size: 20px;
+    font-family: 'Roboto Serif',
+        serif;
+}
+
+.update:hover {
+    background-color: white;
+    color: #2288ff;
+    border: 1px solid #2288ff;
+    cursor: pointer;
+}
+
+@media (max-width:700px) {
+      .container-info{
+          flex-direction: column;
+      }
   
+      .info-left{
+          width: 54%;
+          font-size: 23px;
+      }
+  } 
+ 
   </style>
