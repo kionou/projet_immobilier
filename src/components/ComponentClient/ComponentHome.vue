@@ -267,7 +267,8 @@ form{
     top: 85%;
     transform: translate(-50%,-50%);
     position: absolute;
-    width: 65%;
+    width: 98%;
+    max-width: 700px;
     height: 155px;
     background-color: white;
     display: flex;
@@ -275,6 +276,7 @@ form{
     justify-content: center;
     border-radius: 5px;
     border: 4px solid #2288ff;
+    padding:10px;
 }
 
 .input{
@@ -282,8 +284,9 @@ form{
 }
 
 select{
-    width: 261px;
-    height: 55px;
+    max-width: 261px;
+    width: 98%;
+    height: 3rem;
     border-radius: 5px;
     padding: 5px;
     outline: none;
@@ -295,29 +298,8 @@ select{
     background-color: hsl(240deg 7% 97%);
     position:relative;
 }
-.vendu-text{
-    position: absolute;
-    left: 22%;
-    font-size: 18px;
-    color: red;
-}
-
-
-.vendu .btncard{
-    background-color: hsla(206,100%,73.3%,1);
-}
-.vendu .btncard:hover{
-    background-color: hsla(206,100%,73.3%,1);
-    color:white ;
-   cursor: not-allowed;
-   pointer-events: all !important;
-   border: none;
-
-}
 
 .boutton{
-    width: 261px;
-    height: 55px;
     text-align: center;
     border: none;
     background-color: #2288ff;
@@ -325,6 +307,8 @@ select{
     border-radius: 5px;
     font-size: 23px;
     font-family: 'Roboto Serif',    serif;
+    padding: 10px;
+
 }
 
 .boutton:hover{
@@ -451,6 +435,25 @@ select{
     display: flex;
     margin-bottom: 11px;
 }
+.vendu-text{
+    position: absolute;
+    left: 22%;
+    font-size: 18px;
+    color: red;
+}
+
+
+.vendu .btncard{
+    background-color: hsla(206,100%,73.3%,1);
+}
+.vendu .btncard:hover{
+    background-color: hsla(206,100%,73.3%,1);
+    color:white ;
+   cursor: not-allowed;
+   pointer-events: all !important;
+   border: none;
+
+}
 
 .btn{
     display: flex;
@@ -539,57 +542,12 @@ select{
     margin-top: -2px;
 }
 
-@media (min-width:1024px) {
-    body {
-        padding-top: 86px;
-    }
-    form {
-        padding: 50px;
-        width: 70%;
-    }
 
 
-}
-
-@media (min-width:1920px) {
-    body {
-        padding-top: 86px;
-    }
-
-    form {
-        padding: 50px;
-        width: 50%;
-    }
-}
-
-
-
-@media (max-width:940px) {
-  
-        form {
-            padding: 50px;
-            width: 74%;
-        }
-
-}
-
-@media (max-width:836px) {
-
-    form {
-        padding: 50px;
-        width: 80%;
-    }
-
-    .input{
-        margin-right: 22px;
-    }
-
-}
 
 @media (max-width:768px) {
    
     select {
-        width: 202px;
         height: 49px;
     }
 
@@ -601,7 +559,6 @@ select{
 
     form {
         top: 76%;
-        padding: 50px;
         width: 45%;
         height: 232px;
         display: flex;

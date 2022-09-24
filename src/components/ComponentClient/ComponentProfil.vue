@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p>bonjour le monde</p>
+  <div class="container">
+    
   </div>
 </template>
 
@@ -10,6 +10,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="css" scoped>
+  .container{
+    width:100%;
+    height:100vh;
+    border:1px solid red;
+  }
 
 </style>
