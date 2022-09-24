@@ -48,7 +48,8 @@ const routes = [
   {
     path: '/dashbord',
     name: 'dashbord',
-    component: () => import('../views/ViewAdmin/HomeAdmin.vue')
+    component: () => import('../views/ViewAdmin/HomeAdmin.vue'),
+    props:true
   },
   {
     path: '/dashbord/updatebien/:id',
@@ -60,6 +61,12 @@ const routes = [
     path: '/dashbord/bien/:id',
     name: 'dashbord/bien',
     component: () => import('../views/ViewAdmin/DetailBien.vue'),
+    props:true
+  },
+  {
+    path: '/updateagent/:id',
+    name: '/updateagent',
+    component: () => import('../views/ViewAdmin/UpdateAgent.vue'),
     props:true
   },
 

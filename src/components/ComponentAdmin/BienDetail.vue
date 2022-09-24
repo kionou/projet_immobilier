@@ -71,15 +71,15 @@
                   </div>
               
               </div>
-              <div class="container-message">
+              <div class="container-message"  v-if="bien.user_id != '001'">
               
-                 <div class="message-content" v-if="bien.user_id != '001'">
+                 <div class="message-content">
                     <h3>Les informations de l'agent immobilier qui a publié ce bien .</h3>
                     <div class="contenaire_card">
                     <div class="content-card">
                         <div class="card-image">
                            
-                            <img src="@/assets/images/image.jpg" alt="">   
+                            <img :src="agent.image" alt="">   
                              
                         </div>
                         <div class="card-body">

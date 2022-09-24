@@ -211,6 +211,7 @@
 
 <script>
     import dataBien from '@/database/requeteBien';
+    import Spinner from './Spinner.vue';
 export default {
     name:"ComponentHome",
     data() {
@@ -218,6 +219,7 @@ export default {
             biens:"",
             alert:'',
             isActive: true,
+            loading:false
   
         }
     },
@@ -228,6 +230,9 @@ export default {
         }
     },
    async mounted(){
+    setTimeout(()=>{
+
+    },300)
     let bien = await dataBien.AfficherBien()
     console.log(bien);
     if (bien.success) {
@@ -487,7 +492,7 @@ select{
 }
 
 .contact{
-     width: 80%;
+     width: 100%;
       background-color: white;
       height: auto;
      font-family: 'Roboto Serif',    serif;

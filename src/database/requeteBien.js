@@ -89,21 +89,62 @@ const dataBien = class{
     
  }
 
+//     static UpdateBien = (id,into)=>{
+//         console.log('sqfQSD',id,into);
+//         return new Promise(async (next)=>{
+//         const docRef = doc(bienCollection, id);
+//           await setDoc(docRef,into,{ merge:true })
+//         .then(resultat=>{
+//                  console.log('ss',resultat);
+//                  next({success:resultat})
+//         }).catch(error=>{
+//                  console.log("eee",error);
+//                  next ({ erreur:error})
+//             })
+//          })
+       
+//     }
+
+
     static UpdateBien = (id,into)=>{
-        console.log('sqfQSD',id,into);
-        return new Promise(async (next)=>{
-        const docRef = doc(bienCollection, id);
-          await setDoc(docRef,into,{ merge:true })
-        .then(resultat=>{
-                 console.log('ss',resultat);
-                 next({success:resultat})
+     console.log('sqfQSD',id,into.images);
+     console.log('sqfQdgsgsgSD',into.images);
+     return new Promise(async (next)=>{
+       if (into.images === '') {
+         console.log('besion de image');
+
+         const docRef = doc(bienCollection, id);
+         await getDoc(docRef)
+        .then(docRef=>{
+                  let data = docRef.data().images
+                  into.images = data
+                 const update = doc(bienCollection, id);
+                 setDoc(update,into,{ merge:true })
+                 console.log( setDoc(update,into,{ merge:true }));
+                 next({success:"reussi"})         
         }).catch(error=>{
                  console.log("eee",error);
                  next ({ erreur:error})
             })
-         })
-       
-    }
+         
+       } else {
+
+         const update = doc(bienCollection, id);
+         setDoc(update,into,{ merge:true })
+         .then(docRef=>{
+                 console.log('ss',docRef);
+                 next({success:"reussis"})
+         }).catch(error=>{
+                 console.log("eee",error);
+                 next ({ erreur:error})
+             })
+           
+         
+       }
+      })
+    
+ }
+
     static DeleteBien = (id)=>{
      console.log('sqfQSD',id);
      return new Promise(async (next)=>{

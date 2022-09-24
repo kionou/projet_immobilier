@@ -1,6 +1,8 @@
 <template>
   <div>
     <ModalAgent v-bind:revele="revele" v-bind:submit="submit"></ModalAgent>
+    <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete"></DeleteAgent>
+
      <div class="contenu1">
                 <div class="boutton" @click="submit">
                     <p>Ajouter un Agent</p>
@@ -12,7 +14,7 @@
                     <div class="content-card" v-for="agent in agents " :key="agent.id" v-else>
                         <div class="card-image">
                            
-                            <img src="@/assets/images/image.jpg" alt="">   
+                            <img :src="agent.image" alt="">   
                              
                         </div>
                         <div class="card-body">
@@ -29,8 +31,8 @@
                             <p> {{agent.numero}}</p>
                             </div>
                             <div class="icon">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                                <i class="fa-solid fa-trash"></i>
+                                <i class="fa-solid fa-pen-to-square" @click="update(agent.id)"></i>
+                                <i class="fa-solid fa-trash" @click="agentDelete(agent.id)"></i>
                               
                        </div>
                         </div>
@@ -44,22 +46,38 @@
 <script>
 import dataAgent from '@/database/requeteAgent';
 import ModalAgent from './ModalAgent.vue';
+import DeleteAgent from './DeleteAgent.vue';
 export default {
     name:'ComponentAgent',
+    props:['Iddelete'],
     components:{
     ModalAgent,
+    DeleteAgent
   
 },
 data(){
     return{
         revele:false,
         agents:"",
-        alert:''
+        alert:'',
+        Iddelete:'',
+        toggle:false
     }
 },
 methods:{
     submit(){
         this.revele = !this.revele
+    },
+    agentDelete(id){
+        console.log(id);
+        this.toggle = !this.toggle
+        this.Iddelete = id
+
+    },
+    update(id){
+        this.$router.push(`/updateagent/${id}`) 
+
+
     }
 },
 async mounted() {
@@ -134,8 +152,8 @@ async mounted() {
 }
 
 .content-card{
-    width: 250px;
-    height: 408px;
+    width: 290px;
+    height: 44vh;
     border: 1px solid #ccc;
     background-color: white;
     border-radius: 10px;
@@ -167,14 +185,18 @@ async mounted() {
     display: flex;
     flex-direction: column;
     padding: 0 10px 10px 10px;
+    height:24vh;
+    justify-content: space-around;
 }
 
 .body-text {
     display: flex;
     margin-bottom: 11px;
     justify-content: center;
-    border: 1px solid red;
+    border: 1px solid #ccc;
     flex-direction: column;
+    padding: 3px;
+
 
 }
 .icon{

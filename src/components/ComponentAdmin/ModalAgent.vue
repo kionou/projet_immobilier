@@ -96,7 +96,8 @@ methods: {
                     prenom:this.prenom,
                     email:this.email,
                     numero:this.numero,
-                    password:this.password
+                    password:this.password,
+                    image:'@/assets/images/image.jpg'
                 }
                 console.log(DataUser);
                 let agent = await dataAgent.InsertionAgent(DataUser)

@@ -354,58 +354,58 @@
    border: none;
 
 }
-.boutton{
-      margin-top: 30px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      width: 100%;
-      padding: 15px 0;
-      justify-content: space-evenly;
-      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
-      background-color: white;
+    .boutton{
+        margin-top: 30px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        padding: 15px 0;
+        justify-content: space-evenly;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+        background-color: white;
 
-}
-.update {
-    width: 8rem;
-    height: 3rem;
-    text-align: center;
-    border: none;
-    background-color: #2288ff;
-    color: white;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: 'Roboto Serif',
-        serif;
-}
+    }
+    .update {
+        width: 8rem;
+        height: 3rem;
+        text-align: center;
+        border: none;
+        background-color: #2288ff;
+        color: white;
+        border-radius: 5px;
+        font-size: 20px;
+        font-family: 'Roboto Serif',
+            serif;
+    }
 
-.update:hover {
-    background-color: white;
-    color: #2288ff;
-    border: 1px solid #2288ff;
-    cursor: pointer;
-}
+    .update:hover {
+        background-color: white;
+        color: #2288ff;
+        border: 1px solid #2288ff;
+        cursor: pointer;
+    }
 
-.delete {
-    width: 8rem;
-    height: 3rem;
-    text-align: center;
-    border: none;
-    background-color: red;
-    color: white;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: 'Roboto Serif',
-        serif;
-}
+    .delete {
+        width: 8rem;
+        height: 3rem;
+        text-align: center;
+        border: none;
+        background-color: red;
+        color: white;
+        border-radius: 5px;
+        font-size: 20px;
+        font-family: 'Roboto Serif',
+            serif;
+    }
 
-.delete:hover {
-    background-color: white;
-    color: red;
-    border: 1px solid red;
-    cursor: pointer;
-}
-  
+    .delete:hover {
+        background-color: white;
+        color: red;
+        border: 1px solid red;
+        cursor: pointer;
+    }
+    
  
 
   @media (max-width:700px) {

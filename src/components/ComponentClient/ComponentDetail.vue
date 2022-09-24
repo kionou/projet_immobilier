@@ -106,7 +106,7 @@
                     <div class="content-card">
                         <div class="card-image">
                            
-                            <img src="@/assets/images/image.jpg" alt="">   
+                            <img :src="agent.image" alt="">   
                              
                         </div>
                         <div class="card-body">
