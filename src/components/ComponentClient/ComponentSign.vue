@@ -10,6 +10,9 @@
               <h1>INSCRIPTION</h1>
               <p>Inscrivez vous pour beneficier de nos produits.</p>
             </div>
+            <small>
+                {{erreur}}
+            </small>
           
             <form >
               <div class="name"> 
@@ -61,6 +64,7 @@ export default {
                 email:'',
                 numero:'',
                 password:'',
+                erreur:'',
               v$:useVuelidate(),
             
         }
@@ -108,14 +112,23 @@ methods: {
              let   DataUser={
                     nom:this.nom,
                     prenom:this.prenom,
-                    email:this.email,
                     numero:this.numero,
+                    image:'https://previews.123rf.com/images/apoev/apoev1903/apoev190300009/124806570-personne-gris-espace-r%C3%A9serv%C3%A9-photo-homme-en-t-shirt-sur-fond-gris.jpg?fj=1'
+                }
+                let auth={
+                    email:this.email,
                     password:this.password
                 }
-                console.log(DataUser);
-                let user = await connectUser.AddUser(DataUser)
-                console.log(user);
-    
+                console.log(DataUser,auth);
+                let user = await connectUser.AddUser(DataUser,auth)
+                
+                if (user.erreur == "auth/email-already-in-use") {
+                    this.erreur = "Votre Adresse Email existe  déjà donc veillez-vous connecté."
+                    
+                } else {
+                    
+                }
+
             }
            
 

@@ -1,4 +1,4 @@
-import { usercollection} from "./Connect";
+import { clientcollection} from "./Connect";
 import {  addDoc , getDocs } from 'firebase/firestore'
 
 
@@ -7,7 +7,7 @@ const dataUser = class{
     static InsertionUser = (into)=>{
         console.log('sqfQSD',{...into});
         return new Promise(async (next)=>{
-        await addDoc(usercollection,into)
+        await addDoc(clientcollection,into)
         .then(docRef=>{
                  console.log('ss',docRef);
                  next({success:docRef})
@@ -22,7 +22,7 @@ const dataUser = class{
     static AfficherUser = ()=>{
         let array =[]
         return new Promise(async (next)=>{
-         await getDocs(usercollection)
+         await getDocs(clientcollection)
         .then(docRef=>{
           console.log('offf',docRef.docs);
           if (docRef.docs.length > 0) {

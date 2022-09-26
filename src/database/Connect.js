@@ -25,5 +25,7 @@ export const auth = getAuth(app);
 
 
 export const bienCollection = collection(data,'bien')
-export const usercollection = collection(data,'clients')
+export const clientcollection = collection(data,'clients')
 export const agentcollection = collection(data,'agents')
+export const usercollection = collection(data,'users')
+

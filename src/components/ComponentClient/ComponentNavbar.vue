@@ -9,12 +9,19 @@
                 <li>
                     <router-link class="link" :to="{name:'home'}">Accueil</router-link>
                 </li>
-                <li>
+                <li v-if="connect">
+                    <p class="logout" @click="logout">Deconnter</p>
+                </li> 
+                <div v-else class="links">
+                    <li >
                     <router-link class="link" :to="{name:'agentlogin'}">Agent</router-link>
                 </li>
-                <li>
+                <li >
                     <router-link class="link" :to="{name:'login'}">Mon Compte</router-link>
                 </li> 
+                </div>
+                
+               
             </ul>
             <div class="icon" @click="toggleMobileNav" v-show="mobile" :class="{'icon-active':mobileNav}">
                <img src="@/assets/images/logopng.png" alt="">
@@ -37,7 +44,11 @@
 </template>
 
 <script>
-    import connectUser from '@/database/authentificationUser';
+    import { auth } from '@/database/Connect';
+   import { onAuthStateChanged } from '@firebase/auth';
+   import connectUser from '@/database/authentificationUser';
+    
+ 
 export default {
     name:'ComponentNavbar',
     data(){
@@ -46,6 +57,7 @@ export default {
             mobile:null,
             mobileNav:null,
             windowWith:null,
+            connect:''
         };
     },
     created(){
@@ -55,8 +67,18 @@ export default {
   async  mounted(){
         window.addEventListener("scroll",this.updateScroll);
         
-        let statu = await connectUser.EtatUser()
-        console.log('hh',statu)
+        onAuthStateChanged(auth,(user)=>{
+        if (user != null) {
+            console.log('user connect',user);
+            this.connect = user
+            
+            
+        } else {
+            console.log('user no connect');
+           
+        }
+            
+        })
 
     },
     methods:{
@@ -84,6 +106,11 @@ export default {
             this.mobile = false;
             this.mobileNav = false;
             return;
+
+        },
+      async  logout(){
+        await connectUser.LogoutUser()
+        this.$router.push('/login')
 
         }
 
@@ -113,7 +140,10 @@ header{
     transition: 0.5s ease all;
     width:90%;
   
-  
+    .links{
+        border: 1px solid red;
+        display: flex;
+    }
     ul,
     .link{
         font-weight: 500;
@@ -140,6 +170,26 @@ header{
             border-color: #00afea;
         }
     }
+.logout{
+    text-align: center;
+    border: 1px solid;
+    padding: 1rem 1.5rem;
+    border-radius: 20px;
+    font-size: 17px;
+    background-color: #2288ff;
+    color: white;
+    font-family: 'Roboto Serif', serif;
+    text-decoration: none;
+
+    &:hover{
+        background-color: white;
+    color: #2288ff;
+    border: 1px solid #2288ff;
+    cursor: pointer;
+        }
+
+}
+
     .branding{
         display: flex;
         align-items: center;

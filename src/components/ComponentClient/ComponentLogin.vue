@@ -9,8 +9,10 @@
             <div class="texte">
                 <h2>CONNEXION</h2>
             </div>
-            <form action="/connexion
-            " method="post">
+            <small>
+                {{erreur}}
+            </small>
+            <form >
                      <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
                 <input type="email" name="email" placeholder="Adresse Email" v-model="email">
                      <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>        
@@ -28,6 +30,7 @@
 <script>
      import useVuelidate from '@vuelidate/core'
     import {require, lgmin,lgmax,ValidEmail} from '@/functions/rules'
+    import connectUser from '@/database/authentificationUser'
 export default {
     name:"Componentlogin",
     data() {
@@ -35,6 +38,7 @@ export default {
                 email:'',
              password:'',
              v$:useVuelidate(),
+             erreur:''
             
         }
     },
@@ -52,10 +56,21 @@ export default {
             },
     },
     methods: {
+        MessageErreur(into){
+            if (into === "auth/wrong-password") {
+                console.log('pazssword');
+                this.erreur = 'Mot de passe incorrect'
+                
+            } else {
+                console.log('email');
+                this.erreur = "Email ou le Mot de passe est incorrect !"
+            } 
+
+        },
         redirect(){
             this.$router.push('/sign')
         },
-            submit(){
+          async  submit(){
             console.log('rrr')
             console.log('fsqjfblqkf',this.v$.$errors.length);
             // this.v$.$validate()
@@ -67,6 +82,13 @@ export default {
                     password:this.password
                 }
                 console.log(DataUser);
+                let user = await connectUser.Userconnect(DataUser)
+                if (user.success) {
+                 this.$router.push('/profil')   
+                } else {
+                    this.MessageErreur(user.erreur)
+                    
+                }
     
             }
         }

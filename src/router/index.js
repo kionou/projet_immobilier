@@ -40,6 +40,12 @@ const routes = [
     component: () => import('../views/ViewClient/DetailBienAgent.vue'),
     props:true
   },
+  {
+    path: '/profil',
+    name: 'profil',
+    component: () => import('../views/ViewClient/ProfilUser.vue'),
+    props:true
+  },
   // router client fin
 
 
@@ -69,6 +75,7 @@ const routes = [
     component: () => import('../views/ViewAdmin/UpdateAgent.vue'),
     props:true
   },
+  
 
 
 
