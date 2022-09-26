@@ -37,6 +37,7 @@
 </template>
 
 <script>
+    import connectUser from '@/database/authentificationUser';
 export default {
     name:'ComponentNavbar',
     data(){
@@ -51,8 +52,11 @@ export default {
         window.addEventListener("resize",this.checkScreen);
         this.checkScreen();
     },
-    mounted(){
-        window.addEventListener("scroll",this.updateScroll)
+  async  mounted(){
+        window.addEventListener("scroll",this.updateScroll);
+        
+        let statu = await connectUser.EtatUser()
+        console.log('hh',statu)
 
     },
     methods:{

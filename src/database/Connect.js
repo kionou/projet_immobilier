@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import 'firebase/auth'
 import { getFirestore,collection} from 'firebase/firestore'
 import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 import "firebase/storage"
 
 const firebaseConfig = {
@@ -19,8 +20,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const data = getFirestore(app)
 export const storage = getStorage(app);
+export const auth = getAuth(app);
+
 
 
 export const bienCollection = collection(data,'bien')
-export const usercollection = collection(data,'users')
+export const usercollection = collection(data,'clients')
 export const agentcollection = collection(data,'agents')

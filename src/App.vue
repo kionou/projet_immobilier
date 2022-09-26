@@ -3,6 +3,16 @@
   <router-view/>
 </template>
 
+<script>
+
+  export default{
+  async  mounted(){
+  
+
+    }
+  }
+</script>
+
 <style lang="scss">
   
   @import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,wght@1,200&display=swap');
@@ -29,3 +39,5 @@
 
 
 </style>
+
+

@@ -52,6 +52,7 @@
 <script>
 import useVuelidate from '@vuelidate/core'
 import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
+import connectUser from '@/database/authentificationUser'
 export default {
     data() {
         return {
@@ -98,7 +99,7 @@ export default {
        },
 },
 methods: {
-    submit(){
+   async submit(){
          
             // this.v$.$validate()
             this.v$.$touch()
@@ -112,6 +113,8 @@ methods: {
                     password:this.password
                 }
                 console.log(DataUser);
+                let user = await connectUser.AddUser(DataUser)
+                console.log(user);
     
             }
            

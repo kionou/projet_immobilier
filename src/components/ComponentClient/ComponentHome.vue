@@ -546,7 +546,18 @@ select{
     padding: 5px;
     margin-top: -2px;
 }
+.tete{
 
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        font-size: 41px;
+        color: white;
+        font-weight: bolder;
+        width: 96%;
+        height: 136px;
+}
 
 
 
@@ -563,7 +574,7 @@ select{
     }
 
     form {
-        top: 76%;
+        top: 83%;
         width: 45%;
         height: 232px;
         display: flex;
@@ -580,7 +591,6 @@ select{
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 80%;
     }
 
     .contact .info{
@@ -600,10 +610,28 @@ select{
     }
 
     .contact .info{
-        width: 114%;
-    }
+           max-width: 300px;
+           width: 98%;
+    } 
 
-  
+}
+
+
+@media (max-width:450px) {
+.alert{
+    font-size:20px;
+}
+ 
+ 
+
+}
+@media (max-width:485px) {
+
+  form{
+    padding:10px;
+    top:92%;
+  }
+ 
 
 }
 
@@ -612,19 +640,6 @@ select{
     width: 40%;
 }
 
-}
-
-.tete{
-
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        position: absolute;
-        font-size: 41px;
-        color: white;
-        font-weight: bolder;
-        width: 96%;
-        height: 136px;
 }
 
 </style>
