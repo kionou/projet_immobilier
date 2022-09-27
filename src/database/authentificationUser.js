@@ -1,6 +1,6 @@
 import { auth,usercollection } from "./Connect";
 import { doc, setDoc } from "firebase/firestore"; 
-import { createUserWithEmailAndPassword ,signInWithEmailAndPassword , signOut , onAuthStateChanged} from "firebase/auth";
+import { createUserWithEmailAndPassword ,signInWithEmailAndPassword , signOut , onAuthStateChanged,updateProfile} from "firebase/auth";
 
 
 
@@ -10,12 +10,15 @@ const connectUser = class{
 
         let email = authentification.email;
         let password = authentification.password
+        
 
         return new Promise(async (next)=>{
         await createUserWithEmailAndPassword(auth,email,password)
             .then(async (cred)=>{
+                updateProfile(cred.user,{displayName: 'user'})
                 await setDoc(doc(usercollection, cred.user.uid),into)
                 .then((user)=>{
+                    signOut(auth)
                     next({success:"Enregistrer avec success"}) 
                 })
                 .catch((err)=>{
@@ -40,8 +43,14 @@ const connectUser = class{
 
      await  signInWithEmailAndPassword(auth,email,password)
         .then((cred)=>{
-            console.log('ss',cred);
-            next({success:cred})
+            if (cred.user.displayName != "agent") { 
+                signOut(auth)
+                next({alert:"Email ou le Mot de passe est incorrect !"})
+                
+            } else {
+              next({success:cred})
+                
+            }
 
         })
         .catch((err)=>{

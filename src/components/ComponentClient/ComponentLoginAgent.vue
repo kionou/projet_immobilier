@@ -9,6 +9,9 @@
               <div class="texte">
                   <h2>CONNEXION</h2>
               </div>
+              <small>
+                {{erreur}}
+              </small>
               <form >
                      <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
                   <input type="email" name="email" placeholder="Adresse Email" v-model="email">
@@ -27,6 +30,7 @@
   <script>
     import useVuelidate from '@vuelidate/core'
     import {require, lgmin,lgmax,ValidEmail} from '@/functions/rules'
+    import connectAgent from '@/database/authAgent'
   export default {
       name:"ComponentLoginAgent",
       data() {
@@ -34,6 +38,7 @@
              email:'',
              password:'',
              v$:useVuelidate(),
+             erreur:''
               
           }
       },
@@ -51,8 +56,19 @@
             },
     },
       methods: {
+        MessageErreur(into){
+            if (into === "auth/wrong-password") {
+                console.log('pazssword');
+                this.erreur = 'Mot de passe incorrect'
+                
+            } else {
+                console.log('email');
+                this.erreur = "Email ou le Mot de passe est incorrect !"
+            } 
 
-          submit(){
+        },
+
+        async  submit(){
             console.log('rrr')
             console.log('fsqjfblqkf',this.v$.$errors.length);
             // this.v$.$validate()
@@ -64,6 +80,18 @@
                     password:this.password
                 }
                 console.log(DataUser);
+                let user = await connectAgent.Agentconnect(DataUser)
+                if (user.success) {
+                 
+                    console.log(user.success.user.uid)
+                    this.$router.push(`/agent/${user.success.user.uid}`) 
+                } else if (user.alert) {
+                    this.erreur = user.alert
+                    
+                }  else {
+                    this.MessageErreur(user.erreur)
+                    
+                }
     
             }
         }

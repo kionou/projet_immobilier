@@ -2,27 +2,27 @@
   <div class="container">
     <div class="content">
       <div class="image">
-        <img src="@/assets/images/image.jpg" alt="">
+        <img :src="agent.image" alt="">
 
       </div>
       <div class="info">
         <h3>Informations</h3>
         <div class="tableau">
           <div class="tableau-heaeder">
-            <p>Nom                  :</p>
+            <p>Nom :</p>
             <p>Prenom:</p>
             <p> Email    :</p>
             <p>Numéro :</p>
           </div>
           <div class="tableau-content">
-            <p>Kionou</p>
-            <p>Mamamdou</p>
-            <p>Kionumamamadou00@gmail.com</p>
-            <p>0908070687</p>
+            <p>{{agent.nom}}</p>
+            <p>{{agent.prenom}}</p>
+            <p>{{agent.email}}</p>
+            <p>{{agent.numero}}</p>
           </div>
         </div>
         <div  class="boutton " >
-                   <button class="update"   @click="update()">Modifier</button>
+                   <button class="update"  @click="update()">Modifier</button>
                    <button class="delete"   >Supprimer</button>
           </div>
       </div>
@@ -33,7 +33,36 @@
 </template>
 
 <script>
+  import dataAgent from '@/database/requeteAgent';
 export default {
+  name:'ComponentProfil',
+  props:['id'],
+  components:{
+
+  },
+  data() {
+    return {
+      agent:''
+      
+    }
+  },
+  methods: {
+    update(){
+        this.$router.push(`/update/${this.id}`)
+
+    }
+  },
+ async mounted() {
+  let agent = await dataAgent.GetAgnetId(this.id)
+        console.log(agent.success);
+        if (agent.success) {
+          this.agent = agent.success
+            
+          
+        } else {
+            
+        }
+  },
 
 }
 </script>
@@ -52,7 +81,7 @@ export default {
   .content{
     /* border: 1px solid blue; */
     width: 70%;
-    height: 40vh;
+    height: auto;
     padding: 10px;
     display: flex;
     box-shadow: 0 3px 10px rgb(0 0 0 / 20%);

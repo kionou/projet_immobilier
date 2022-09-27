@@ -11,12 +11,9 @@ export default {
 <style scoped>
 
 .spin{
-    display: block;
-    width: 40px;
-    height: 40px;
-    margin: 30px auto;
-    border: 3px solid transparent;
-    border-radius: 50%;
-    border-top-color:#ff8800 ;
+    height: 100%;
+     margin: 0;
+    padding: 76px 10px 10px;
+    margin-top: 3px;
 }
 </style>

@@ -84,8 +84,11 @@ export default {
                 console.log(DataUser);
                 let user = await connectUser.Userconnect(DataUser)
                 if (user.success) {
-                 this.$router.push('/profil')   
-                } else {
+                  this.$router.push('/profil')   
+                } else if (user.alert) {
+                    this.erreur = user.alert
+                    
+                }  else {
                     this.MessageErreur(user.erreur)
                     
                 }

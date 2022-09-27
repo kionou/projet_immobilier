@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ComponentModal v-bind:toggle="toggle" v-bind:valider="valider" :texte="texte" ></ComponentModal>
      <div class="modal-container" id="modal" v-if="revele" @click.self="submit">
        
          
@@ -21,7 +22,7 @@
                 <input type="email" name="email" placeholder="Adresse Email" v-model="email"> 
 
                 <small v-if="v$.numero.$error">{{v$.numero.$errors[0].$message}} </small>
-                <input type="tel" placeholder="Numero Téléphonique" v-model="numero">
+                <input type="tel" name="numero" placeholder="Numero Téléphonique" v-model="numero">
 
                 <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>
                 <input type="password" name="password" placeholder="Mot de passe" v-model="password">
@@ -45,10 +46,9 @@ import ComponentModal from './ComponentModal.vue'
 export default {
     name:'ModalAgent',
     components:{
-        ComponentModal
-
-    },
-    props:['revele','submit','toggle'],
+    ComponentModal,
+},
+    props:['revele','submit','count'],
         data() {
         return {
                 nom:'',
@@ -57,7 +57,9 @@ export default {
                 numero:'',
                 password:'',
               v$:useVuelidate(),
-              erreur:''
+              erreur:'',
+              toggle:false,
+              texte:'Enregistrement de l\'Agent éffectué avec success.'
             
         }
     },
@@ -101,6 +103,8 @@ methods: {
             if (this.v$.$errors.length == 0 ) {
                
              let   DataUser={
+                
+                    email:this.email,
                     nom:this.nom,
                     prenom:this.prenom,
                     numero:this.numero,
@@ -115,6 +119,9 @@ methods: {
                 let agent = await connectAgent.AddAgent(DataUser,auth)
                 console.log(agent);
                 if (agent.success) {
+                    this.toggle = !this.toggle
+                  
+                    console.log('bonjour');
                     // this.$router.push('/')
                     
                 } else {

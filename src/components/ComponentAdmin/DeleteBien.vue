@@ -4,7 +4,7 @@
         
            
               <div class="container">
-               
+               {{Iddelete}}
                 <p>vous voulez-vous supprimer cette article ?</p>
                 <div class="boutton">
                     <button @click="supp">Oui</button>
@@ -33,7 +33,7 @@
 
         },
         close(){
-            this.toggle = false
+            this.$router.go()
             console.log('ddd')
 
         }

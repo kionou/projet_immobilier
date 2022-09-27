@@ -1,13 +1,15 @@
 <template>
     <div>
-       <div class="modal-container" id="modal" v-if="toggle" @click.self="bienDelete">
+       <div class="modal-container" id="modal" v-if="success" @click.self="valider" >      
+         <div class="container">
+         <div class="btn-close" @click="close">
+            <img src="@/assets/images/cross-out-mark-674638.png" alt="">
+        </div>
+        <div class="image">
+            <img src="@/assets/images/clipart1725690.png" alt="">
+        </div>
         
-           
-              <div class="container">
-               
-                <p>vous voulez-vous supprimer cette article ?</p>
-             
-
+                <p>{{texte}}</p>
           </div>
           
         
@@ -18,12 +20,16 @@
   <script>
   export default {
       name:'ComponentModal',
-      props:['toggle','bienDelete','Iddelete'],
+      props:['suucess','valider','texte'],
+      data() {
+        return {
+         
+        }
+      },
       methods: {
-   
+    
         close(){
-            this.toggle = false
-            console.log('ddd')
+         this.$router.go()
 
         }
         
@@ -42,7 +48,7 @@
       top: 0;
       left: 0;
       background: rgba(0, 0, 0, .3);
-      z-index: 6;
+      z-index: 9;
       opacity: 1;
   }
 
@@ -60,10 +66,42 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
       padding: 10px;
      
   }
+  .image{
+    /* border: 1px solid red; */
+    width: 100px;
+    height: 100px;
+}
+  .image img{
+    width: 100%;
+    height: 100%;
+}
+.btn-close{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 0;
+    right: 0;
+    color: aqua;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.btn-close img{
+    width: 100%;
+    height: 100%;
+    color: aqua;
+}
+
+
+.modal-container .modal p {
+    font-size: 19px;
+    margin-top: 10px;
+    
+}
 
 
 

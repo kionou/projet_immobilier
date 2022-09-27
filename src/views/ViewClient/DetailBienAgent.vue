@@ -54,7 +54,7 @@ import ComponentAgentBien from '@/components/ComponentClient/ComponentAgentBien.
     },
     methods: {
         bien(){
-                this.$router.push('/agent')
+                this.$router.go(-1)
             }
         
     },

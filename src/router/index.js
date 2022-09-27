@@ -30,9 +30,10 @@ const routes = [
     component: () => import('../views/ViewClient/LoginAgent.vue')
   },
     {
-    path: '/agent',
+    path: '/agent/:id',
     name: 'agent',
-    component: () => import('../views/ViewClient/AgentView.vue')
+    component: () => import('../views/ViewClient/AgentView.vue'),
+    props:true
   },
   {
     path: '/agent/bien/detail/:id',
@@ -70,8 +71,8 @@ const routes = [
     props:true
   },
   {
-    path: '/updateagent/:id',
-    name: '/updateagent',
+    path: '/update/:id',
+    name: '/update',
     component: () => import('../views/ViewAdmin/UpdateAgent.vue'),
     props:true
   },

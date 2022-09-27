@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ModalBien v-bind:revele="revele" v-bind:submit="submit" :agentId="agentId"></ModalBien> 
+    <ModalBien v-bind:revele="revele" v-bind:submit="submit" :agentId="agentId" ></ModalBien> 
      <div class="contenu1">
                 <div class="boutton" @click="submit">
                     <p>Ajouter un Bien</p>
@@ -13,7 +13,7 @@
                             <p>Ajouter un Bien</p>
                             </div>
                         </div>
-                       
+                      
 
                     </div>
                    
@@ -39,6 +39,7 @@
                     <div class="icon-content">
                         <i class="fas fa-bath"></i>
                         <samp>{{bien.douche}} douches</samp>
+                      
                     </div>
                 </div>
                     <div class="">
@@ -56,7 +57,7 @@
                     </div>
             </div>
         </div>
-                  
+      
                 </div>
             </div>
   </div>
@@ -67,7 +68,7 @@ import dataBien from '@/database/requeteBien';
 import ModalBien from '../ComponentAdmin/ModalBien.vue';
 export default {
     name:'ComponentBien',
-    props:['agentId'],
+    props:['agentId','id'],
     components:{
         ModalBien,
         
@@ -84,7 +85,7 @@ data(){
 methods:{
     submit(){
         this.revele = !this.revele
-        this.agentId = "999"
+        this.agentId = this.id
     },
     redirect(id){
         this.$router.push(`/agent/bien/detail/${id}`)
@@ -92,7 +93,7 @@ methods:{
     }
 },
 async mounted() {
-    let bien = await dataBien.GetBienUser("mzpf7yEJmNBskKNQbgRc")
+    let bien = await dataBien.GetBienUser(this.id)
     console.log(bien);
     if (bien.success) {
         console.log(bien.success);

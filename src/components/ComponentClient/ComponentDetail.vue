@@ -144,6 +144,8 @@
    import dataUser from '@/database/requeteClient';
    import useVuelidate from '@vuelidate/core'
     import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
+    import {  auth } from '@/database/Connect';
+
 export default {
     name:"ComponentDetail",
     props:['id'],
@@ -229,6 +231,11 @@ export default {
         } else {
             
         }
+        
+    },
+    created() {
+
+      
         
     },
 

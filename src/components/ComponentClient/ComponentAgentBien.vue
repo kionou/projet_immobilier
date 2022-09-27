@@ -1,5 +1,7 @@
 <template>
     <div>
+        <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte"></ComponentModal>
+    <DeleteBien v-bind:toggle="toggle" v-bind:bienDelete="bienDelete" :Iddelete="Iddelete"></DeleteBien>   
           <div class="container-fluid"  >
             <div class="containers" ref="scroll">
                 <div class="modifier" v-if="bien.status == 'true'">
@@ -77,13 +79,13 @@
 
               <div v-else class="modifier">
                 <div  class="boutton" v-if="bien.status == 'false' " >
-                    <button class="update"  @click="vendre()">vendu</button>
+                    <button class="update"  @click="valider()"> En location</button>
                     <button class="update" @click="update()">Modifier</button>
-                    <button class="delete" >Supprimer</button>
+                    <button class="delete" @click="bienDelete(bien.id)"  >Supprimer</button>
                 </div>
                 <div  class="boutton vendu" v-else >
                    
-                    <button class="update" :disabled="isActive"   @click="vendre()">vendu</button>
+                    <button class="update" :disabled="isActive"   @click="vendre()"> En location</button>
                     <button class="update" :disabled="isActive"  @click="update()">Modifier</button>
                     <button class="delete" :disabled="isActive"  >Supprimer</button>
                 </div>
@@ -92,32 +94,50 @@
 
             </div>
                 
-           
-            
-             
           </div>
     </div>
   </template>
   
   <script>
     import dataBien from '@/database/requeteBien';
+    import ComponentModal from '../ComponentAdmin/ComponentModal.vue';
+    import DeleteBien from '../ComponentAdmin/DeleteBien.vue';
   export default {
       name:"BienDetail",
       props:['id'],
+      components:{
+        ComponentModal,
+        DeleteBien
+      },
       data() {
         return {
             bien:'',
-            isActive:true
+            isActive:true,
+            texte:'',
+            toggle:false,
+            success:false,
+            Iddelete:''
             
         }
       },
       methods: {
-      async  vendre(){
+      async  valider(){
             console.log(this.id);
             let bien = await dataBien.UpdateBienVendu(this.id)
+            if (bien.success) {
             console.log('sdd',bien)
+            this.success = !this.success
+                
+            } else {
+                
+            }
 
         },
+        bienDelete(){
+        this.toggle = !this.toggle
+        this.Iddelete = this.id
+
+    },
         update(){
             this.$router.push(`/dashbord/updatebien/${this.id}`) 
 
@@ -134,6 +154,7 @@
         if (bien.success) {
             this.bien = bien.success
             console.log('sdd',bien.success.user_id)
+            this.texte = `Vous aviez mis ${bien.success.nom_bien} en location`
             
         }
    

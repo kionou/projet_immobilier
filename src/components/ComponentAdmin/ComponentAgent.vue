@@ -1,13 +1,13 @@
 <template>
   <div>
-    <ModalAgent v-bind:revele="revele" v-bind:submit="submit"></ModalAgent>
+    <ModalAgent v-bind:revele="revele" v-bind:submit="submit" ></ModalAgent>
     <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete"></DeleteAgent>
 
      <div class="contenu1">
                 <div class="boutton" @click="submit">
                     <p>Ajouter un Agent</p>
                 </div>
-                <div class="contenaire_card">
+                <div class="contenaire_card" ref="scroll">
                     <div class="alert" v-if="alert">
                         {{alert}}
                     </div>
@@ -49,6 +49,7 @@ import ModalAgent from './ModalAgent.vue';
 import DeleteAgent from './DeleteAgent.vue';
 export default {
     name:'ComponentAgent',
+    
     props:['Iddelete'],
     components:{
     ModalAgent,
@@ -61,7 +62,7 @@ data(){
         agents:"",
         alert:'',
         Iddelete:'',
-        toggle:false
+        toggle:false,
     }
 },
 methods:{
@@ -75,12 +76,16 @@ methods:{
 
     },
     update(id){
-        this.$router.push(`/updateagent/${id}`) 
+        this.$router.push(`/update/${id}`) 
 
 
     }
 },
 async mounted() {
+    this.$refs.scroll.scrollTop= this.$refs.scroll.scrollHeight;
+    this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
+
+
     let agent = await dataAgent.AfficherAgent()
     console.log(agent);
     if (agent.success) {
@@ -133,11 +138,14 @@ async mounted() {
     height: 93vh;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, auto));
-    gap: 3rem;
+    gap: 4rem;
     background-color: white;
     padding: 10px 21px;
     justify-items: center;
     border: 1px solid #ccc;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    padding: 3px;
     
 
 }
@@ -162,11 +170,9 @@ async mounted() {
     text-align: center;
     font-family: 'Roboto Serif', serif;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    padding: 10px;
 }
-.content-card:hover{
-    transform: translateY(-10px);
-    transition: 0.5s;
-}
+
 
 .card-image {
     width: 100%;

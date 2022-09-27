@@ -1,6 +1,6 @@
 import { auth,agentcollection } from "./Connect";
 import { doc, setDoc } from "firebase/firestore"; 
-import { createUserWithEmailAndPassword ,signInWithEmailAndPassword , signOut , onAuthStateChanged} from "firebase/auth";
+import { createUserWithEmailAndPassword ,signInWithEmailAndPassword , signOut , updateProfile,onAuthStateChanged,updateEmail} from "firebase/auth";
 
 
 
@@ -14,8 +14,10 @@ const connectAgent = class{
         return new Promise(async (next)=>{
         await createUserWithEmailAndPassword(auth,email,password)
             .then(async (cred)=>{
+                updateProfile(cred.user,{displayName: 'agent'})
                 await setDoc(doc(agentcollection, cred.user.uid),into)
                 .then(()=>{
+                    signOut(auth)
                     next({success:"Enregistrer avec success"}) 
                 })
                 .catch((err)=>{
@@ -40,8 +42,15 @@ const connectAgent = class{
 
      await  signInWithEmailAndPassword(auth,email,password)
         .then((cred)=>{
-            console.log('ss',cred);
-            next({success:cred})
+            if (cred.user.displayName != "agent") { 
+                signOut(auth)
+                next({alert:"Email ou le Mot de passe est incorrect !"})
+                
+            } else {
+                updateEmail(auth.currentUser, "user@example.com")
+              next({success:cred})
+                
+            }
 
         })
         .catch((err)=>{
@@ -61,6 +70,15 @@ const connectAgent = class{
         .catch((err)=>{
             console.log(err.message);
         })
+
+   }
+
+   static updateAgent  =async (into)=>{
+    
+    await  signInWithEmailAndPassword(auth,email,password)
+    .then(function(userCredential) {
+        userCredential.user.updateEmail(into)
+    })
 
    }
 

@@ -21,7 +21,7 @@
                 </div>
             </div>
             
-            <component v-bind:is="component"></component>
+            <component v-bind:is="component" :id="id" ></component>
            
             
            
@@ -37,6 +37,7 @@ import ComponentBien from './ComponentBien.vue'
 import ComponentProfil from './ComponentProfil.vue'
 export default {
   name:"ComponentAgent",
+  props:['id'],
   components:{
    "bien": ComponentBien,
    'profil':ComponentProfil

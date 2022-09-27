@@ -74,6 +74,7 @@ export default {
     padding: 20px 5px;
     background-color: #2D3748;
     color: #fff;
+    height: 100vh;
 
 }
 

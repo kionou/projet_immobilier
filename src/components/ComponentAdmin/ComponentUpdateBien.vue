@@ -84,17 +84,18 @@
              description:this.description,
              service:this.service,
              images:this.image,
-             user_id:this.user_id
+             user_id:this.user_id,
+             status:this.status
           }
           console.log(DataBien);
        let bien =  await dataBien.UpdateBien(this.id,DataBien)
-    //    if (bien.success) {
-    //       this.$router.push('/')
+       if (bien.success) {
+          this.$router.go(-1)
           
-    //    } else {
-    //       console.log('error 404');
+       } else {
+          console.log('error 404');
           
-    //    }
+       }
   
       },
      
@@ -136,7 +137,8 @@
             this.commune = bien.success.commune,
             this.description = bien.success.description,
             this.service = bien.success.service,
-            this.user_id = bien.success.user_id
+            this.user_id = bien.success.user_id,
+            this.status = bien.success.status
             
           
             

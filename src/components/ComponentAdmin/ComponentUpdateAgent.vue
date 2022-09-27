@@ -13,9 +13,6 @@
                   <input type="email" placeholder="Adresse Email" v-model="email">
                   <input type="tel" placeholder="Numero" v-model="numero">
               </div>
-               <div class="form_groupe">
-                  <input type="password" placeholder="Mot de passe" v-model="password">
-              </div>
 
              <label class="custom-file-upload">
               <input type="file" @change="upload"/>
@@ -47,7 +44,6 @@
           prenom:'',
           email:'',
           numero:'',
-          password:'',
           image:''
           
       }
@@ -59,14 +55,13 @@
              prenom:this.prenom,
              email:this.email,
              numero:this.numero,
-             password:this.password,
              image:this.image
       
           }
           console.log(DataAgent);
        let agent =  await dataAgent.UpdateAgent(this.id,DataAgent)
        if (agent.success) {
-          this.$router.push('/')
+          this.$router.go(-1)
           
        } else {
           console.log('error 404');
