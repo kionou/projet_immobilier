@@ -6,6 +6,9 @@
             <div class="container">
 
             <form >
+                    <small>
+                        {{erreur}}
+                    </small>
                     <h3>Ajouter un agent</h3>
 
                 <small v-if="v$.nom.$error">{{v$.nom.$errors[0].$message}} </small>
@@ -35,12 +38,17 @@
 </template>
 
 <script>
-    import dataAgent from '@/database/requeteAgent'
+    import connectAgent from '@/database/authAgent'
     import useVuelidate from '@vuelidate/core'
 import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
+import ComponentModal from './ComponentModal.vue'
 export default {
     name:'ModalAgent',
-    props:['revele','submit'],
+    components:{
+        ComponentModal
+
+    },
+    props:['revele','submit','toggle'],
         data() {
         return {
                 nom:'',
@@ -49,6 +57,7 @@ export default {
                 numero:'',
                 password:'',
               v$:useVuelidate(),
+              erreur:''
             
         }
     },
@@ -94,18 +103,22 @@ methods: {
              let   DataUser={
                     nom:this.nom,
                     prenom:this.prenom,
-                    email:this.email,
                     numero:this.numero,
-                    password:this.password,
-                    image:'@/assets/images/image.jpg'
+                    image:'https://previews.123rf.com/images/apoev/apoev1903/apoev190300009/124806570-personne-gris-espace-r%C3%A9serv%C3%A9-photo-homme-en-t-shirt-sur-fond-gris.jpg?fj=1'
                 }
-                console.log(DataUser);
-                let agent = await dataAgent.InsertionAgent(DataUser)
+                let auth ={
+                    email:this.email,
+                    password:this.password,
+
+                }
+                console.log(DataUser,auth);
+                let agent = await connectAgent.AddAgent(DataUser,auth)
                 console.log(agent);
                 if (agent.success) {
-                    this.$router.push('/')
+                    // this.$router.push('/')
                     
                 } else {
+                    this.erreur = "Votre Adresse Email existe  déjà donc veillez-vous connecté."
                     
                 }
     
