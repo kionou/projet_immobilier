@@ -20,7 +20,7 @@
   <script>
   export default {
       name:'ComponentModal',
-      props:['suucess','valider','texte'],
+      props:['success','valider','texte'],
       data() {
         return {
          
@@ -42,7 +42,7 @@
   
   .modal-container {
    
-      height: 100vh;
+      height: 119vh;
       width: 100%;
       position: absolute;
       top: 0;

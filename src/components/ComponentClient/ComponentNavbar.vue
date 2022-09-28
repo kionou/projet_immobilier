@@ -6,19 +6,24 @@
             
             </div>
             <ul v-show="!mobile" class="navigation">
-                <li>
-                    <router-link class="link" :to="{name:'home'}">Accueil</router-link>
-                </li>
-                <li v-if="connect">
-                    <p class="logout" @click="logout">Deconnter</p>
-                </li> 
-                <div v-else class="links">
-                    <li >
-                    <router-link class="link" :to="{name:'agentlogin'}">Agent</router-link>
-                </li>
+                <div v-if="connect" class="links">
+                
                 <li >
                     <router-link class="link" :to="{name:'login'}">Mon Compte</router-link>
                 </li> 
+                <li >
+                    <p class="logout" @click="logout">Deconnter</p>
+                </li>
+               
+                </div>
+
+                <div v-else class="links">
+                    <li>
+                    <router-link class="link" :to="{name:'home'}">Accueil</router-link>
+                </li>
+                <li >
+                    <router-link class="link" :to="{name:'login'}">Mon Compte</router-link>
+                </li>
                 </div>
                 
                
@@ -30,9 +35,6 @@
                 <ul v-show="mobileNav" class="dropdown-nav">
                     <li>
                     <router-link class="link" :to="{name:'home'}">Home</router-link>
-                </li>
-                 <li>
-                    <router-link class="link" :to="{name:'agentlogin'}">Agent</router-link>
                 </li>
                 <li>
                     <router-link class="link" :to="{name:'login'}">Mon Compte</router-link>
@@ -141,7 +143,6 @@ header{
     width:90%;
   
     .links{
-        border: 1px solid red;
         display: flex;
     }
     ul,
@@ -156,6 +157,8 @@ header{
         text-transform: uppercase;
         padding:16px;
         margin-left: 16px;
+        display: flex;
+       align-items: center;
     }
     .link{
     

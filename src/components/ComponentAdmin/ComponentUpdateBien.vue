@@ -31,13 +31,13 @@
              
   
              <label class="custom-file-upload">
-              <input type="file" @change="upload" multiple/>
+              <input type="file" @change="upload" multiple  ref="input"/>
               <i class="fa fa-cloud-upload"></i> 
                   Téléchargement personnalisé
               </label>
   
               <div class="boutton">
-                      <button @click.prevent="valider">Modifier un bien</button>
+                      <button :disabled="isActive" @click.prevent="valider">Modifier un bien</button>
                   </div>
              </form>
           
@@ -56,6 +56,7 @@
       props:['id'],
      data() {
       return {
+        isActive:false,
           nom_bien:'',
           prix:'',
           piece:'',
@@ -114,6 +115,9 @@
   }); 
     
     const photos = await Promise.all(promises);
+    if (photos) {
+        this.isActive = false
+    } 
     this.image = photos
     console.log(this.image);
   
@@ -145,6 +149,10 @@
         } else {
             
         }
+
+        this.$refs.input.addEventListener('click',()=>{
+            this.isActive = true
+        })
      },
   
   
@@ -238,5 +246,14 @@
       border: 1px solid #2288ff;
       cursor: pointer;
   }
+
+  button:disabled,
+button[disabled]{
+    background-color: hsla(206,100%,73.3%,1);
+    color:white ;
+   cursor: not-allowed;
+   pointer-events: all !important;
+   border: none;
+}
   
   </style>

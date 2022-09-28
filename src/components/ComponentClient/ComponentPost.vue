@@ -29,7 +29,7 @@
                                                        
                                                       <p>{{user.nom}}</p>
                                                       
-                                                     
+                                                    
   
                                                    </td>
                                                    <td data-label="Vaccin utilisé">{{user.email}}FCFA
@@ -62,15 +62,14 @@
   
   <script>
   import dataUser from '@/database/requeteClient';
-  import BienDetail from './BienDetail.vue';
-  import UpdateBien from './ComponentUpdateBien.vue';
+  
   
   export default {
-      name:'ComponentBien',
+      name:'ComponentProfil',
       props:['id'],
       components:{
-      UpdateBien,
-      'detail':BienDetail
+
+
   
   },
       data(){
@@ -85,7 +84,7 @@
   methods:{
     
       redirect(id){
-          this.$router.push(`/dashbord/bien/${id}`)
+        this.$router.push(`/agent/bien/detail/${id}`)
               console.log(id);
          
       },
@@ -93,12 +92,11 @@
   },
   async mounted(){
 
-
     this.$refs.scroll.scrollTop= this.$refs.scroll.scrollHeight;
     this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
 
 
-      let user = await dataUser.AfficherUser()
+      let user = await dataUser.GetClientId(this.id)
 
       if (user.success) {
           this.users=user.success   
@@ -122,7 +120,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      height:92.5vh;
+      height:93vh;
       padding-top: 10px;
   }
   

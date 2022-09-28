@@ -8,6 +8,8 @@
             <nav>
                 <p v-on:click="component='bien'">Liste des Biens</p>
                 <p v-on:click="component='profil'">Mon profil</p>
+                <p v-on:click="component='client'">Liste des clients</p>
+
             </nav>
          
         </div>
@@ -17,11 +19,11 @@
                     <input type="text" placeholder="Recherchez">
                 </form>  
                 <div class="btn">
-                    <p>Deconnecter</p>
+                    <p @click="logout" >Deconnecter</p>
                 </div>
             </div>
             
-            <component v-bind:is="component" :id="id" ></component>
+            <component v-bind:is="component" :id="id"  ></component>
            
             
            
@@ -35,19 +37,48 @@
 
 import ComponentBien from './ComponentBien.vue'
 import ComponentProfil from './ComponentProfil.vue'
+import { auth } from '@/database/Connect';
+import { onAuthStateChanged } from '@firebase/auth'
+import connectUser from '@/database/authentificationUser';
+import ComponentPost from './ComponentPost.vue';
 export default {
   name:"ComponentAgent",
   props:['id'],
   components:{
    "bien": ComponentBien,
-   'profil':ComponentProfil
+   'profil':ComponentProfil,
+   'client':ComponentPost
 },
   data (){
     return{
-        component:'bien'
+        component:'bien',
+        idUser:''
      
     }
-  }
+  },
+  methods: {
+    async  logout(){
+        await connectUser.LogoutUser()
+        this.$router.push('/login')
+
+        }
+  },
+  mounted() {
+     
+  },
+  created() {
+    onAuthStateChanged(auth,(user)=>{
+        if ((user == null) && (user.displayName != "agent")) {
+            this.idUser = user.uid
+            this.$router.push('/login')
+            
+            
+        } else{
+
+        }
+            
+        })
+  },
 
 }
 </script>
@@ -149,6 +180,7 @@ input{
 .btn:hover{
     color: #2288ff;
     background-color: white;
+    cursor: pointer;
 }
 
 </style>

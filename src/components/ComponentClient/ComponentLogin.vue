@@ -31,6 +31,8 @@
      import useVuelidate from '@vuelidate/core'
     import {require, lgmin,lgmax,ValidEmail} from '@/functions/rules'
     import connectUser from '@/database/authentificationUser'
+    import { auth } from '@/database/Connect';
+    import { onAuthStateChanged } from '@firebase/auth'
 export default {
     name:"Componentlogin",
     data() {
@@ -86,7 +88,8 @@ export default {
                 if (connection.user) {
                   this.$router.push('/profil')   
                 } else if (connection.agent) {
-                      this.$router.push('/agent')   
+                    console.log(connection.agent.user.uid);
+                    this.$router.push(`/agent/${connection.agent.user.uid}`) 
                     
                 }  else {
                   this.$router.push('/dashbord')   
@@ -97,6 +100,21 @@ export default {
             }
         }
     },
+    created() {
+    onAuthStateChanged(auth,(user)=>{
+        if (user.displayName == "admin") {
+            this.$router.push('/dashbord')  
+
+        }  else if(user.displayName == "agent"){
+            this.$router.push(`/agent/${user.uid}`) 
+
+        }else{
+            this.$router.push('/profil')  
+
+        }
+            
+        })
+  },
 
 }
 </script>
@@ -119,7 +137,8 @@ export default {
 input {
     margin-bottom: 2rem;
     height: 3rem;
-    width: auto;
+    max-width: 335px;
+    width: 147%;
     padding: 5px;
     font-size: 18px;
     outline: none;
@@ -257,8 +276,8 @@ form{
    
 
     button{
-            width: 16rem;
-            height: 5rem;
+            width: 9rem;
+            height: 3rem;
     }
 }
 
@@ -267,7 +286,19 @@ form{
        width: 305px;
        height: 529px;
    }
-
+   .image{
+    width: 100px;
+    height: 100px;
+   }
+input{
+    width: 104%;
+}
+.sanp{
+    font-size: 12px;
+}
+.texte{
+    font-size: 13px;
+}
  
 }
 

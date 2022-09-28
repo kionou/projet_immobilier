@@ -1,5 +1,5 @@
 import { clientcollection} from "./Connect";
-import {  addDoc , getDocs } from 'firebase/firestore'
+import {  addDoc , getDocs,getDoc,doc , query, where} from 'firebase/firestore'
 
 
 const dataUser = class{
@@ -10,7 +10,7 @@ const dataUser = class{
         await addDoc(clientcollection,into)
         .then(docRef=>{
                  console.log('ss',docRef);
-                 next({success:docRef})
+                 next({resultat:docRef})
         }).catch(error=>{
                  console.log("eee",error);
                  next ({ erreur:error})
@@ -44,6 +44,35 @@ const dataUser = class{
          })
        
     }
+
+    static GetClientId = (id)=>{
+      let array =[]
+      console.log('sqfQSD',id);
+      return new Promise(async (next)=>{
+      const q = query( clientcollection, where("user_id", "==", id));
+      await getDocs(q)
+      .then(docRef=>{
+           console.log('rrf',docRef)
+           if (docRef.docs.length > 0) {
+                docRef.forEach((doc) => {
+                let data = doc.data()
+                data.id =doc.id,
+                array.push(data)
+                console.log('ssss',array);
+                next({success:array})
+                    });
+           } else {
+                console.log('df<df');
+                next({alert: "Aucun client n'\a posté pour le moment !"})     
+           }
+              
+      }).catch(error=>{
+               console.log("eee",error);
+               next ({ erreur:error})
+          })
+       })
+     
+  }
 
 
 

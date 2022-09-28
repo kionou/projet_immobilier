@@ -109,10 +109,10 @@
             </div>
               <div class="modifier">
                 <div class="boutton vendu" v-if="bien.status == 'true'">
-                <button class="update" :disabled="isActive"  @click="vendre()">Vendu</button>
+                <button class="update" :disabled="isActive"  @click="vendre()">En location</button>
               </div>
               <div class="boutton" v-else>
-                <button class="update"  @click="vendre()">Vendu</button>
+                <button class="update"  @click="vendre()">En location</button>
               </div>
               </div>
              

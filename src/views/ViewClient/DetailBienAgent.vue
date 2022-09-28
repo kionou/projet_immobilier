@@ -7,7 +7,8 @@
               </div>
               <nav>
                 <p @click="bien">Liste des Biens</p>
-                <p v-on:click="profil">Mon profil</p>
+                <p @click="bien" >Mon profil</p>
+                <p @click="bien" >Liste des clients</p>
               
               </nav>
            
@@ -18,7 +19,7 @@
                       <input type="text" placeholder="Recherchez">
                   </form>  
                   <div class="btn">
-                      <p>Deconnecter</p>
+                      <p @click="logout" > Deconnecter</p>
                   </div>
               </div>
               
@@ -32,6 +33,9 @@
    
   
 import ComponentAgentBien from '@/components/ComponentClient/ComponentAgentBien.vue';
+import { auth } from '@/database/Connect';
+import { onAuthStateChanged } from '@firebase/auth'
+import connectUser from '@/database/authentificationUser';
 
   export default {
     name:"DetailBienAgent",
@@ -55,9 +59,27 @@ import ComponentAgentBien from '@/components/ComponentClient/ComponentAgentBien.
     methods: {
         bien(){
                 this.$router.go(-1)
-            }
+            },
+    async  logout(){
+        await connectUser.LogoutUser()
+        this.$router.push('/login')
+
+        }
         
     },
+    created() {
+    onAuthStateChanged(auth,(user)=>{
+        if ((user == null) && (user.displayName != "agent")) {
+            this.idUser = user.uid
+            this.$router.push('/login')
+            
+            
+        } else{
+
+        }
+            
+        })
+  },
   
   }
   </script>
@@ -160,6 +182,7 @@ import ComponentAgentBien from '@/components/ComponentClient/ComponentAgentBien.
   .btn:hover{
       color: #2288ff;
       background-color: white;
+      cursor: pointer;
   }
   
   </style>

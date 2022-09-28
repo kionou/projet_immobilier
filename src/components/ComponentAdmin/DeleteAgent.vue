@@ -5,7 +5,7 @@
            
               <div class="container">
                
-                <p>vous voulez-vous supprimer cette article ?</p>
+                <p>vous voulez-vous supprimer ce agent ?</p>
                 <div class="boutton">
                     <button @click="supp">Oui</button>
                     <button @click='close'>Non</button>

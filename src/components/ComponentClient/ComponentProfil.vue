@@ -1,4 +1,6 @@
 <template>
+    <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete"></DeleteAgent>
+
   <div class="container">
     <div class="content">
       <div class="image">
@@ -23,7 +25,7 @@
         </div>
         <div  class="boutton " >
                    <button class="update"  @click="update()">Modifier</button>
-                   <button class="delete"   >Supprimer</button>
+                   <button class="delete" @click="agentDelete"  >Supprimer</button>
           </div>
       </div>
 
@@ -34,15 +36,19 @@
 
 <script>
   import dataAgent from '@/database/requeteAgent';
+  import DeleteAgent from '../ComponentAdmin/DeleteAgent.vue';
 export default {
   name:'ComponentProfil',
   props:['id'],
   components:{
+    DeleteAgent
 
   },
   data() {
     return {
-      agent:''
+      agent:'',
+      Iddelete:'',
+      toggle:false,
       
     }
   },
@@ -50,7 +56,14 @@ export default {
     update(){
         this.$router.push(`/update/${this.id}`)
 
-    }
+    },
+    agentDelete(){
+      console.log(this.id);
+        
+        this.toggle = !this.toggle
+        this.Iddelete = this.id
+
+    },
   },
  async mounted() {
   let agent = await dataAgent.GetAgnetId(this.id)

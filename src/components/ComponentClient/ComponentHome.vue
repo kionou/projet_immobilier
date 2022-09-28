@@ -1,4 +1,5 @@
 <template>
+    
   <div>
     <div class="ImageHeader">
        <div class="tete">Pour trouver la location qui vous ressemble</div>
@@ -159,10 +160,10 @@
             </div>
            
         </div>
-         
+       
         </div>
       
-        
+        <button :class="{selected: isSelected}" @click="isSelected = !isSelected">favvoris</button>
        </div>
         <div class="content-texte">
             <h2>CONTACTEZ-NOUS</h2>
@@ -219,14 +220,22 @@ export default {
             biens:"",
             alert:'',
             isActive: true,
-            loading:false
+            loading:false,
+            isSelected:false
+ 
   
-        }
+        }  
     },
     methods:{
         redirect(id){
              this.$router.push(`/detail/${id}`)
             console.log(id);
+        },
+        favorite: function() {
+            if (this.disabled==true) {
+                return;
+            }
+            this.value = !this.value;
         }
     },
    async mounted(){
@@ -246,6 +255,7 @@ export default {
         console.log('erreur 404');
         
     }
+  
 
 
     },
@@ -641,5 +651,14 @@ select{
 }
 
 }
+
+button{
+    background-color: red;
+    color: white;
+}
+button.selected{
+    background-color: aqua;
+}
+
 
 </style>

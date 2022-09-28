@@ -19,7 +19,7 @@
                     <input type="text" placeholder="Recherchez">
                 </form>  
                 <div class="btn">
-                    <p>Deconnecter</p>
+                    <p @click="logout">Deconnecter</p>
                 </div>
             </div>
             <component v-bind:is="component"></component>
@@ -35,6 +35,9 @@
   import ComponentBien from './ComponentBien.vue';
   import ComponentAgent from './ComponentAgent.vue';
   import ComponentClient from './ComponentClient.vue';
+  import { auth } from '@/database/Connect';
+ import { onAuthStateChanged } from '@firebase/auth'
+ import connectUser from '@/database/authentificationUser';
 
  
 export default {
@@ -49,7 +52,22 @@ export default {
     return{
       component:'bien'
     }
-  }
+  },
+  methods: {
+    async  logout(){
+        await connectUser.LogoutUser()
+        this.$router.push('/login')
+
+        }
+  },
+  created() {
+    onAuthStateChanged(auth,(user)=>{
+        if (user == null && user.displayName != "admin") {
+            this.$router.push('/login')   
+        } 
+            
+        })
+  },
 
 }
 </script>
@@ -152,6 +170,7 @@ input{
 .btn:hover{
     color: #2288ff;
     background-color: white;
+    cursor: pointer;
 }
 
 </style>

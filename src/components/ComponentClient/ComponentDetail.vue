@@ -1,5 +1,7 @@
 <template>
-  <div>
+             <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte" ></ComponentModal>
+
+  <div class="section" ref="scroll">
     <div class="trait-blue"></div>
         <div class="container-fluid" >
            
@@ -7,7 +9,7 @@
            
             <div class="container">
                 <div class="texte">
-                    <p>Location {{bien.bien_nom}} {{bien.superficie}}m2, {{bien.ville}} {{bien.commune}}</p>
+                    <p>Location {{bien.nom_bien}} {{bien.superficie}}m2, {{bien.ville}} {{bien.commune}}</p>
                 </div>
                 <div class="ImageHeader">
                     <div class="image">
@@ -17,9 +19,9 @@
             </div>
             <div class="container-info">
                 <div class="info-right">
-                    <h1 class="info-texte">LOCATION {{bien.bien_nom}} {{bien.ville}} Appartement Abidjan</h1>
+                    <h1 class="info-texte">LOCATION {{bien.nom_bien}} {{bien.ville}} </h1>
                     <h3  class="info-texte">{{bien.commune}}</h3>
-                    <p  class="info-texte">{{bien.nom}} {{bien.piece}}pieces</p>
+                    <p  class="info-texte">{{bien.nom_bien}} {{bien.piece}}pieces</p>
                     <div class="icon">
                         <div class="icon-content">
                             <i class="fas fa-door-closed"></i>
@@ -94,7 +96,8 @@
                         </textarea>
                         <small v-if="v$.descriptions.$error">{{v$.descriptions.$errors[0].$message}} </small>
                         <input type="hidden" name="idbien" v-model="id_bien">
-                        <button @click.prevent="submit">Demander des infos</button>
+                        <input type="hidden" name="idbien" v-model="user_id">
+                        <button @click.prevent="valider">Demander des infos</button>
                     </form>
         
                 </div>
@@ -142,13 +145,17 @@
    import dataBien from '@/database/requeteBien';
    import dataAgent from '@/database/requeteAgent';
    import dataUser from '@/database/requeteClient';
-   import useVuelidate from '@vuelidate/core'
+   import useVuelidate from '@vuelidate/core';
+   import ComponentModal from '../ComponentAdmin/ComponentModal.vue';
     import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
-    import {  auth } from '@/database/Connect';
+
 
 export default {
     name:"ComponentDetail",
     props:['id'],
+    components:{
+        ComponentModal
+    },
     data() {
         return {
             bien:"",
@@ -157,7 +164,10 @@ export default {
             numero:'',
             descriptions:'Bonjour,J\'ai vu votre annonce sur le site Je souhaiterais obtenir des informations complémentaires sur ce bien et, éventuellement, convenir d\'un rendez-vous pour une visite Merci, par avance, de bien vouloir me contacter dès que possible.Cordialement',
             v$:useVuelidate(),
-            agent:''
+            agent:'',
+            success:false,
+            texte:'Votre demande a été envoiyé avec success nous vous contacterez dans les heures qui suivent .',
+            user_id:''
             
         }
     },
@@ -189,25 +199,27 @@ export default {
     },
     methods: {
 
- async submit(){
+ async valider(){
   console.log('rrr')
   console.log('fsqjfblqkf',this.v$.$errors.length);
-  // this.v$.$validate()
   this.v$.$touch()
   if (this.v$.$errors.length == 0 ) {
-      // this.revele = !this.revele
    let   DataUser={
          nom:this.nom,
           email:this.email,
           numero:this.numero,
           description:this.descriptions,
-          bien_id:this.id
+          bien_id:this.id,
+          user_id:this.user_id
          
       }
       console.log(DataUser);
       let user = await dataUser.InsertionUser(DataUser)
-        if (user.success) {
-            this.$router.push('/')
+        if (user.resultat) {
+            this.success = !this.success
+            console.log(user.resultat);
+
+            // this.$router.push('/')
             
         } else {
             
@@ -218,10 +230,15 @@ export default {
 
 },
    async mounted() {
+
+        this.$refs.scroll.scrollTop= this.$refs.scroll.scrollHeight;
+        this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
+
         let bien = await dataBien.GetBienId(this.id)
         console.log(bien.success.user_id);
         if (bien.success) {
             this.bien = bien.success
+            this.user_id =  bien.success.user_id
             let id_agent = bien.success.user_id
             let agent = await  dataAgent.GetAgnetId(id_agent)
             console.log('agent',agent.success);
@@ -243,6 +260,13 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.section{
+    width: 100%;
+    height: 109vh;
+  
+    overflow-y: scroll;
+      scrollbar-width: thin;
+}
     .ImageHeader{
     /* border: 1px solid red; */
     width: 100%;
@@ -269,6 +293,7 @@ small{
     height: 50px;
     background-color: #2288ff;
     width: 100%;
+    margin-top: 23px;
 }
 
 .container{

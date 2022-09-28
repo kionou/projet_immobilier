@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ComponentModal v-bind:toggle="toggle" v-bind:valider="valider" :texte="texte" ></ComponentModal>
+    <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte" ></ComponentModal>
      <div class="modal-container" id="modal" v-if="revele" @click.self="submit">
        
          
@@ -28,7 +28,7 @@
                 <input type="password" name="password" placeholder="Mot de passe" v-model="password">
               
                   
-                <button @click.prevent='valider' >Enregistrer</button>
+                <button  @click.prevent='valider' >Enregistrer</button>
             </form>
           
         </div>
@@ -51,6 +51,7 @@ export default {
     props:['revele','submit','count'],
         data() {
         return {
+                isActive:true,
                 nom:'',
                 prenom:'',
                 email:'',
@@ -58,7 +59,7 @@ export default {
                 password:'',
               v$:useVuelidate(),
               erreur:'',
-              toggle:false,
+              success:false,
               texte:'Enregistrement de l\'Agent éffectué avec success.'
             
         }
@@ -103,7 +104,7 @@ methods: {
             if (this.v$.$errors.length == 0 ) {
                
              let   DataUser={
-                
+
                     email:this.email,
                     nom:this.nom,
                     prenom:this.prenom,
@@ -119,7 +120,7 @@ methods: {
                 let agent = await connectAgent.AddAgent(DataUser,auth)
                 console.log(agent);
                 if (agent.success) {
-                    this.toggle = !this.toggle
+                    this.success = !this.success
                   
                     console.log('bonjour');
                     // this.$router.push('/')

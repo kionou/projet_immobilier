@@ -35,7 +35,7 @@
             </label>
 
             <div class="boutton">
-                    <button @click.prevent="valider">Ajouter un bien</button>
+                    <button  :disabled="isActive" @click.prevent="valider">Ajouter un bien</button>
                 </div>
            </form>
         
@@ -55,6 +55,7 @@ export default {
    ],
    data() {
     return {
+        isActive:true,
         nom_bien:'',
         prix:'',
         piece:'',
@@ -89,7 +90,7 @@ export default {
         console.log(DataBien);
      let bien =  await dataBien.InsertionBien(DataBien)
      if (bien.success) {
-        this.$router.push('/')
+        this.$router.go()
         
      } else {
         console.log('error 404');
@@ -113,6 +114,10 @@ async upload (e)  {
 }); 
   
   const photos = await Promise.all(promises);
+  if (photos) {
+  this.isActive = false
+    
+  }
   this.image = photos
   console.log(this.image);
 
@@ -212,6 +217,15 @@ button:hover {
     color: #2288ff;
     border: 1px solid #2288ff;
     cursor: pointer;
+}
+
+button:disabled,
+button[disabled]{
+    background-color: hsla(206,100%,73.3%,1);
+    color:white ;
+   cursor: not-allowed;
+   pointer-events: all !important;
+   border: none;
 }
 
 </style>

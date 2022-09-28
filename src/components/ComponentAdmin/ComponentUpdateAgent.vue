@@ -15,13 +15,13 @@
               </div>
 
              <label class="custom-file-upload">
-              <input type="file" @change="upload"/>
+              <input type="file" @change="upload" ref="input"/>
               <i class="fa fa-cloud-upload"></i> 
                   Téléchargement personnalisé
               </label>
   
               <div class="boutton">
-                      <button @click.prevent="valider">Modifier</button>
+                      <button :disabled="isActive" @click.prevent="valider">Modifier</button>
                   </div>
              </form>
           
@@ -40,6 +40,7 @@
       props:['id'],
      data() {
       return {
+        isActive:false,
           nom:'',
           prenom:'',
           email:'',
@@ -100,6 +101,9 @@
     () => {
    
       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        if (downloadURL) {
+        this.isActive = false
+    } 
         this.image = downloadURL
         console.log('File available at', downloadURL);
       });
@@ -123,6 +127,10 @@
         } else {
             
         }
+
+        this.$refs.input.addEventListener('click',()=>{
+            this.isActive = true
+        })
      },
   
   
@@ -216,5 +224,14 @@
       border: 1px solid #2288ff;
       cursor: pointer;
   }
+
+  button:disabled,
+button[disabled]{
+    background-color: hsla(206,100%,73.3%,1);
+    color:white ;
+   cursor: not-allowed;
+   pointer-events: all !important;
+   border: none;
+}
   
   </style>
