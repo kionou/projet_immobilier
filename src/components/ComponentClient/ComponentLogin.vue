@@ -82,14 +82,15 @@ export default {
                     password:this.password
                 }
                 console.log(DataUser);
-                let user = await connectUser.Userconnect(DataUser)
-                if (user.success) {
+                let connection = await connectUser.Userconnect(DataUser)
+                if (connection.user) {
                   this.$router.push('/profil')   
-                } else if (user.alert) {
-                    this.erreur = user.alert
+                } else if (connection.agent) {
+                      this.$router.push('/agent')   
                     
                 }  else {
-                    this.MessageErreur(user.erreur)
+                  this.$router.push('/dashbord')   
+                   
                     
                 }
     
@@ -118,7 +119,7 @@ export default {
 input {
     margin-bottom: 2rem;
     height: 3rem;
-    width: 20rem;
+    width: auto;
     padding: 5px;
     font-size: 18px;
     outline: none;
@@ -253,10 +254,7 @@ form{
         align-content: center;
     }
 
-    input{
-            height: 6rem;
-            width: 35rem;
-    }
+   
 
     button{
             width: 16rem;
@@ -270,9 +268,7 @@ form{
        height: 529px;
    }
 
-   input{
-       width: 27rem;
-   }
+ 
 }
 
 </style>

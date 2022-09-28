@@ -43,13 +43,15 @@ const connectUser = class{
 
      await  signInWithEmailAndPassword(auth,email,password)
         .then((cred)=>{
-            if (cred.user.displayName != "agent") { 
-                signOut(auth)
-                next({alert:"Email ou le Mot de passe est incorrect !"})
+            if (cred.user.displayName == "user") { 
+                next({user:cred})
                 
-            } else {
-              next({success:cred})
+            }  else if (cred.user.displayName == "agent") {
+              next({agent:cred})
                 
+            } else{
+              next({admin:cred})
+
             }
 
         })
