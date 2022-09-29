@@ -1,7 +1,9 @@
 <template>
     <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete"></DeleteAgent>
-
-  <div class="container">
+  <div class="loading" v-if="loading">
+  <ComponentLoading/>
+  </div>
+  <div class="container" v-else>
     <div class="content">
       <div class="image">
         <img :src="agent.image" alt="">
@@ -37,11 +39,13 @@
 <script>
   import dataAgent from '@/database/requeteAgent';
   import DeleteAgent from '../ComponentAdmin/DeleteAgent.vue';
+  import ComponentLoading from './ComponentLoading.vue';
 export default {
   name:'ComponentProfil',
   props:['id'],
   components:{
-    DeleteAgent
+    DeleteAgent,
+    ComponentLoading
 
   },
   data() {
@@ -49,6 +53,7 @@ export default {
       agent:'',
       Iddelete:'',
       toggle:false,
+      loading:true
       
     }
   },
@@ -70,6 +75,7 @@ export default {
         console.log(agent.success);
         if (agent.success) {
           this.agent = agent.success
+          this.loading = false
             
           
         } else {

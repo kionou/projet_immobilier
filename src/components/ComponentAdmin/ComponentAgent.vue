@@ -1,13 +1,15 @@
 <template>
-  <div>
+  <div ref="scroll">
     <ModalAgent v-bind:revele="revele" v-bind:submit="submit" ></ModalAgent>
     <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete"></DeleteAgent>
-
-     <div class="contenu1">
+        <div class="loading" v-if="loading">
+            <ComponentLoading/>
+        </div>
+     <div class="contenu1"   v-else  >
                 <div class="boutton" @click="submit">
                     <p>Ajouter un Agent</p>
                 </div>
-                <div class="contenaire_card" ref="scroll">
+                <div class="contenaire_card" >
                     <div class="alert" v-if="alert">
                         {{alert}}
                     </div>
@@ -39,7 +41,7 @@
                     </div>
                   
                 </div>
-            </div>
+     </div>
   </div>
 </template>
 
@@ -47,13 +49,15 @@
 import dataAgent from '@/database/requeteAgent';
 import ModalAgent from './ModalAgent.vue';
 import DeleteAgent from './DeleteAgent.vue';
+import ComponentLoading from '../ComponentClient/ComponentLoading.vue';
 export default {
     name:'ComponentAgent',
     
     props:['Iddelete'],
     components:{
     ModalAgent,
-    DeleteAgent
+    DeleteAgent,
+    ComponentLoading
   
 },
 data(){
@@ -63,6 +67,7 @@ data(){
         alert:'',
         Iddelete:'',
         toggle:false,
+        loading:true
     }
 },
 methods:{
@@ -89,9 +94,12 @@ async mounted() {
     let agent = await dataAgent.AfficherAgent()
     console.log(agent);
     if (agent.success) {
-        this.agents=agent.success   
+        this.agents=agent.success  
+        this.loading = false 
     }else if (agent.alert) {
         this.alert =agent.alert
+        this.loading = false 
+
         
     } else {
         console.log('erreu 404');
@@ -110,8 +118,9 @@ async mounted() {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: auto;
     height: 93vh;
+    overflow-y: scroll;
+    scrollbar-width: thin;
 }
 
 .boutton{
@@ -143,9 +152,9 @@ async mounted() {
     padding: 10px 21px;
     justify-items: center;
     border: 1px solid #ccc;
+    padding: 3px;
     overflow-y: scroll;
     scrollbar-width: thin;
-    padding: 3px;
     
 
 }

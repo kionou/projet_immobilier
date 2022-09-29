@@ -62,22 +62,22 @@
   
   <script>
   import dataUser from '@/database/requeteClient';
+  import ComponentLoading from './ComponentLoading.vue';
   
   
   export default {
       name:'ComponentProfil',
       props:['id'],
-      components:{
-
-
-  
-  },
+      component:{
+      ComponentLoading
+    },
       data(){
       return{
           revele:false,
           component:'',
           users:'',
-          alert:''
+          alert:'',
+          loading:true
          
       }
   },

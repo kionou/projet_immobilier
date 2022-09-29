@@ -129,9 +129,6 @@ methods: {
                     this.success = !this.success
                     this.loading =false
 
-                  
-                    console.log('bonjour');
-                    // this.$router.push('/')
                     
                 } else {
                     this.erreur = "Votre Adresse Email existe  déjà donc veillez-vous connecté."

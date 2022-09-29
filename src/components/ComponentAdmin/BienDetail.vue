@@ -1,7 +1,12 @@
 <template>
-    <div>
-          <div class="container-fluid"  >
-            <div class="containers" ref="scroll">
+    <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte" ></ComponentModal>
+
+    <div  ref="scroll">
+        <div class="loading" v-if="loading">
+            <ComponentLoading/>
+        </div>
+          <div class="container-fluid" v-else >
+            <div class="containers">
                 <div class="modifier" v-if="bien.status == 'true'">
                     <div class="boutton">
                     <p class="text">Ce bien est déjà vendu</p>
@@ -101,29 +106,19 @@
                   
                 </div>
                 </div>
-                
-                
-           
-               
-               
+ 
             </div>
               <div class="modifier">
                 <div class="boutton vendu" v-if="bien.status == 'true'">
                 <button class="update" :disabled="isActive"  @click="vendre()">En location</button>
               </div>
               <div class="boutton" v-else>
-                <button class="update"  @click="vendre()">En location</button>
+                <button class="update"  @click="valider()">En location</button>
               </div>
               </div>
-             
-
-     
 
             </div>
-                
-           
-            
-             
+
           </div>
     </div>
   </template>
@@ -131,22 +126,35 @@
   <script>
     import dataBien from '@/database/requeteBien';
     import dataAgent from '@/database/requeteAgent'
+    import ComponentLoading from '../ComponentClient/ComponentLoading.vue';
+    import ComponentModal from './ComponentModal.vue';
   export default {
       name:"BienDetail",
       props:['id'],
+      components:{
+        ComponentLoading,
+        ComponentModal
+      },
       data() {
         return {
             bien:'',
             isActive:true,
-            agent:''
+            agent:'',
+            loading:true,
+            success:false,
+            texte:'',
             
         }
       },
       methods: {
-      async  vendre(){
-            console.log(this.id);
+      async  valider(){
+          this.loading = false
             let bien = await dataBien.UpdateBienVendu(this.id)
             console.log('sdd',bien)
+            if(bien){
+                this.loading = false
+
+            }
 
         },
         update(){
@@ -167,9 +175,10 @@
         if (bien.success) {
             this.bien = bien.success
             let id_agent = bien.success.user_id
+            this.texte = `Vous aviez mis ${bien.success.nom_bien} en location`
             let agent = await  dataAgent.GetAgnetId(id_agent)
-            console.log('agent',agent.success);
             this.agent = agent.success
+            this.loading = false
            
             
         } else {

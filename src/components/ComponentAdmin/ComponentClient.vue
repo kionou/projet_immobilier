@@ -1,9 +1,12 @@
 <template>
-    <div>
-        <div class="contenu">
+    <div ref="scroll">
+        <div class="loading" v-if="loading">
+            <ComponentLoading/>
+        </div>
+        <div class="contenu" v-else>
                   <div class="contenu_card">
 
-                           <div class="carnet" ref="scroll">
+                           <div class="carnet" >
                             <div class="alert" v-if="alert">
                                     {{alert}}
                             </div>
@@ -55,7 +58,7 @@
                   </div>
                   
   
-              </div>
+        </div>
               
     </div>
   </template>
@@ -64,13 +67,15 @@
   import dataUser from '@/database/requeteClient';
   import BienDetail from './BienDetail.vue';
   import UpdateBien from './ComponentUpdateBien.vue';
+  import ComponentLoading from '../ComponentClient/ComponentLoading.vue';
   
   export default {
       name:'ComponentBien',
       props:['id'],
       components:{
       UpdateBien,
-      'detail':BienDetail
+      'detail':BienDetail,
+      ComponentLoading
   
   },
       data(){
@@ -78,7 +83,8 @@
           revele:false,
           component:'',
           users:'',
-          alert:''
+          alert:'',
+          loading:true
          
       }
   },
@@ -101,9 +107,12 @@
       let user = await dataUser.AfficherUser()
 
       if (user.success) {
-          this.users=user.success   
+          this.users=user.success  
+          this.loading = false 
       }else if (user.alert) {
         this.alert = user.alert
+        this.loading = false 
+
         
       } else {
         console.log('eeeq');

@@ -6,8 +6,8 @@
         <div class="loading" v-if="loading">
             <ComponentLoading/>
 
-        </div>
-        <div class="container-fluid" v-else  >
+      </div>
+        <div class="container-fluid" >
             <div class="containers" >
                 <div class="modifier" v-if="bien.status == 'true'">
                     <div class="boutton">
@@ -137,7 +137,6 @@
       methods: {
       async  valider(){
         this.loading =true
-            console.log(this.id);
             let bien = await dataBien.UpdateBienVendu(this.id)
             if (bien.success) {
             this.loading =false

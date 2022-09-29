@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div class="loading">
+    <div class="loading" v-if="loading">
         <ComponentLoading/>
     </div>
-     <div class="modal-container" id="modal" v-if="revele" @click.self="submit">
+    <div v-else>
+        <div class="modal-container" id="modal" v-if="revele" @click.self="submit" >
         <div class="modal">
            <h1>Enregistrement des biens immobiliers</h1>
            <form >
@@ -44,6 +45,8 @@
         
         </div>
     </div>
+    </div>
+   
   </div>
 </template>
 

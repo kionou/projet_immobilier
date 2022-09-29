@@ -207,7 +207,8 @@ export default {
     methods: {
 
  async valider(){
-  console.log('rrr')
+
+  this.loading = true
   console.log('fsqjfblqkf',this.v$.$errors.length);
   this.v$.$touch()
   if (this.v$.$errors.length == 0 ) {
@@ -224,12 +225,7 @@ export default {
       let user = await dataUser.InsertionUser(DataUser)
         if (user.resultat) {
             this.success = !this.success
-            
-        
-            console.log(user.resultat);
-
-            // this.$router.push('/')
-            
+            this.loading = false
         } else {
             
         }

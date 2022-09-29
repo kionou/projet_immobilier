@@ -4,7 +4,6 @@
         
            
               <div class="container">
-               {{Iddelete}}
                 <p>vous voulez-vous supprimer cette article ?</p>
                 <div class="boutton">
                     <button @click="supp">Oui</button>
@@ -13,21 +12,35 @@
 
           </div>
           
-        
+        <div class="loading" v-if="loading">
+            <ComponentLoading/>
+
+        </div>
       </div>
     </div>
   </template>
   
   <script>
     import dataBien from '@/database/requeteBien'
+    import ComponentLoading from '../ComponentClient/ComponentLoading.vue'
   export default {
       name:'DeleteBien',
       props:['toggle','bienDelete','Iddelete'],
+      data() {
+        return {
+            loading:false
+        }
+      },
+      components:{
+        ComponentLoading
+      },
       methods: {
      async supp(){
+        this.loading = true
             let bien = await dataBien.DeleteBien(this.Iddelete)
             if(bien.success){
                location.reload()
+               this.loading = false
               
             }
 

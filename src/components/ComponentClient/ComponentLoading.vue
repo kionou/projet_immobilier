@@ -20,7 +20,7 @@
     props: {
       color: {
         type: String,
-        default: '#41b883',
+        default: '#2288ff',
       },
       scale: {
         type: Number,
@@ -40,7 +40,7 @@
   
   <style scoped >
 
-/* .container-loading {
+.container-loading {
     height: 100%;
     width: 100%;
     position: fixed;
@@ -49,7 +49,7 @@
     background: black;
     z-index: 100;
     opacity: 1;
-} */
+}
   .preloader {
     width: 125px;
     height: 125px;

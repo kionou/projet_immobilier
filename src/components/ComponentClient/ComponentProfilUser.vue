@@ -1,5 +1,9 @@
 <template>
-    <div class="container">
+  <div>
+    <div class="loading" v-if="loading">
+       <ComponentLoading/>
+    </div>
+    <div class="container" v-else>
       <div class="content">
         <div class="image">
           <img src="@/assets/images/image.jpg" alt="">
@@ -30,10 +34,22 @@
       </div>
       
     </div>
+  </div>
+  
   </template>
   
   <script>
+    import ComponentLoading from './ComponentLoading.vue';
+
   export default {
+    data() {
+      return {
+        loading:true
+      }
+    },
+    component:{
+      ComponentLoading
+    }
   
   }
   </script>

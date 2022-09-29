@@ -4,7 +4,10 @@
     <DeleteBien v-bind:toggle="toggle" v-bind:bienDelete="bienDelete" :Iddelete="Iddelete"></DeleteBien>
 
       <component v-bind:is="component"></component>
-      <div class="contenu">
+      <div class="loading" v-if="loading">
+    <ComponentLoading/>
+      </div>
+      <div class="contenu" v-else>
                 <div class="boutton" @click="submit()">
                     <p>Ajouter un bien</p>
                 </div>
@@ -80,6 +83,7 @@ import dataBien from '@/database/requeteBien';
 import ModalBien from './ModalBien.vue';
 import UpdateBien from './ComponentUpdateBien.vue';
 import DeleteBien from './DeleteBien.vue';
+import ComponentLoading from '../ComponentClient/ComponentLoading.vue';
 
 export default {
     name:'ComponentBien',
@@ -88,6 +92,7 @@ export default {
     ModalBien,
     UpdateBien,
     DeleteBien,
+    ComponentLoading
 
 },
     data(){
@@ -98,7 +103,8 @@ export default {
         biens:'',
         Iddelete:'',
         alert:'',
-        agentId:''
+        agentId:'',
+        loading:true
        
     }
 },
@@ -127,9 +133,12 @@ async mounted(){
     if (bien.success) {
         console.log(bien.success)
         this.biens=bien.success
+        this.loading  = false
+
         
     } else if (bien.alert) {
         this.alert=bien.alert
+        this.loading  = false
         
     } else {
         console.log('err 404');
