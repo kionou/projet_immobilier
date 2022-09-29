@@ -72,8 +72,11 @@
                     </div>
             </div>
         </div> -->
+        <div v-if="loading">
+            <p>chargement.....</p>
+        </div>
         
-        <div class="content-card" v-for="bien in biens" :key="bien.id">
+        <div class="content-card" v-for="bien in biens" :key="bien.id" v-else>
             <div class="vendu" v-if="bien.status == 'true'">
                 <div class="card-image">
                <img :src="bien.images" alt="">   
@@ -212,7 +215,6 @@
 
 <script>
     import dataBien from '@/database/requeteBien';
-    import Spinner from './Spinner.vue';
 export default {
     name:"ComponentHome",
     data() {
@@ -220,7 +222,7 @@ export default {
             biens:"",
             alert:'',
             isActive: true,
-            loading:false,
+            loading:true,
             isSelected:false
  
   
@@ -247,6 +249,7 @@ export default {
     if (bien.success) {
         console.log(bien.success)
         this.biens=bien.success
+        this.loading=false
         
     }else if (bien.alert) {
         this.alert = bien.alert
