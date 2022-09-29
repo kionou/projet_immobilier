@@ -1,6 +1,7 @@
 <template>
     <div>
-       <div class="modal-container" >
+      
+       <div class="modal-container">
           <div class="modal">
              <h1>Modifier  des biens immobiliers</h1>
              <form action="">
@@ -50,10 +51,14 @@
   import dataBien  from '@/database/requeteBien'
   import {storage} from '@/database/Connect'
   import { ref,  uploadBytes, getDownloadURL } from "firebase/storage";
+
   export default {
       
       name:'UpdateBien',
       props:['id'],
+      components:{
+     
+      },
      data() {
       return {
         isActive:false,
@@ -67,12 +72,14 @@
           commune:'',
           description:'',
           service:'',
-          image:''
+          image:'',
+     
           
       }
      },
      methods: {
      async valider(){
+   
           let DataBien={
              nom_bien:this.nom_bien,
              prix:this.prix,
@@ -92,6 +99,7 @@
        let bien =  await dataBien.UpdateBien(this.id,DataBien)
        if (bien.success) {
           this.$router.go(-1)
+
           
        } else {
           console.log('error 404');
@@ -144,6 +152,7 @@
             this.user_id = bien.success.user_id,
             this.status = bien.success.status
             
+ 
           
             
         } else {

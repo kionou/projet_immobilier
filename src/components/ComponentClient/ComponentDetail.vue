@@ -1,12 +1,13 @@
 <template>
-             <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte" ></ComponentModal>
+    <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte" ></ComponentModal>
 
-  <div class="section" ref="scroll">
+    <div class="general" ref="scroll">
+        <div class="loading" v-if="loading">
+           <ComponentLoading/>
+    </div>
+    <div class="section"  v-else>
     <div class="trait-blue"></div>
         <div class="container-fluid" >
-           
-  
-           
             <div class="container">
                 <div class="texte">
                     <p>Location {{bien.nom_bien}} {{bien.superficie}}m2, {{bien.ville}} {{bien.commune}}</p>
@@ -139,6 +140,9 @@
             </div>
         </div>
   </div>
+    </div>
+
+ 
 </template>
 
 <script>
@@ -148,13 +152,15 @@
    import useVuelidate from '@vuelidate/core';
    import ComponentModal from '../ComponentAdmin/ComponentModal.vue';
     import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
+    import ComponentLoading from './ComponentLoading.vue';
 
 
 export default {
     name:"ComponentDetail",
     props:['id'],
     components:{
-        ComponentModal
+        ComponentModal,
+        ComponentLoading
     },
     data() {
         return {
@@ -167,7 +173,8 @@ export default {
             agent:'',
             success:false,
             texte:'Votre demande a été envoiyé avec success nous vous contacterez dans les heures qui suivent .',
-            user_id:''
+            user_id:'',
+            loading:true
             
         }
     },
@@ -217,6 +224,8 @@ export default {
       let user = await dataUser.InsertionUser(DataUser)
         if (user.resultat) {
             this.success = !this.success
+            
+        
             console.log(user.resultat);
 
             // this.$router.push('/')
@@ -243,6 +252,7 @@ export default {
             let agent = await  dataAgent.GetAgnetId(id_agent)
             console.log('agent',agent.success);
             this.agent = agent.success
+            this.loading=false
            
             
         } else {
@@ -260,6 +270,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.general{
+    height: 100vh;
+     overflow-y: scroll;
+      scrollbar-width: thin;
+}
+
 .section{
     width: 100%;
     height: 109vh;
@@ -268,12 +284,9 @@ export default {
       scrollbar-width: thin;
 }
     .ImageHeader{
-    /* border: 1px solid red; */
     width: 100%;
     height: auto;
     bottom: 0;
-    border-radius: 10px;
-
 }
 small{
     color: red;
@@ -293,7 +306,6 @@ small{
     height: 50px;
     background-color: #2288ff;
     width: 100%;
-    margin-top: 23px;
 }
 
 .container{
@@ -500,7 +512,7 @@ textarea{
     font-family: 'Roboto Serif',
     serif;
     margin-top:2rem;
-    padding: 5px;
+    padding: 9px;
 }
 
 
@@ -530,7 +542,7 @@ textarea:focus{
 
 
 button {
-    width: 18rem;
+    width: 13rem;
     height: 3rem;
     margin-top: 2rem;
     text-align: center;
@@ -552,13 +564,26 @@ button:hover {
 
 
 
-@media (max-width:1165px) {
+@media (max-width:900px) {
+    .message-detail{
+        flex-direction: column;
+        align-items: center;
+    }
   
+    .message{
+        padding: 20px;
+        width: auto;
+        margin-bottom: 30px;
+    }
+    .message-content{
+        width: auto;
+    }
+    .message-detail h3{
+        width: 364px;
+    }
 }
 
-@media (max-width:900px) {
-  
-}
+
 
 @media (max-width:700px) {
     .container-info{
@@ -569,15 +594,49 @@ button:hover {
         width: 54%;
         font-size: 23px;
     }
+    .info-texte{
+        font-size:20px
+    }
+  
+   
+
+    
 } 
+@media (max-width:500px) {
+    .message-detail{
+        width: 88%;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+}
+@media (max-width:460px) {
+    .container ,.container-info, .container-desc, .container-image{
+        width: 98%;
+    }
+    .info-left{
+        font-size: 18px;
+    }
+    .message-detail{
+        width: auto;
+    }
+    .message{
+        width: 86%;
+    }
+    input , textarea{
+        width: 15rem;
+    }
+
+  
+}
 
 .content-card{
-    width: 300px;
+    width: 290px;
     height: auto;
     border: 1px solid #ccc;
     background-color: white;
     border-radius: 10px;
-    margin-top: 30px;
+    margin-top: 20px;
     overflow: hidden;
     text-align: center;
     font-family: 'Roboto Serif', serif;
@@ -606,7 +665,7 @@ button:hover {
     flex-direction: column;
     justify-content: space-around;
     padding: 0 10px 10px 10px;
-    height: 20vh;
+    height: 200px;
 }
 
 .body-text {

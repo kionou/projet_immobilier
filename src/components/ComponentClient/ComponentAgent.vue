@@ -47,12 +47,12 @@ export default {
   components:{
    "bien": ComponentBien,
    'profil':ComponentProfil,
-   'client':ComponentPost
+   'client':ComponentPost,
 },
   data (){
     return{
         component:'bien',
-        idUser:''
+        idUser:'',
      
     }
   },
@@ -71,6 +71,7 @@ export default {
         if ((user == null) && (user.displayName != "agent")) {
             this.idUser = user.uid
             this.$router.push('/login')
+
             
             
         } else{

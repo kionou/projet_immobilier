@@ -13,7 +13,7 @@ export default {
 .spin{
     height: 100%;
      margin: 0;
-    padding: 76px 10px 10px;
+    padding: 87px 0px 0px;
     margin-top: 3px;
 }
 </style>

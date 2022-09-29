@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Spinner/>
     <ComponentNavbar/>
     <ComponentSign/>
 
@@ -9,12 +10,14 @@
 <script>
     import ComponentNavbar from '@/components/ComponentClient/ComponentNavbar';
     import ComponentSign from '@/components/ComponentClient/ComponentSign';
+    import Spinner from '@/components/ComponentClient/Spinner.vue';
     
 export default {
     name:"SignView",
     components:{
     ComponentNavbar,
     ComponentSign,
+    Spinner
 }
 
 }

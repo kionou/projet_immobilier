@@ -1,9 +1,14 @@
 <template>
     <div>
-        <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte"></ComponentModal>
-    <DeleteBien v-bind:toggle="toggle" v-bind:bienDelete="bienDelete" :Iddelete="Iddelete"></DeleteBien>   
-          <div class="container-fluid"  >
-            <div class="containers" ref="scroll">
+    <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte"></ComponentModal>
+    <DeleteBien v-bind:toggle="toggle" v-bind:bienDelete="bienDelete" :Iddelete="Iddelete"></DeleteBien> 
+    <div class="general" ref="scroll">
+        <div class="loading" v-if="loading">
+            <ComponentLoading/>
+
+        </div>
+        <div class="container-fluid" v-else  >
+            <div class="containers" >
                 <div class="modifier" v-if="bien.status == 'true'">
                     <div class="boutton">
                     <p class="text">Ce bien est déjà en location</p>
@@ -95,6 +100,12 @@
             </div>
                 
           </div>
+
+    </div>
+    
+       
+    
+         
     </div>
   </template>
   
@@ -102,12 +113,14 @@
     import dataBien from '@/database/requeteBien';
     import ComponentModal from '../ComponentAdmin/ComponentModal.vue';
     import DeleteBien from '../ComponentAdmin/DeleteBien.vue';
+    import ComponentLoading from './ComponentLoading.vue';
   export default {
       name:"BienDetail",
       props:['id'],
       components:{
         ComponentModal,
-        DeleteBien
+        DeleteBien,
+        ComponentLoading
       },
       data() {
         return {
@@ -116,16 +129,18 @@
             texte:'',
             toggle:false,
             success:false,
-            Iddelete:''
+            Iddelete:'',
+            loading:true
             
         }
       },
       methods: {
       async  valider(){
+        this.loading =true
             console.log(this.id);
             let bien = await dataBien.UpdateBienVendu(this.id)
             if (bien.success) {
-            console.log('sdd',bien)
+            this.loading =false
             this.success = !this.success
                 
             } else {
@@ -153,8 +168,8 @@
         let bien = await dataBien.GetBienId(this.id)
         if (bien.success) {
             this.bien = bien.success
-            console.log('sdd',bien.success.user_id)
             this.texte = `Vous aviez mis ${bien.success.nom_bien} en location`
+            this.loading =false
             
         }
    
@@ -165,12 +180,16 @@
   </script>
   
   <style lang="css" scoped>
+    .general{
+    height: 100vh;
+     overflow-y: scroll;
+      scrollbar-width: thin;
+}
       .ImageHeader{
       /* border: 1px solid red; */
       width: 100%;
       height: auto;
       bottom: 0;
-      border-radius: 10px;
   
   }
   
@@ -439,6 +458,25 @@
           font-size: 23px;
       }
   } 
+  @media (max-width:460px) {
+    .container ,.container-info, .container-desc, .container-image{
+        width: 98%;
+    }
+    .info-left{
+        font-size: 18px;
+    }
+    .message-detail{
+        width: auto;
+    }
+    .message{
+        width: 86%;
+    }
+    input , textarea{
+        width: 15rem;
+    }
+
+  
+}
   
   
   </style>

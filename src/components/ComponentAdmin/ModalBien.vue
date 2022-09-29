@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="loading">
+        <ComponentLoading/>
+    </div>
      <div class="modal-container" id="modal" v-if="revele" @click.self="submit">
         <div class="modal">
            <h1>Enregistrement des biens immobiliers</h1>
@@ -48,11 +51,15 @@
 import dataBien  from '@/database/requeteBien'
 import {storage} from '@/database/Connect'
 import { ref,  uploadBytes, getDownloadURL } from "firebase/storage";
+import ComponentLoading from '../ComponentClient/ComponentLoading.vue';
 export default {
     
     name:'ModalBien',
     props:['revele','submit','agentId'
    ],
+   components:{
+    ComponentLoading
+   },
    data() {
     return {
         isActive:true,
@@ -66,12 +73,14 @@ export default {
         commune:'',
         description:'',
         service:'',
-        image:''
+        image:'',
+        loading:false
         
     }
    },
    methods: {
    async valider(){
+    this.loading = true
         let DataBien={
            nom_bien:this.nom_bien,
            prix:this.prix,
@@ -91,6 +100,7 @@ export default {
      let bien =  await dataBien.InsertionBien(DataBien)
      if (bien.success) {
         this.$router.go()
+        this.loading = false
         
      } else {
         console.log('error 404');

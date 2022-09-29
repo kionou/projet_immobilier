@@ -30,10 +30,10 @@
   background-color: #fafafa;
 
   
-    height: 100%;
-    margin: 0;
-    padding: 90px 10px 10px;
-    margin-top: 3px;
+    // height: 100%;
+    // margin: 0;
+    // padding: 90px 10px 10px;
+    // margin-top: 3px;
    
 }
 

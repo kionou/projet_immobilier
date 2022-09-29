@@ -1,9 +1,7 @@
 <template>
   <div>
     <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte" ></ComponentModal>
-     <div class="modal-container" id="modal" v-if="revele" @click.self="submit">
-       
-         
+     <div class="modal-container" id="modal" v-if="revele" @click.self="submit">        
             <div class="container">
 
             <form >
@@ -29,6 +27,10 @@
               
                   
                 <button  @click.prevent='valider' >Enregistrer</button>
+                <div v-if="loading">
+                <ComponentLoading/>
+
+                </div>
             </form>
           
         </div>
@@ -43,10 +45,12 @@
     import useVuelidate from '@vuelidate/core'
 import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
 import ComponentModal from './ComponentModal.vue'
+import ComponentLoading from '../ComponentClient/ComponentLoading.vue'
 export default {
     name:'ModalAgent',
     components:{
     ComponentModal,
+    ComponentLoading
 },
     props:['revele','submit','count'],
         data() {
@@ -60,7 +64,8 @@ export default {
               v$:useVuelidate(),
               erreur:'',
               success:false,
-              texte:'Enregistrement de l\'Agent éffectué avec success.'
+              texte:'Enregistrement de l\'Agent éffectué avec success.',
+              loading:false
             
         }
     },
@@ -98,6 +103,7 @@ export default {
 methods: {
 
    async  valider(){
+    this.loading= true
          
             // this.v$.$validate()
             this.v$.$touch()
@@ -121,12 +127,16 @@ methods: {
                 console.log(agent);
                 if (agent.success) {
                     this.success = !this.success
+                    this.loading =false
+
                   
                     console.log('bonjour');
                     // this.$router.push('/')
                     
                 } else {
                     this.erreur = "Votre Adresse Email existe  déjà donc veillez-vous connecté."
+                    this.loading =false
+
                     
                 }
     

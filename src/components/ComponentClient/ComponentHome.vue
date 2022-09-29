@@ -24,59 +24,18 @@
        <div class="content-texte">
            <h2>Les biens qui pourraient vous intéresser</h2>
        </div>
-       <div class="content-info">
-        <div class="alert" v-if="alert">
-         {{alert}}
 
-        </div>
-       
-     
-        <!-- <div class="content-card">
-            <div class="card-image">
-               
-                <img src="@/assets/images/1.jpg" alt="">   
-                 
+       <div class="content-info">
+        <div class="general">
+            <div class="loading" v-if="loading">
+           <ComponentLoading/>
+
             </div>
-            <div class="card-body">
-                <div class="body-text">
-                <h3>fsqgjhqg</h3>
+            <div class="cadre"  v-else>
+                <div class="alert" v-if="alert">
+                      {{alert}}
                 </div>
-                <div class="body-text">
-                <p>fdjkbdkb</p>
-                </div>
-                <div class="body-text">
-                <p> 4/300m</p>
-                </div>
-                <div class="icon">
-                    <div class="icon-content">
-                        <i class="fas fa-door-closed"></i>
-                        <samp>4</samp>
-                    </div>
-                    <div class="icon-content">
-                        <i class="fas fa-bath"></i>
-                        <samp> 2</samp>
-                    </div>
-                </div>
-                    <div class="">
-                        <div id="trait_dessus">
-                          
-                        </div>
-                    </div>
-                    <div class="">
-                        <p>loyer 1000F CFA/mois</p>
-                    </div>
-                    <div class="btn">
-                         <button class="btncard">
-                              <p @click="redirect">Détail</p>
-                         </button>
-                    </div>
-            </div>
-        </div> -->
-        <div v-if="loading">
-            <p>chargement.....</p>
-        </div>
-        
-        <div class="content-card" v-for="bien in biens" :key="bien.id" v-else>
+                <div class="content-card" v-for="bien in biens" :key="bien.id" v-else>
             <div class="vendu" v-if="bien.status == 'true'">
                 <div class="card-image">
                <img :src="bien.images" alt="">   
@@ -163,11 +122,62 @@
             </div>
            
         </div>
+
+            </div>
+
+        </div >
+
+      
+     
+        <!-- <div class="content-card">
+            <div class="card-image">
+               
+                <img src="@/assets/images/1.jpg" alt="">   
+                 
+            </div>
+            <div class="card-body">
+                <div class="body-text">
+                <h3>fsqgjhqg</h3>
+                </div>
+                <div class="body-text">
+                <p>fdjkbdkb</p>
+                </div>
+                <div class="body-text">
+                <p> 4/300m</p>
+                </div>
+                <div class="icon">
+                    <div class="icon-content">
+                        <i class="fas fa-door-closed"></i>
+                        <samp>4</samp>
+                    </div>
+                    <div class="icon-content">
+                        <i class="fas fa-bath"></i>
+                        <samp> 2</samp>
+                    </div>
+                </div>
+                    <div class="">
+                        <div id="trait_dessus">
+                          
+                        </div>
+                    </div>
+                    <div class="">
+                        <p>loyer 1000F CFA/mois</p>
+                    </div>
+                    <div class="btn">
+                         <button class="btncard">
+                              <p @click="redirect">Détail</p>
+                         </button>
+                    </div>
+            </div>
+        </div> -->
+       
+       
+        
+       
        
         </div>
-      
-        <button :class="{selected: isSelected}" @click="isSelected = !isSelected">favvoris</button>
        </div>
+       
         <div class="content-texte">
             <h2>CONTACTEZ-NOUS</h2>
         </div>
@@ -215,35 +225,34 @@
 
 <script>
     import dataBien from '@/database/requeteBien';
+    import ComponentLoading from './ComponentLoading.vue';
 export default {
     name:"ComponentHome",
+    components:{
+        ComponentLoading
+
+    },
     data() {
         return {
             biens:"",
             alert:'',
             isActive: true,
             loading:true,
-            isSelected:false
+            isSelected:false,
+
  
   
         }  
     },
     methods:{
         redirect(id){
-             this.$router.push(`/detail/${id}`)
             console.log(id);
+            this.$router.push(`/detail/${id}`)
+
         },
-        favorite: function() {
-            if (this.disabled==true) {
-                return;
-            }
-            this.value = !this.value;
-        }
     },
    async mounted(){
-    setTimeout(()=>{
-
-    },300)
+   
     let bien = await dataBien.AfficherBien()
     console.log(bien);
     if (bien.success) {
@@ -276,7 +285,6 @@ export default {
     width: 100%;
     text-align: center;
     bottom: 0;
-    border-radius: 10px;
 }
 
 form{
@@ -317,6 +325,7 @@ select{
     position:relative;
 }
 
+
 .boutton{
     text-align: center;
     border: none;
@@ -356,6 +365,11 @@ select{
 .content-info{
     width: 99%;
     height: auto;
+ 
+
+}
+
+.cadre{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, auto));
     gap: 3rem;
@@ -363,7 +377,6 @@ select{
     padding: 10px 21px;
     justify-items: center;
     border-radius: 10px;
-
 }
 .alert{
     width: 100%;
@@ -371,9 +384,7 @@ select{
     font-size: 30px;
     border: 1px solid #ccc;
 }
-/* p{
-    color: black;
-} */
+
 .content-card{
     width: 290px;
     height: auto;
@@ -386,10 +397,7 @@ select{
     font-family: 'Roboto Serif', serif;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
-/* .content-card:hover{
-    transform: translateY(-10px);
-    transition: 0.5s;
-} */
+
 .card-image {
     height: 200px;
     padding: 5px;

@@ -1,7 +1,8 @@
 <template>
   <div>
     <ModalBien v-bind:revele="revele" v-bind:submit="submit" :agentId="agentId" ></ModalBien> 
-     <div class="contenu1">
+  
+     <div class="contenu1"  >
                 <div class="boutton" @click="submit">
                     <p>Ajouter un Bien</p>
                 </div>
@@ -59,18 +60,20 @@
         </div>
       
                 </div>
-            </div>
+     </div>
   </div>
 </template>
 
 <script>
 import dataBien from '@/database/requeteBien';
 import ModalBien from '../ComponentAdmin/ModalBien.vue';
+
 export default {
     name:'ComponentBien',
     props:['agentId','id'],
     components:{
         ModalBien,
+        
         
   
 },
@@ -79,7 +82,9 @@ data(){
         revele:false,
         agentId:'',
         biens:'',
-        alert:''
+        alert:'',
+      
+
     }
 },
 methods:{
@@ -98,9 +103,12 @@ async mounted() {
     if (bien.success) {
         console.log(bien.success);
         this.biens = bien.success
+
         
     }else if(bien.alert){
         this.alert = bien.alert
+  
+
 
     }else{
         console.log('erreur404')

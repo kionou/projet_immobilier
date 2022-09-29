@@ -1,7 +1,6 @@
 <template>
   <div class="toi">
     <div class="ImageHeader">
-        <section class="content">
           <div class="cadre">
             <div class="image">
               <img src="@/assets/images/logopng.png" alt="">
@@ -47,7 +46,7 @@
                 <button @click.prevent="submit" id="open" >Enregister</button>
             </form>
           </div>
-        </section>
+       
     </div>
   </div>
 </template>
@@ -151,7 +150,6 @@ methods: {
     width: 100%;
     text-align: center;
     bottom: 0;
-    border-radius: 10px;
     position: relative;
     transition: all .2s linear
 }
@@ -324,9 +322,13 @@ button:hover {
 }
 
 @media (max-width:770px) {
-
+.ImageHeader{
+    height: 115vh;
+}
 .cadre {
-    width: 500px;
+    max-width: 430px;
+    width: 98%;
+    height: 630px;
 }
 
 .name {
@@ -334,6 +336,7 @@ button:hover {
     /* border: 1px solid red; */
     width: auto;
     height: auto;
+    margin-bottom: 0;
 }
 
 .mail {
@@ -341,25 +344,25 @@ button:hover {
     width: auto;
     height: auto;
 }
+.mail1 {
+    /* border: 1px solid blue; */
+   margin-bottom: 12px;
+}
 
 .input {
-    width: 40rem;
+    width: 23rem;
     margin-bottom: 12px;
 }
 .input1{
-        width: 353px;
+        width: 23rem;
 }
 
 button{
-    width: 23rem;
-    height: 5rem;
+    width: 10rem;
+    height: 3rem;
 }
 
 }
 
-@media (max-width:770px) {
-    .cadre{
-        width: 445px;
-    }
-}
+
 </style>
