@@ -89,21 +89,34 @@ const dataBien = class{
     
  }
 
-//     static UpdateBien = (id,into)=>{
-//         console.log('sqfQSD',id,into);
-//         return new Promise(async (next)=>{
-//         const docRef = doc(bienCollection, id);
-//           await setDoc(docRef,into,{ merge:true })
-//         .then(resultat=>{
-//                  console.log('ss',resultat);
-//                  next({success:resultat})
-//         }).catch(error=>{
-//                  console.log("eee",error);
-//                  next ({ erreur:error})
-//             })
-//          })
+    static RechercheBien = (into)=>{
+       let array =[]
+     console.log('sqfQSD',into);
+     return new Promise(async (next)=>{
+     const q = query(bienCollection, where("nom_bien", "==", into.nom));
+     await getDocs(q)
+     .then(docRef=>{
+          console.log('rrf',docRef)
+          if (docRef.docs.length > 0) {
+               docRef.forEach((doc) => {
+               let data = doc.data()
+               data.id =doc.id,
+               array.push(data)
+               console.log('ssss',array);
+               next({success:array})
+                   });
+          } else {
+               console.log('df<df');
+               next({alert: 'Aucun resultat trouvé'})     
+          }
+             
+     }).catch(error=>{
+              console.log("eee",error);
+              next ({ erreur:error})
+         })
+      })
        
-//     }
+    }
 
 
     static UpdateBien = (id,into)=>{

@@ -38,7 +38,7 @@
                                          </thead>
                                          <tbody v-for="bien in biens" :key="bien.id">
                                              <tr >
-                                                 <td  data-label="date de l'acte">
+                                                 <td  data-label="nom du bien">
                                                     <div  class="doctor">
                                                         <div class="images">
                                                         <img :src="bien.images[0]" alt="">
@@ -48,11 +48,11 @@
                                                    
 
                                                  </td>
-                                                 <td data-label="Vaccin utilisé">{{bien.prix}}FCFA
+                                                 <td data-label="prix">{{bien.prix}}FCFA
 
                                                     
                                                  </td>
-                                                 <td data-label="Protège contre">{{bien.ville}} {{bien.commune}}</td>
+                                                 <td data-label="ville">{{bien.ville}} {{bien.commune}}</td>
                                                 
                                                  <td class="doctor" >
                                                     <i class="fa-solid fa-eye"  @click="detail(bien.id)" ></i>

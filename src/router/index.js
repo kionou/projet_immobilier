@@ -47,6 +47,12 @@ const routes = [
     component: () => import('../views/ViewClient/ProfilUser.vue'),
     props:true
   },
+    {
+    path: '/recherche',
+    name: 'recherche',
+    component: () => import('../views/ViewClient/RechercheView.vue'),
+    props:true
+  },
   // router client fin
 
 

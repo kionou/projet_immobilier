@@ -1,9 +1,6 @@
 <template>
     
   <div>
-    <div v-if="rech">
-        <ComponentRech :bien="bien"></ComponentRech>
-    </div>
     <div class="ImageHeader">
        <div class="tete">Pour trouver la location qui vous ressemble</div>
        <form >
@@ -231,13 +228,11 @@
 <script>
     import dataBien from '@/database/requeteBien';
     import ComponentLoading from './ComponentLoading.vue';
-import ComponentRechVue from './ComponentRech.vue';
-    import ComponentRech from './ComponentRech.vue';
 export default {
-    name:"ComponentHome",
+    name:"ComponentRech",
+    props:[''],
     components:{
-        ComponentLoading,
-        ComponentRech
+        ComponentLoading
 
     },
     data() {
@@ -248,12 +243,8 @@ export default {
             loading:true,
             isSelected:false,
             nom:'',
-            piece:'',
-            rech:false,
-            bien:''
+            piece:''
 
- 
-  
         }  
     },
     methods:{
@@ -268,10 +259,7 @@ export default {
                 piece:this.piece
             }
             let bien = await dataBien.RechercheBien(recherche)
-            this.bien = bien
-            this.$router.push(`/recherche`)
-
-            console.log(recherche);
+            console.log(bien);
         }
     },
    async mounted(){
