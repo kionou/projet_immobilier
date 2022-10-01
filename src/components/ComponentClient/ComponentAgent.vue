@@ -90,9 +90,9 @@ export default {
 .container{
     width: 100%;
     height: 100vh;
-    /* border: 1px solid red; */
+    border: 1px solid red;
     display: flex;
-
+    overflow-x: initial;
 }
 
 .menu{
@@ -182,6 +182,35 @@ input{
     color: #2288ff;
     background-color: white;
     cursor: pointer;
+}
+@media (max-width:768px) {
+  input{width: 300px;}
+  .btn{
+ 
+    padding: 1rem ;
+  
+}
+}
+
+@media (max-width:645px) {
+  input{width: 300px;}
+  .btn{ 
+    padding: 1rem ;
+
+}
+
+form{
+    display: none;
+}
+.content .search{
+    justify-content: center;
+}
+
+nav p {
+
+    padding: 10px 0px;
+   
+}
 }
 
 </style>

@@ -85,18 +85,22 @@ export default {
                 }
                 console.log(DataUser);
                 let connection = await connectUser.Userconnect(DataUser)
-                if (connection.user) {
-                  this.$router.push('/profil')   
-                } else if (connection.agent) {
-                    console.log(connection.agent.user.uid);
-                    this.$router.push(`/agent/${connection.agent.user.uid}`) 
+                if (connection.erreur ) {
+                  this.MessageErreur(connection.erreur)
+                 } 
+
+                 if (connection.user) {
+                   this.$router.push('/profil')   
+
                     
-                }  else {
-                  this.$router.push('/dashbord')   
-                   
+                 } else if (connection.agent) {
+                  this.$router.push(`/agent/${connection.agent.user.uid}`) 
+                 }
+                 if (connection.admin) {
+                    this.$router.push('/dashbord')   
+
                     
-                }
-    
+                 }
             }
         }
     },

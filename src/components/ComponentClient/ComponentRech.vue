@@ -3,6 +3,7 @@
   <div>
     <div class="ImageHeader">
        <div class="tete">Pour trouver la location qui vous ressemble</div>
+       {{bien}}
        <form >
         <select id="biens" name="bien" class="input" v-model="nom">
             <option value="" disabled selected >-- TYPES DE BIENS --</option>
@@ -24,8 +25,9 @@
    </div>
    <div class="content">
        <div class="content-texte">
-           <h2>Les biens qui pourraient vous intéresser</h2>
+           <h2>Resultat de votre recherche</h2>
        </div>
+       {{bien}}
 
        <div class="content-info">
         <div class="general">
@@ -34,6 +36,7 @@
 
             </div>
             <div class="cadre"  v-else>
+             
                 <div class="alert" v-if="alert">
                       {{alert}}
                 </div>
@@ -230,7 +233,7 @@
     import ComponentLoading from './ComponentLoading.vue';
 export default {
     name:"ComponentRech",
-    props:[''],
+    props:['bien'],
     components:{
         ComponentLoading
 
@@ -278,9 +281,15 @@ export default {
         console.log('erreur 404');
         
     }
+
+    console.log('recherfr',this.bien);
   
 
 
+    },
+
+    created() {
+        console.log('')
     },
 
 }

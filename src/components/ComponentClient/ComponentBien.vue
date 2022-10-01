@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="general" ref="scroll">
     <ModalBien v-bind:revele="revele" v-bind:submit="submit" :agentId="agentId" ></ModalBien> 
     <div class="loading" v-if="loading">
         <ComponentLoading/>
@@ -8,7 +8,7 @@
                 <div class="boutton" @click="submit">
                     <p>Ajouter un Bien</p>
                 </div>
-                <div class="contenaire_card">
+                <div class="contenaire_card" >
                     <div class="messages" v-if="alert">
                         <div class="message">
                             <span>{{alert}}</span>
@@ -100,6 +100,10 @@ methods:{
     }
 },
 async mounted() {
+
+    this.$refs.scroll.scrollTop= this.$refs.scroll.scrollHeight;
+    this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
+
     let bien = await dataBien.GetBienUser(this.id)
     console.log(bien);
     if (bien.success) {
@@ -130,7 +134,7 @@ async mounted() {
     flex-direction: column;
     align-items: center;
     height: auto;
-    height: 93vh;
+    height: calc(100vh - 59px);
 }
 
 .boutton{
@@ -182,6 +186,8 @@ async mounted() {
     padding: 10px;
     justify-items: center;
     border: 1px solid #ccc;
+    overflow-y: scroll;
+      scrollbar-width: thin;
     
 
 }
@@ -291,6 +297,30 @@ async mounted() {
 
 .btncard:hover p {
     color: #2288ff;
+}
+.general{
+    width: 100%;
+    overflow-x:initial;
+}
+
+@media (max-width:800px) {
+    .contenaire_card{
+    grid-template-columns: none;
+     overflow-y: scroll;
+      scrollbar-width: thin;
+
+    }
+
+}
+
+@media (max-width:466px) {
+    .contenaire_card{
+    grid-template-columns: repeat(auto-fit, minmax(240px, auto));
+    }
+    .content-card{
+        max-width: 290px;
+        width: 98%;
+    }
 }
 
 

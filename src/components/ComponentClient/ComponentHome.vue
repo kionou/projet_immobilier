@@ -231,7 +231,6 @@
 <script>
     import dataBien from '@/database/requeteBien';
     import ComponentLoading from './ComponentLoading.vue';
-import ComponentRechVue from './ComponentRech.vue';
     import ComponentRech from './ComponentRech.vue';
 export default {
     name:"ComponentHome",
@@ -268,10 +267,10 @@ export default {
                 piece:this.piece
             }
             let bien = await dataBien.RechercheBien(recherche)
-            this.bien = bien
+            this.bien = 'bien'
             this.$router.push(`/recherche`)
 
-            console.log(recherche);
+            console.log('recherche', this.bien);
         }
     },
    async mounted(){
