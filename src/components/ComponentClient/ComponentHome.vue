@@ -58,7 +58,7 @@
                <p>{{bien.nom_bien}} </p>
                </div>
                <div class="body-text">
-               <p> {{bien.piece}} pièces/ {{bien.superficie}} m2</p>
+               <p> {{bien.piece}} pièces/ {{bien.superficie}} m²</p>
                </div>
                <div class="icon">
                    <div class="icon-content">

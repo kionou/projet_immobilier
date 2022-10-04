@@ -6,7 +6,7 @@
             <ComponentLoading/>
         </div>
      <div class="contenu1"   v-else  >
-                <div class="boutton" @click="submit">
+                <div class="boutton addbtn" @click="submit">
                     <p>Ajouter un Agent</p>
                 </div>
                 <div class="contenaire_card" >
@@ -118,7 +118,7 @@ async mounted() {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 93vh;
+    height:calc(100vh - 64px);
     overflow-y: scroll;
     scrollbar-width: thin;
 }
@@ -155,6 +155,7 @@ async mounted() {
     padding: 3px;
     overflow-y: scroll;
     scrollbar-width: thin;
+    position: relative;
     
 
 }
@@ -169,8 +170,8 @@ async mounted() {
 }
 
 .content-card{
-    width: 290px;
-    height: 44vh;
+    width: 270px;
+    height: 450px;
     border: 1px solid #ccc;
     background-color: white;
     border-radius: 10px;
@@ -200,7 +201,7 @@ async mounted() {
     display: flex;
     flex-direction: column;
     padding: 0 10px 10px 10px;
-    height:24vh;
+    height:224px;
     justify-content: space-around;
 }
 
@@ -248,5 +249,11 @@ async mounted() {
     color: #2288ff;
 
   }
+  @media (max-width: 500px) {
+    .addbtn{
+    display: none;
+  }
+  }
+ 
 
 </style>

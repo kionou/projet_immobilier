@@ -5,7 +5,7 @@
         <ComponentLoading/>
     </div>
      <div class="contenu1" v-else >
-                <div class="boutton" @click="submit">
+                <div class="boutton addbtn" @click="submit">
                     <p>Ajouter un Bien</p>
                 </div>
                 <div class="contenaire_card" >
@@ -129,7 +129,7 @@ async mounted() {
 <style lang="css" scoped>
 
     
-  .contenu1{
+.contenu1{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -178,7 +178,7 @@ async mounted() {
 .contenaire_card{
 
     width: 99%;
-    height: 93vh;
+    height:calc(100vh - 60px);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, auto));
     gap: 3rem;
@@ -187,7 +187,8 @@ async mounted() {
     justify-items: center;
     border: 1px solid #ccc;
     overflow-y: scroll;
-      scrollbar-width: thin;
+    scrollbar-width: thin;
+    position: relative;
     
 
 }
@@ -301,7 +302,10 @@ async mounted() {
 .general{
     width: 100%;
     overflow-x:initial;
+    height:calc(100vh - 64px);
 }
+
+
 
 @media (max-width:800px) {
     .contenaire_card{
@@ -309,6 +313,14 @@ async mounted() {
      overflow-y: scroll;
       scrollbar-width: thin;
 
+    }
+  
+}
+
+@media (max-width:768px) 
+{
+    .addbtn{
+        display: none;
     }
 
 }

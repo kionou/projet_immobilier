@@ -8,7 +8,7 @@
     <ComponentLoading/>
       </div>
       <div class="contenu" v-else>
-                <div class="boutton" @click="submit()">
+                <div class="boutton addbtn" @click="submit()">
                     <p>Ajouter un bien</p>
                 </div>
                 <div class="contenu_card">
@@ -23,10 +23,11 @@
                           </div>
                             
                              <div class="table-container" v-else>
+                              
                                  <h1 class="heading">
                                      La liste des biens Immobiliers
                                  </h1>
-                                 
+                        
                                  <table class="table">
                                          <thead>
                                              <tr>
@@ -38,7 +39,7 @@
                                          </thead>
                                          <tbody v-for="bien in biens" :key="bien.id">
                                              <tr >
-                                                 <td  data-label="nom du bien">
+                                                 <td  data-label="Nom du bien et Image">
                                                     <div  class="doctor">
                                                         <div class="images">
                                                         <img :src="bien.images[0]" alt="">
@@ -48,16 +49,19 @@
                                                    
 
                                                  </td>
-                                                 <td data-label="prix">{{bien.prix}}FCFA
+                                                 <td data-label="Prix">{{bien.prix}}FCFA
 
                                                     
                                                  </td>
-                                                 <td data-label="ville">{{bien.ville}} {{bien.commune}}</td>
+                                                 <td data-label="Ville">{{bien.ville}} {{bien.commune}}</td>
                                                 
-                                                 <td class="doctor" >
+                                                 <td  data-label="Actions">
+                                                    <div  class="doctors">
                                                     <i class="fa-solid fa-eye"  @click="detail(bien.id)" ></i>
                                                     <i class="fa-solid fa-pen-to-square" @click="redirect(bien.id)"></i>
                                                     <i class="fa-solid fa-trash" @click="bienDelete(bien.id)"></i>
+                                                    </div>
+                                                   
                                                  </td>
                                                
                                              </tr>
@@ -157,7 +161,7 @@ async mounted(){
     display: flex;
     flex-direction: column;
     align-items: center;
-    height:93vh;
+    height:calc(100vh - 64px);
 }
 
 .boutton{
@@ -197,6 +201,7 @@ async mounted(){
       flex-direction: column;
       background-color: #fff;
       border-radius: 8px;
+      position: relative;
   }
    
   .carnet {
@@ -207,6 +212,7 @@ async mounted(){
       align-items: center;
       justify-content: space-between;
       align-items: center;
+      position: relative;
   }
   .table-container{
       padding: 0 10px;
@@ -263,6 +269,12 @@ async mounted(){
 }
 
   .doctor{
+     display: flex;
+     justify-content: space-around;
+     align-items: center;
+  
+  }
+  .doctors{
      display: flex;
      justify-content: space-around;
      align-items: center;
@@ -349,7 +361,22 @@ async mounted(){
           font-size:14px;
           text-align:left
       }
+
+      .heading{
+        font-size: 30px;
+      }  
       
+      .doctor{
+        justify-content: flex-end;
+      }
+      .images{
+        margin-right: 10px;
+      }
+
+      .addbtn{
+        display: none;
+    }
+
   }
 
 

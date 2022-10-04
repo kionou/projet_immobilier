@@ -3,14 +3,22 @@
        <div class="modal-container" >
           <div class="modal">
              <h1>Modifier  </h1>
-             <form action="">
-               <p>dfs</p>
-                  <input type="text" placeholder="Non" v-model="nom">
-                 
-                  <input type="text" placeholder="Prenom" v-model="prenom">
+             <form >
               
                <div class="form_groupe">
+                <small v-if="v$.nom.$error">{{v$.nom.$errors[0].$message}} </small>
+                <input type="text" placeholder="Non" v-model="nom">
+
+                <small v-if="v$.prenom.$error">{{v$.prenom.$errors[0].$message}} </small>
+                  <input type="text" placeholder="Prenom" v-model="prenom">
+               </div>
+                 
+              
+               <div class="form_groupe">
+                <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
                   <input type="email" placeholder="Adresse Email" v-model="email">
+
+                  <small v-if="v$.numero.$error">{{v$.numero.$errors[0].$message}} </small>
                   <input type="tel" placeholder="Numero" v-model="numero">
               </div>
 
@@ -34,6 +42,8 @@
   import dataAgent from '@/database/requeteAgent';
   import {storage} from '@/database/Connect'
   import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+  import useVuelidate from '@vuelidate/core'
+import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
   export default {
       
       name:'UpdateBien',
@@ -45,12 +55,49 @@
           prenom:'',
           email:'',
           numero:'',
-          image:''
+          image:'',
+          v$:useVuelidate(),
           
       }
      },
+     validations: {
+             
+             nom:{
+                require,
+                lgmin:lgmin(4),
+                lgmax:lgmax(20)
+            },
+            prenom:{
+                require,
+                lgmin:lgmin(4),
+                lgmax:lgmax(20)
+                
+            },
+            email:{
+                require,
+                ValidEmail
+               
+            },
+            numero:{
+                require,
+                ValidNumeri,
+                lgmin:lgmin(10),
+                lgmax:lgmax(12)
+     
+            },
+            password:{
+                require,
+                lgmin:lgmin(6),
+                lgmax:lgmax(12)
+            },
+     },
      methods: {
      async valider(){
+      this.loading= true
+         
+         // this.v$.$validate()
+         this.v$.$touch()
+         if (this.v$.$errors.length == 0 ){
           let DataAgent={
              nom:this.nom,
              prenom:this.prenom,
@@ -68,6 +115,8 @@
           console.log('error 404');
           
        }
+         }
+    
   
       },
      
@@ -142,32 +191,40 @@
   .modal-container {
       height: 100vh;
       width: 100%;
-      border: 1px solid red;
+      display: flex;
+      display: flex;
+    justify-content: center;
+    align-items: center;
   
   }
   
   .modal-container .modal {
      
-    max-width: 400px;
-    width: 98%;
+     max-width: 400px;
+     width: 98%;
+     height: 500px;
       margin: 0 10px;
       padding: 20px;
       border-radius: 5px;
       text-align: center;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
       box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
-    background-color: white;
+     background-color: white;
   }
+  form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  small{
+    color: #f8001b;
+}
   
   input {
-      margin-bottom: 13px;
-      margin-right: 9px;
-      margin-left: 10px;
+      margin-bottom: 27px;
       height: 2.5rem;
-      width: 20rem;
+      max-width: 20rem;
+      width: 98%;
       padding: 5px;
       font-size: 18px;
       outline: none;
@@ -207,7 +264,7 @@
       margin-bottom: 9px;
   }
   button{
-          padding: 12px;
+          padding: 10px;
           text-align: center;
           border: none;
           background-color: #2288ff;

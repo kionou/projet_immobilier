@@ -27,7 +27,7 @@
                                            </thead>
                                            <tbody v-for="user in users" :key="user.id">
                                                <tr >
-                                                   <td  data-label="date de l'acte">
+                                                   <td  data-label="Nom du client">
                                                      
                                                        
                                                       <p>{{user.nom}}</p>
@@ -35,13 +35,13 @@
                                                      
   
                                                    </td>
-                                                   <td data-label="Vaccin utilisé">{{user.email}}FCFA
+                                                   <td data-label="Adresse Email">{{user.email}}
   
                                                       
                                                    </td>
-                                                   <td data-label="Protège contre">{{user.numero}}</td>
+                                                   <td data-label="Numero">{{user.numero}}</td>
                                                   
-                                                   <td class="doctor" >
+                                                   <td class="doctor" data-label="Action" >
                                                       <i class="fa-solid fa-eye" @click="redirect(user.bien_id)"></i>
                                                    </td>
                                                  
@@ -131,7 +131,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      height:92.5vh;
+      height:calc(100vh - 64px);
       padding-top: 10px;
   }
   
@@ -185,6 +185,7 @@
         padding-right: 10px;
         overflow-y: scroll;
       scrollbar-width: thin;
+      position: relative;
     }
     .table-container{
         padding: 0 10px;
@@ -275,7 +276,6 @@
         }
         .table tbody tr td{
             text-align: right;
-            padding-left: 50%;
             position: relative;
         }
         .table td:before{

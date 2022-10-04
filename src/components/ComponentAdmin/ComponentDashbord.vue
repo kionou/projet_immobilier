@@ -173,4 +173,34 @@ input{
     cursor: pointer;
 }
 
+@media (max-width:768px) {
+  input{width: 300px;}
+  .btn{
+ 
+    padding: 1rem ;
+  
+}
+}
+
+@media (max-width:645px) {
+  input{width: 300px;}
+  .btn{ 
+    padding: 1rem ;
+
+}
+
+form{
+    display: none;
+}
+.content .search{
+    justify-content: center;
+}
+
+nav p {
+
+    padding: 10px 0px;
+   
+}
+}
+
 </style>

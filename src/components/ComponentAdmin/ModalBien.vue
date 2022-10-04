@@ -9,32 +9,60 @@
            <h1>Enregistrement des biens immobiliers</h1>
            <form >
             <div class="form_groupe">
-                <input type="text" placeholder="Non du bien" v-model="nom_bien">
-            
-                <input type="text" placeholder="Prix du bien" v-model="prix">
+
+                <div class="data-v" >
+                    <small v-if="v$.nom_bien.$error">{{v$.nom_bien.$errors[0].$message}} </small>
+                    <input type="text" placeholder="Non du bien" v-model="nom_bien">
+                </div>
+
+                <div class="data-v">
+                    <small v-if="v$.prix.$error">{{v$.prix.$errors[0].$message}} </small>
+                    <input type="text" placeholder="Prix du bien" v-model="prix">
+                </div>
             </div>
              <div class="form_groupe">
-                <input type="text" placeholder="Nombre de pieces" v-model="piece">
-                <input type="text" placeholder="superficie" v-model="superficie">
+                <div class="data-v">
+                    <small v-if="v$.piece.$error">{{v$.piece.$errors[0].$message}} </small>
+                    <input type="text" placeholder="Nombre de pieces" v-model="piece">
+                </div>
+                <div class="data-v">
+                    <small v-if="v$.superficie.$error">{{v$.superficie.$errors[0].$message}} </small>
+                    <input type="text" placeholder="superficie" v-model="superficie">
+                </div>
             </div>
              <div class="form_groupe">
-                <input type="text" placeholder="Nombre de chambre" v-model="chambre">
-                <input type="text" placeholder="Nombre de douche" v-model="douche">
+                <div class="data-v">
+                    <small v-if="v$.chambre.$error">{{v$.chambre.$errors[0].$message}} </small>
+                    <input type="text" placeholder="Nombre de chambre" v-model="chambre">
+                </div>
+                <div class="data-v">
+                    <small v-if="v$.douche.$error">{{v$.douche.$errors[0].$message}} </small>
+                    <input type="text" placeholder="Nombre de douche" v-model="douche">
+                </div>
             </div>
              <div class="form_groupe">
-                <input type="text" placeholder="Ville " v-model="ville">
-                <input type="text" placeholder="Commune" v-model="commune">
+                <div class="data-v">
+                    <small v-if="v$.ville.$error">{{v$.ville.$errors[0].$message}} </small>
+                    <input type="text" placeholder="Ville " v-model="ville">
+                </div>
+                <div class="data-v">
+                    <small v-if="v$.commune.$error">{{v$.commune.$errors[0].$message}} </small>
+                    <input type="text" placeholder="Commune" v-model="commune">
+                </div>
             </div>
             <div class="textArea">
+                <small v-if="v$.description.$error">{{v$.description.$errors[0].$message}} </small>
                 <textarea name="" id="" cols="71" rows="4" placeholder="Description" v-model="description"></textarea>
             </div>
             <div class="textArea">
+                <small v-if="v$.service.$error">{{v$.service.$errors[0].$message}} </small>
                 <textarea name="" id="" cols="71" rows="4"  placeholder="service" v-model="service"></textarea>
             </div>
+
             <input type="hidden"   v-model="user_id">
            <label class="custom-file-upload">
-            <input type="file" @change="upload" multiple/>
-            <i class="fa fa-cloud-upload"></i> 
+             <input type="file" @change="upload" multiple/>
+             <i class="fa fa-cloud-upload"></i> 
                 Téléchargement personnalisé
             </label>
 
@@ -55,6 +83,8 @@ import dataBien  from '@/database/requeteBien'
 import {storage} from '@/database/Connect'
 import { ref,  uploadBytes, getDownloadURL } from "firebase/storage";
 import ComponentLoading from '../ComponentClient/ComponentLoading.vue';
+import useVuelidate from '@vuelidate/core'
+import {require, lgmin,lgmax,ValidNumeri} from '@/functions/rules'
 export default {
     
     name:'ModalBien',
@@ -65,7 +95,7 @@ export default {
    },
    data() {
     return {
-        isActive:true,
+        isActive:false,
         nom_bien:'',
         prix:'',
         piece:'',
@@ -77,14 +107,78 @@ export default {
         description:'',
         service:'',
         image:'',
-        loading:false
+        loading:false,
+        v$:useVuelidate(),
         
     }
    },
+   validations: {
+             
+    nom_bien:{
+                require,
+                lgmin:lgmin(5),
+                lgmax:lgmax(20)
+            },
+            prix:{
+                require,
+                ValidNumeri,
+                lgmin:lgmin(6),
+                lgmax:lgmax(10)
+                
+            },
+            piece:{
+                require,
+                ValidNumeri,
+                lgmin:lgmin(1),
+                lgmax:lgmax(2)
+               
+            },
+            superficie:{
+                require,
+                ValidNumeri,
+                lgmin:lgmin(3),
+                lgmax:lgmax(5)
+     
+            },
+            chambre:{
+                require,
+                ValidNumeri,
+                lgmin:lgmin(1),
+                lgmax:lgmax(2)
+            },
+            douche:{
+                require,
+                ValidNumeri,
+                lgmin:lgmin(1),
+                lgmax:lgmax(2)
+            },
+            ville:{
+                require,
+                lgmin:lgmin(4),
+                lgmax:lgmax(30)
+            },
+            commune:{
+                require,
+                lgmin:lgmin(4),
+                lgmax:lgmax(30)
+            },
+            description:{
+                require,
+                lgmin:lgmin(30),
+                lgmax:lgmax(500)
+            },
+            service:{
+                require,
+                lgmin:lgmin(30),
+                lgmax:lgmax(500)
+            },
+     },
    methods: {
    async valider(){
-    this.loading = true
-        let DataBien={
+    this.v$.$touch()
+         if (this.v$.$errors.length == 0 ){
+              this.loading = true
+            let DataBien={
            nom_bien:this.nom_bien,
            prix:this.prix,
            piece:this.piece,
@@ -109,6 +203,8 @@ export default {
         console.log('error 404');
         
      }
+         }
+  
 
     },
    
@@ -158,15 +254,23 @@ async upload (e)  {
 .modal-container .modal {
    max-width: 900px;
     width: 98%;
-    margin: 0 10px;
-    padding: 20px;
+    padding: 10px;
     background: #fff;
     border-radius: 5px;
     text-align: center;
     position: absolute;
     top: 50%;
-    left: 52%;
+    left: 50%;
     transform: translate(-50%, -50%);
+}
+small{
+    color: #f8001b;
+}
+  
+.form_groupe{
+    display: flex;
+    /* border: 1px solid red; */
+    justify-content: center;
 }
 
 input {
@@ -182,15 +286,26 @@ input {
     font-family: 'Roboto Serif',
         serif;
 }
+.textArea{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
 
 textarea{
     margin-bottom: 10px;
     padding: 5px;
     outline: none;
-        font-size: 17px;
-     border: 1px solid #ccc;
+    font-size: 17px;
+    border: 1px solid #ccc;
     font-family: 'Roboto Serif',
             serif;
+}
+.data-v{
+    display: flex;
+    flex-direction: column;
+
 }
 
 input:focus ,textarea:focus {

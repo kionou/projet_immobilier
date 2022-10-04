@@ -17,7 +17,7 @@
                 </div>
                 <div class="container">
                   <div class="texte">
-                      <p>Location {{bien.nom_bien}} {{bien.superficie}}m2, {{bien.ville}} {{bien.commune}} </p>
+                      <p>Location {{bien.nom_bien}} {{bien.superficie}}m², {{bien.ville}} {{bien.commune}} </p>
                   </div>
                   <div class="ImageHeader">
                       <div class="image">
@@ -47,7 +47,7 @@
                           </div>
                           <div class="icon-content">
                                <i class="fas fa-expand"></i>
-                              <samp> {{bien.superficie}} m2</samp>
+                              <samp> {{bien.superficie}} m²</samp>
                           </div>
                       </div>
                   </div>
@@ -179,8 +179,7 @@
   </script>
   
   <style lang="css" scoped>
-    .general{
-    height: 100vh;
+    .general{ 
      overflow-y: scroll;
       scrollbar-width: thin;
 }
@@ -455,6 +454,15 @@
       .info-left{
           width: 54%;
           font-size: 23px;
+      }
+
+      .boutton{
+        flex-direction: column;
+
+      }
+      .update {
+        margin-bottom: 10px;
+
       }
   } 
   @media (max-width:460px) {

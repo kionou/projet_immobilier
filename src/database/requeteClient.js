@@ -35,7 +35,7 @@ const dataUser = class{
               next({success:array})  
             }) 
           } else {
-            next({alert:"Aucun client n'\a posté pour le moment !"})   
+            next({alert:"Aucun client n'\a été postulé pour le moment !"})   
           }
         }).catch(error=>{
                  console.log("eee",error);

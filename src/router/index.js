@@ -54,6 +54,10 @@ const routes = [
     component: () => import('../views/ViewClient/RechercheView.vue'),
     props:true
   },
+  { path: '/:pathMatch(.*)*',
+   name: 'NotFound', 
+   component:() => import('../views/ViewClient/NotFound.vue') 
+  },
   // router client fin
 
 

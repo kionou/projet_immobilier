@@ -15,7 +15,7 @@
                 </div>
                 <div class="container">
                   <div class="texte">
-                      <p>Location {{bien.nom_bien}} {{bien.superficie}}m2, {{bien.ville}} {{bien.commune}} </p>
+                      <p>Location {{bien.nom_bien}} {{bien.superficie}}m², {{bien.ville}} {{bien.commune}} </p>
                   </div>
                   <div class="ImageHeader">
                       <div class="image">
@@ -45,7 +45,7 @@
                           </div>
                           <div class="icon-content">
                                <i class="fas fa-expand"></i>
-                              <samp> {{bien.superficie}} m2</samp>
+                              <samp> {{bien.superficie}} m²</samp>
                           </div>
                       </div>
                   </div>
@@ -383,7 +383,6 @@
 }
 .message-content{
     /* border: 1px solid blue; */
-    width:50%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -393,7 +392,7 @@
 
 .content-card{
     width: 300px;
-    height: auto;
+    height: 500px;
     border: 1px solid #ccc;
     background-color: white;
     border-radius: 10px;
@@ -421,7 +420,7 @@
     flex-direction: column;
     justify-content: space-around;
     padding: 0 10px 10px 10px;
-    height: 20vh;
+    height: 197px;
 }
 
 .body-text {
@@ -489,6 +488,35 @@
           width: 54%;
           font-size: 23px;
       }
+
+      .message-content{
+        width: auto;
+      }
   } 
+
+  @media (max-width:500px) {
+    .container ,.container-info, .container-desc, .container-image , .modifier , .container-message{
+        width: 90%;
+    }
+    .info-left{
+        font-size: 18px;
+    }
+    .message-detail{
+        width: auto;
+    }
+    .message{
+        width: 86%;
+    }
+    input , textarea{
+        width: 15rem;
+    }
+
+    .content-card[data-v-264072c4] {
+    max-width: 300px;
+    width: 98%;
+}
+
+  
+}
  
   </style>

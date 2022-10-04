@@ -123,54 +123,10 @@ button {
       color: #f8001b;
   }
   
-  @media (max-width: 900px) {
-      body {
-          width: 100%;
+ 
   
-      }
+
   
-      form {
-          padding: 10px;
-      }
-  }
-  
-  @media (max-width: 768px) {
-      body {
-          width: 100%;
-  
-      }
-  
-    
-  
-      form {
-          padding: 10px;
-          width: 90%;
-          height: 230px;
-          /* border: 1px solid red; */
-          align-items: center;
-          align-content: center;
-      }
-  
-      input {
-          height: 6rem;
-          width: 35rem;
-      }
-  
-      button {
-          width: 16rem;
-          height: 5rem;
-      }
-  }
-  
-  @media (max-width: 400px) {
-      .container {
-          width: 305px;
-          height: 529px;
-      }
-  
-      input {
-          width: 27rem;
-      }
-  }
+
   
   </style>

@@ -183,6 +183,7 @@ input{
     background-color: white;
     cursor: pointer;
 }
+
 @media (max-width:768px) {
   input{width: 300px;}
   .btn{
