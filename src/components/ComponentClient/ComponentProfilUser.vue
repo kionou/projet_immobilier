@@ -37,35 +37,21 @@
               
               <div class="form_groupe">
                 <small v-if="v$.nom.$error">{{v$.nom.$errors[0].$message}} </small>
-                <label> Name:<input type="text" name="name" v-model="nom" /></label>
+                <label > Nom:<input type="text" name="nom" v-model="nom" /></label>
               
-               
-
-              <label for="">Prenom</label>
-               <input type="text" placeholder="Prenom" v-model="prenom">
                <small v-if="v$.prenom.$error">{{v$.prenom.$errors[0].$message}} </small>
-                
+               <label> Prenom:<input type="text" name="prenom" v-model="prenom" /></label>  
               </div>
                 
              
               <div class="form_groupe">
-               <label for="">Adresse Email</label>
-               <input type="email" placeholder="Adresse Email" v-model="email">
                <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
+               <label> Adresse Email:<input type="email" name="Adresse Email" v-model="email" /></label>
 
-               <label for="">Numéro</label>
-               <input type="tel" placeholder="Numero" v-model="numero">
                <small v-if="v$.numero.$error">{{v$.numero.$errors[0].$message}} </small>
-                
-               <label> 
-  Name:
-  <input type="text" name="name" />
-</label>
+               <label> Numéro:<input type="tel" name="tel" v-model="numero" /></label>
              </div>
-             <label> 
-  Name:
-  <input type="text" name="name" />
-</label>
+  
 
             <label class="custom-file-upload">
              <input type="file" @change="upload" ref="input"/>
@@ -333,7 +319,7 @@
   width: 100%;
   align-items: center;
 }
-  
+
   input {
       margin-bottom: 27px;
       height: 2.5rem;
