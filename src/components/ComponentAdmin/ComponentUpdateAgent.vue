@@ -43,7 +43,7 @@
   import {storage} from '@/database/Connect'
   import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
   import useVuelidate from '@vuelidate/core'
-import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
+  import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
   export default {
       
       name:'UpdateBien',
@@ -233,15 +233,7 @@ import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
           serif;
   }
   
-  textarea{
-      margin-bottom: 10px;
-      padding: 5px;
-      outline: none;
-          font-size: 17px;
-       border: 1px solid #ccc;
-      font-family: 'Roboto Serif',
-              serif;
-  }
+
   
   input:focus ,textarea:focus {
       border: 1px solid #2288ff;

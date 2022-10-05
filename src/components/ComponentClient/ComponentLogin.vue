@@ -106,13 +106,14 @@ export default {
     },
     created() {
     onAuthStateChanged(auth,(user)=>{
-        if (user.displayName == "admin") {
+        if (user.displayName === "admin") {
             this.$router.push('/dashbord')  
 
-        }  else if(user.displayName == "agent"){
+        }  else if(user.displayName === "agent"){
             this.$router.push(`/agent/${user.uid}`) 
 
-        }else{
+        }
+        if(user.displayName === "user"){
             this.$router.push('/profil')  
 
         }

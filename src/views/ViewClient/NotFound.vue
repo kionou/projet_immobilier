@@ -1,20 +1,33 @@
 <template>
   <div class="contenu">
-    <h1>404 Error Page #3</h1>
-<p class="zoom-area"><b>CSS</b> animations to make a cool 404 page. </p>
+    <h1>Page non trouvée</h1>
+
 <section class="error-container">
   <span>4</span>
   <span><span class="screen-reader-text">0</span></span>
   <span>4</span>
 </section>
 <div class="link-container">
-  <a target="_blank" href="https://www.silocreativo.com/en/creative-examples-404-error-css/" class="more-link">Visit the original article</a>
+    <router-link class="more-link" :to="{name:''}" @click="redirect"> Page précedente</router-link>
+    <router-link class="more-link" :to="{path:'home'}" >Visiter la page d'acceuil</router-link>
+
 </div>
+
   </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            
+        }
+    },
+    methods: {
+        redirect(){
+            this.$router.go(-1)
+        }
+    },
 
 }
 </script>
@@ -35,7 +48,7 @@ export default {
   display: inline-block;
   line-height: 0.7;
   position: relative;
-  color: #FFB485;
+  color: #9dc0f4;
 }
 .error-container > span {
   display: inline-block;
@@ -47,7 +60,7 @@ export default {
   animation: colordancing 4s infinite;
 }
 .error-container > span:nth-of-type(3) {
-  color: #F56991;
+  color: #d5edf9;
   animation: colordancing2 4s infinite;
 }
 .error-container > span:nth-of-type(2) {
@@ -63,10 +76,10 @@ export default {
 	top: 0; left: 0;
 	width: inherit; height: inherit;
   border-radius: 999px;
-	box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
-				inset 0 30px 0 rgba(239, 250, 180, 0.4),
-				inset -30px 0 0 rgba(255, 196, 140, 0.4),	
-				inset 0 -30px 0 rgba(245, 105, 145, 0.4);
+	box-shadow:  inset 30px 0 0 #2288ff,
+				inset 0 30px 0 #94C5EB,
+				inset -30px 0 0 #C9E0F5,	
+				inset 0 -30px 0 #95A3AB;
   animation: shadowsdancing 4s infinite;
 }
 .error-container > span:nth-of-type(2):before {
@@ -82,68 +95,68 @@ export default {
 }
 @keyframes shadowsdancing {
   0% {
-    box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
-				inset 0 30px 0 rgba(239, 250, 180, 0.4),
-				inset -30px 0 0 rgba(255, 196, 140, 0.4),	
-				inset 0 -30px 0 rgba(245, 105, 145, 0.4);
+    box-shadow: inset 30px 0 0 #2288ff,
+				inset 0 30px 0 #94C5EB,
+				inset -30px 0 0 #C9E0F5,	
+				inset 0 -30px 0 #95A3AB;
   }
   25% {
-    box-shadow: inset 30px 0 0 rgba(245, 105, 145, 0.4),
-				inset 0 30px 0 rgba(209, 242, 165, 0.4),
-				inset -30px 0 0 rgba(239, 250, 180, 0.4),	
-				inset 0 -30px 0 rgba(255, 196, 140, 0.4);
+    box-shadow: inset 30px 0 0  #95A3AB,
+				inset 0 30px 0  #94C5EB,
+				inset -30px 0 0 #C9E0F5,	
+				inset 0 -30px 0 #2288ff;
   }
   50% {
-     box-shadow: inset 30px 0 0 rgba(255, 196, 140, 0.4),
-				inset 0 30px 0 rgba(245, 105, 145, 0.4),
-				inset -30px 0 0 rgba(209, 242, 165, 0.4),	
-				inset 0 -30px 0 rgba(239, 250, 180, 0.4);
+     box-shadow: inset 30px 0 0  #94C5EB,
+				inset 0 30px 0   #C9E0F5,
+				inset -30px 0 0 #2288ff,	
+				inset 0 -30px 0 #95A3AB;
   }
   75% {
-   box-shadow: inset 30px 0 0 rgba(239, 250, 180, 0.4),
-				inset 0 30px 0 rgba(255, 196, 140, 0.4),
-				inset -30px 0 0 rgba(245, 105, 145, 0.4),	
-				inset 0 -30px 0 rgba(209, 242, 165, 0.4);
+   box-shadow: inset 30px 0 0 #C9E0F5,
+				inset 0 30px 0 #2288ff,
+				inset -30px 0 0 #95A3AB,	
+				inset 0 -30px 0 #94C5EB;
   }
   100% {
-    box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
-				inset 0 30px 0 rgba(239, 250, 180, 0.4),
-				inset -30px 0 0 rgba(255, 196, 140, 0.4),	
-				inset 0 -30px 0 rgba(245, 105, 145, 0.4);
+    box-shadow: inset 30px 0 0 #2288ff,
+				inset 0 30px 0 #94C5EB,
+				inset -30px 0 0 #C9E0F5,	
+				inset 0 -30px 0 #95A3AB;
   }
 }
 @keyframes colordancing {
   0% {
-    color: #D1F2A5;
+    color: #2288ff;
   }
   25% {
-    color: #F56991;
+    color: #94C5EB;
   }
   50% {
-    color: #FFC48C;
+    color: #C9E0F5;
   }
   75% {
-    color: #EFFAB4;
+    color:#d1e3f3;
   }
   100% {
-    color: #D1F2A5;
+    color: #94bde0;
   }
 }
 @keyframes colordancing2 {
   0% {
-    color: #FFC48C;
+    color: #C9E0F5;
   }
   25% {
-    color: #EFFAB4;
+    color: #d1e3f3;
   }
   50% {
-    color: #D1F2A5;
+    color: #2288ff;
   }
   75% {
-    color: #F56991;
+    color: #94C5EB;
   }
   100% {
-    color: #FFC48C;
+    color: #C9E0F5;
   }
 }
 
@@ -161,8 +174,7 @@ html, button, input, select, textarea {
 .contenu{
     width: 100%;
     height: 100vh;
-    border: 1px solid red;
-    background-color: #416475;
+    background-color: #fdfeff;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -183,17 +195,22 @@ h1 {
 a.more-link {
   text-transform: uppercase;
   font-size: 13px;
-    background-color: #92a4ad;
+    background-color: rgb(15,142,240);
     padding: 10px 15px;
     border-radius: 0;
-    color: #416475;
+    color: #fff;
     display: inline-block;
     margin-right: 5px;
     margin-bottom: 5px;
     line-height: 1.5;
-    text-decoration: none;
-  margin-top: 50px;
+text-decoration: none;
   letter-spacing: 1px;
+}
+
+@media (max-width: 363px) {
+    .error-container{
+        font-size: 140px;
+    }
 }
 
 </style>

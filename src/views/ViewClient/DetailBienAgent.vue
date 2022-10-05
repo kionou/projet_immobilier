@@ -96,7 +96,7 @@ import connectUser from '@/database/authentificationUser';
   }
   
   .menu{
-      border: 1px solid blue;
+      /* border: 1px solid blue; */
       /* width: 15%; */
       display: flex;
       flex-direction: column;
@@ -111,7 +111,7 @@ import connectUser from '@/database/authentificationUser';
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      border: 1px solid red;
+      border: 1px solid rgb(15,142,240);
   }
   .image img{
       width: 100%;
