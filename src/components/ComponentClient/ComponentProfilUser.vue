@@ -36,39 +36,36 @@
             <form >
                 <small v-if="v$.nom.$error">{{v$.nom.$errors[0].$message}} </small>
                 <div class="form-control">
-                  <label for="commune"> Nom</label>
+                  <label for="nom"> Nom</label>
                   <input type="text" name="nom" v-model="nom">
                 </div>
 
                 <small v-if="v$.prenom.$error">{{v$.prenom.$errors[0].$message}} </small>
                 <div class="form-control">
-                  <label for="commune"> Prenom</label>
+                  <label for="prenom"> Prenom</label>
                   <input type="text" name="prenom" v-model="prenom">
                 </div>
 
-                
-             
-              <div class="form_groupe">
                <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
-               <label class="labe"> Adresse Email:<input type="email" name="Adresse Email" v-model="email" /></label>
+                <div class="form-control">
+                  <label for="email"> Adresse Email</label>
+                  <input type="email"  name="Adresse Email" v-model="email" >
+                </div>
 
                <small v-if="v$.numero.$error">{{v$.numero.$errors[0].$message}} </small>
-               <label> Numéro:<input type="tel" name="tel" v-model="numero" /></label>
-             </div>
-                           <div class="form-control">
-                                <label for="commune"> Commune</label>
-                                <input type="text" name="commune" id="">
-                            </div>
-                            <div class="form-control">
-                                <label for="numero"> Numero</label>
-                                <input type="number" name="numero" id="">
-                            </div>
-
-            <label class="custom-file-upload">
-             <input type="file" @change="upload" ref="input"/>
-             <i class="fa fa-cloud-upload"></i> 
-                 Téléchargement personnalisé
-             </label>
+               <div class="form-control">
+                  <label for="Numero"> Numéro</label>
+                  <input input type="tel" name="tel" v-model="numero" >
+                </div>
+              
+              <div class="dow">
+                  <label class="custom-file-upload">
+                  <input type="file" @change="upload" ref="input"/>
+                  <i class="fa fa-cloud-upload"></i> 
+                      Téléchargement personnalisé
+                  </label>
+              </div>
+            
  
              <div class="boutton">
                      <button :disabled="isActive" @click.prevent="valider">Modifier</button>
@@ -222,7 +219,7 @@
   <style lang="css" scoped>
     .container{
       width:100%;
-      height:100vh;
+      /* height:100vh; */
       border:1px solid red;
       display: flex;
       flex-direction: column;
@@ -232,10 +229,7 @@
   
     }
 
-    .labe{
-      display: inline-block;
-    }
-    .images{
+  .images{
     background: url('@/assets/images/3.jpg') no-repeat center;
     background-size: cover;
     height: 100vh;
@@ -322,66 +316,68 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-top: 10px;
+
   }
 
   small{
     color: #f8001b;
 }
-.form_groupe{
-  border: 1px solid red;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
+.form-control{
+    width: 100%;
+    padding: 10px;
+    font-size: 17px;
 }
-
-  input {
-      margin-bottom: 27px;
-      height: 2.5rem;
-      max-width: 20rem;
-      /* width: 98%; */
-      padding: 5px;
-      font-size: 18px;
-      outline: none;
-      border: 1px solid #ccc;
-      font-family: 'Roboto Serif',
-          serif;
-  }
-  
-label{
-  text-align: end;
+.form-control label{
+    width: 100px;
+    display: inline-block;
+    padding: 2px 20px 2px 2px;
+}
+.form-control input{
+    width: 20rem;
+    height: 2.5rem;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Roboto Serif', serif;
+    font-size: 17px;
+    outline: none;
+    border: 1px solid #ccc;
 }
   
-  input:focus ,textarea:focus {
+  input:focus{
       border: 1px solid #2288ff;
       outline-offset: 0px;
       outline: none;
   }
   
-  form{
-      margin-top: 10px;
-  }
+ .dow{
+  /* border: 1px solid red; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-left: 100px;
+ }
   input[type="file"] {
       display: none;
   }
   
   .custom-file-upload {
-      border: 1px solid #ccc;
+      border: 1px solid rgb(246, 245, 245);
       display: inline-block;
       padding: 15px 34px;
       cursor: pointer;
       margin-bottom: 9px;
   }
-  button{
-          padding: 10px;
-          text-align: center;
-          border: none;
-          background-color: #2288ff;
-          color: white;
-          border-radius: 5px;
-          font-size: 23px;
-          font-family: 'Roboto Serif',
-              serif;
+button{
+    padding: 10px;
+    text-align: center;
+    border: none;
+    background-color: #2288ff;
+    color: white;
+    border-radius: 5px;
+    font-size: 23px;
+    font-family: 'Roboto Serif',
+        serif;
   }
   
   button:hover {
@@ -465,25 +461,38 @@ button[disabled]{
           cursor: pointer;
       }
 
-      .form-control{
-    width: 100%;
-    padding: 10px;
-    font-size: 17px;
-}
-.form-control label{
-    width: 100px;
-    display: inline-block;
-    padding: 2px 20px 2px 2px;
-}
-.form-control input{
-    width: 15rem;
-    height: 34px;
-    border-radius: 5px;
-    border: 1px solid black;
-    padding: 5px;
-    font-family: 'Roboto Serif', serif;
-    font-size: 17px;
-}
+  @media (max-width: 917px) {
+    .form-control input{
+      width:15rem;
+    }
+    .custom-file-upload{
+      padding: 12px 2px;
+    }
+
+      }
+
+      @media (max-width: 837px) {
+        .dow{
+            padding: 0;
+        }
+        .form-control input{
+      width:20rem;
+    }
+
+      }
+
+      @media (max-width: 768px) {
+        .content{
+          flex-direction: column;
+          align-items: center;
+          padding: 70px 0;
+        }
+
+        .info{
+          margin-left: 0;
+        }
+
+      }
     
   
   </style>
