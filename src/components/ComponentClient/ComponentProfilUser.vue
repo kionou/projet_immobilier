@@ -34,24 +34,35 @@
           <h3>Modifier les Informations</h3>
           <div class="tableau">
             <form >
-              
-              <div class="form_groupe">
                 <small v-if="v$.nom.$error">{{v$.nom.$errors[0].$message}} </small>
-                <label > Nom:<input type="text" name="nom" v-model="nom" /></label>
-              
-               <small v-if="v$.prenom.$error">{{v$.prenom.$errors[0].$message}} </small>
-               <label> Prenom:<input type="text" name="prenom" v-model="prenom" /></label>  
-              </div>
+                <div class="form-control">
+                  <label for="commune"> Nom</label>
+                  <input type="text" name="nom" v-model="nom">
+                </div>
+
+                <small v-if="v$.prenom.$error">{{v$.prenom.$errors[0].$message}} </small>
+                <div class="form-control">
+                  <label for="commune"> Prenom</label>
+                  <input type="text" name="prenom" v-model="prenom">
+                </div>
+
                 
              
               <div class="form_groupe">
                <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
-               <label> Adresse Email:<input type="email" name="Adresse Email" v-model="email" /></label>
+               <label class="labe"> Adresse Email:<input type="email" name="Adresse Email" v-model="email" /></label>
 
                <small v-if="v$.numero.$error">{{v$.numero.$errors[0].$message}} </small>
                <label> Numéro:<input type="tel" name="tel" v-model="numero" /></label>
              </div>
-  
+                           <div class="form-control">
+                                <label for="commune"> Commune</label>
+                                <input type="text" name="commune" id="">
+                            </div>
+                            <div class="form-control">
+                                <label for="numero"> Numero</label>
+                                <input type="number" name="numero" id="">
+                            </div>
 
             <label class="custom-file-upload">
              <input type="file" @change="upload" ref="input"/>
@@ -219,6 +230,10 @@
       background-color: #ccc;
       margin-top: 20px;
   
+    }
+
+    .labe{
+      display: inline-block;
     }
     .images{
     background: url('@/assets/images/3.jpg') no-repeat center;
@@ -449,6 +464,26 @@ button[disabled]{
           border: 1px solid red;
           cursor: pointer;
       }
+
+      .form-control{
+    width: 100%;
+    padding: 10px;
+    font-size: 17px;
+}
+.form-control label{
+    width: 100px;
+    display: inline-block;
+    padding: 2px 20px 2px 2px;
+}
+.form-control input{
+    width: 15rem;
+    height: 34px;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    font-family: 'Roboto Serif', serif;
+    font-size: 17px;
+}
     
   
   </style>
