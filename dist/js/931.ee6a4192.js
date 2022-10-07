@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkprojet_immobilier"]=self["webpackChunkprojet_immobilier"]||[]).push([[931],{841:function(e,i,n){n.r(i),n.d(i,{default:function(){return c}});var r=n(3396);function t(e,i,n,t,u,l){const o=(0,r.up)("BienDetail");return(0,r.wg)(),(0,r.iD)("div",null,[(0,r.Wm)(o,{id:n.id},null,8,["id"])])}var u=n(650),l={name:"DetailBien",props:["id"],components:{BienDetail:u.Z}},o=n(89);const a=(0,o.Z)(l,[["render",t]]);var c=a}}]);
-//# sourceMappingURL=931.ee6a4192.js.map

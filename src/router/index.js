@@ -43,7 +43,7 @@ const routes = [
     props:true
   },
   {
-    path: '/profil',
+    path: '/profil/:id',
     name: 'profil',
     component: () => import('../views/ViewClient/ProfilUser.vue'),
     props:true

@@ -46,6 +46,7 @@ const dataAgent = class{
     }
 
     static GetAgnetId = (id)=>{
+      console.log(id)
         return new Promise(async (next)=>{
         const docRef = doc(agentcollection, id);
          await getDoc(docRef)
@@ -118,3 +119,4 @@ const dataAgent = class{
 }
 
 export default dataAgent
+

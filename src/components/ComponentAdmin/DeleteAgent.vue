@@ -4,8 +4,8 @@
         
            
               <div class="container">
-               
-                <p>vous voulez-vous supprimer ce agent ?</p>
+                <!-- vous voulez-vous supprimer ce agent ? -->
+                <p>{{texte}}</p>
                 <div class="boutton">
                     <button @click="supp">Oui</button>
                     <button @click='close'>Non</button>
@@ -21,16 +21,23 @@
   
   <script>
     import dataAgent from '@/database/requeteAgent'
+    import connectUser from '@/database/authentificationUser'
   export default {
       name:'DeleteBien',
-      props:['toggle','agentDelete','Iddelete'],
+      props:['toggle','agentDelete','Iddelete','texte'],
       methods: {
      async supp(){
-            let Agent = await dataAgent.DeleteAgent(this.Iddelete)
-            if(Agent.success){
-               location.reload()
+        let user = await connectUser.DeleteUser(this.Iddelete)
+            if(user.success){
+               this.$router.push('/login')
               
             }
+
+            // let Agent = await dataAgent.DeleteAgent(this.Iddelete)
+            // if(Agent.success){
+            //    location.reload()
+              
+            // }
 
         },
         close(){

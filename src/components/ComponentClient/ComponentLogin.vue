@@ -13,9 +13,9 @@
                 {{erreur}}
             </small>
             <form >
-                     <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
+                <small v-if="v$.email.$error">{{v$.email.$errors[0].$message}} </small>
                 <input type="email" name="email" placeholder="Adresse Email" v-model="email">
-                     <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>        
+                <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>        
                 <input type="password" name="password" placeholder="Mot de passe" v-model="password">
                 <button  @click.prevent="submit">Connecter</button>
             </form>
@@ -37,10 +37,11 @@ export default {
     name:"Componentlogin",
     data() {
         return {
-                email:'',
+            email:'',
              password:'',
              v$:useVuelidate(),
-             erreur:''
+             erreur:'',
+             connect:''
             
         }
     },
@@ -90,7 +91,7 @@ export default {
                  } 
 
                  if (connection.user) {
-                   this.$router.push('/profil')   
+                   this.$router.push(`/profil/${connection.user.user.uid}`)   
 
                     
                  } else if (connection.agent) {
@@ -114,7 +115,8 @@ export default {
 
         }
         if(user.displayName === "user"){
-            this.$router.push('/profil')  
+            this.$emit('msg', { connect: user })
+            this.$router.push(`/profil/${user.uid}`)   
 
         }
             

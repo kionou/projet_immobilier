@@ -164,6 +164,7 @@
      
      },
     async mounted() {
+      console.log(this.id)
         let agent = await dataAgent.GetAgnetId(this.id)
         console.log(agent.success);
         if (agent.success) {

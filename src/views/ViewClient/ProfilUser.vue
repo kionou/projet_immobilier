@@ -2,7 +2,7 @@
   <div>
     <Spinner/>
     <ComponentNavbar/>
-    <ComponentProfilUser/>
+    <ComponentProfilUser :id="id" />
   </div>
 </template>
 
@@ -12,6 +12,7 @@
     import Spinner from '@/components/ComponentClient/Spinner.vue';
 export default {
     name:'ProfilUser',
+    props:['id'],
     components:{
         ComponentProfilUser,
         ComponentNavbar,

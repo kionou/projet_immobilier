@@ -29,7 +29,7 @@
                
             </ul>
             <div class="icon" @click="toggleMobileNav" v-show="mobile" :class="{'icon-active':mobileNav}">
-               <img src="@/assets/images/logopng.png" alt="">
+               <img src="@/assets/images/bars.png" alt="">
             </div>
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="dropdown-nav">
@@ -133,6 +133,8 @@ header{
     -webkit-box-shadow: 0 10px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
     box-shadow: 0 10px 6px -9px #cacd;
+    display: flex;
+    justify-content: center;
 
     nav{
     position: relative;
@@ -140,7 +142,7 @@ header{
     flex-direction: row;
     padding: 12px 0;
     transition: 0.5s ease all;
-    width:90%;
+    width:80%;
   
     .links{
         display: flex;
@@ -155,14 +157,14 @@ header{
 
     li{
         text-transform: uppercase;
-        padding:16px;
-        margin-left: 16px;
+        // padding:16px;
+        margin-left: 30px;
         display: flex;
        align-items: center;
     }
     .link{
     
-        padding-bottom: 4px;
+        // padding-bottom: 4px;
         border-bottom: 1px solid transparent;
         font-size: 1.5rem;
         color: #333;
@@ -176,7 +178,7 @@ header{
 .logout{
     text-align: center;
     border: 1px solid;
-    padding: 1rem 1.5rem;
+    padding: 1rem ;
     border-radius: 20px;
     font-size: 17px;
     background-color: #2288ff;
@@ -216,11 +218,11 @@ header{
         display: flex;
         align-items: center;
         position: absolute;
-           top: 5px;
-            right: -30px;
-            height: 28px;
-            width: 28px;
-            cursor: pointer;
+        top: 27px;
+        right: -30px;
+        height: 30px;
+        width: 30px;
+        cursor: pointer;
   
     }
     .icon img{

@@ -1,30 +1,36 @@
 <template>
+    <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete" :texte="texte"></DeleteAgent>
+
   <div>
-    <!-- <div class="loading" v-if="loading">
+    <div class="loading" v-if="loading">
        <ComponentLoading/>
-    </div> -->
-    <div class="container" >
+    </div>
+    <div class="container" v-else>
       <div class="images">
       <p class="texte">profil</p>
       </div>
-      <div class="content">
+      <div class="contenu">
+        <div class="content">
         <div class="cadre-profil">
           <div class="profil-header">
             <div class="image">
-             <img src="@/assets/images/image.jpg" alt="">
+             <img :src="users.image" alt="">
             </div>
-            <div class="body-text">
-               
-                <p>Kionou mamadou</p>
-              </div>
+            <div class="body">
               <div class="body-text">
-                <i class="fa-solid fa-envelope"></i>
-                <p>Kionumamamadou00</p>
-              </div>
-              <div class="body-text">
-              <i class="fa-solid fa-phone"></i>
-              <p> 0797687657854</p>
-              </div>
+                <i class="fa-solid fa-user"></i>
+               <p>{{users.nom }} {{users.prenom}}</p>
+             </div>
+             <div class="body-text">
+               <i class="fa-solid fa-envelope"></i>
+               <p>{{users.email}}</p>
+             </div>
+             <div class="body-text">
+             <i class="fa-solid fa-phone"></i>
+             <p> {{users.numero}}</p>
+             </div>
+            </div>
+          
 
           </div>
          
@@ -57,7 +63,6 @@
                   <label for="Numero"> Numéro</label>
                   <input input type="tel" name="tel" v-model="numero" >
                 </div>
-              
               <div class="dow">
                   <label class="custom-file-upload">
                   <input type="file" @change="upload" ref="input"/>
@@ -68,19 +73,18 @@
             
  
              <div class="boutton">
-                     <button :disabled="isActive" @click.prevent="valider">Modifier</button>
-                 </div>
+                <button :disabled="isActive" @click.prevent="valider">Modifier</button>
+                <button class="delete"  @click.prevent="agentDelete" >Supprimer</button>
+
+            </div>
             </form>
 
           </div>
-         
-          <div  class="boutton " >
-                     <button class="update"   @click="update()">Modifier</button>
-                     <button class="delete"   >Supprimer</button>
-            </div>
         </div>
   
       </div>
+      </div>
+    
       
     </div>
   </div>
@@ -88,24 +92,35 @@
   </template>
   
   <script>
-    import ComponentLoading from './ComponentLoading.vue';
+    import ComponentLoading from './ComponentLoading.vue'
     import useVuelidate from '@vuelidate/core'
   import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
+  import connectUser from '@/database/authentificationUser'
+  import {storage} from '@/database/Connect'
+  import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+  import DeleteAgent from '../ComponentAdmin/DeleteAgent.vue'
 
   export default {
-    component:{
-      ComponentLoading
+    components:{
+      ComponentLoading,
+      DeleteAgent
     },
+    props:['id'], 
     data() {
       return {
-        loading:false,
+        loading:true,
         isActive:false,
+        toggle:false,
           nom:'',
           prenom:'',
           email:'',
           numero:'',
           image:'',
           v$:useVuelidate(),
+          users:"",
+          agent:'',
+         Iddelete:'',
+         texte:'Voulez-vous supprimez votre compte?'
       }
     },
     validations: {
@@ -133,20 +148,15 @@
                 lgmax:lgmax(12)
      
             },
-            password:{
-                require,
-                lgmin:lgmin(6),
-                lgmax:lgmax(12)
-            },
      },
      methods: {
      async valider(){
-      this.loading= true
          
          // this.v$.$validate()
          this.v$.$touch()
          if (this.v$.$errors.length == 0 ){
-          let DataAgent={
+      // this.loading= true
+          let DataUser={
              nom:this.nom,
              prenom:this.prenom,
              email:this.email,
@@ -154,23 +164,31 @@
              image:this.image
       
           }
-          console.log(DataAgent);
-       let agent =  await dataAgent.UpdateAgent(this.id,DataAgent)
+          console.log("gsdggf",DataUser);
+       let agent =  await connectUser.UpdateUser(this.id,DataUser)
        if (agent.success) {
-          this.$router.go(-1)
-          
+          this.$router.go()
+          // this.loading= false
+
        } else {
-          console.log('error 404');
+          this.$router.push('/:pathMatch(.*)*')
           
        }
          }
-    
-  
+
       },
+      agentDelete(){
+      console.log(this.id);
+        
+        this.toggle = !this.toggle
+        this.Iddelete = this.id
+
+    },
      
   
   async upload (e)  {
 
+      this.isActive = true
       let file =e.target.files[0]
         const name = new Date().getTime() + file.name;
   
@@ -211,6 +229,27 @@
       }
      
      },
+     async mounted() {
+      console.log(this.id);
+        let user = await connectUser.GetUserId(this.id)
+        console.log(user.success);
+        if (user.success) {
+          this.users = user.success
+            
+            this.nom = user.success.nom,
+            this.prenom = user.success.prenom,
+            this.email = user.success.email,
+            this.numero = user.success.numero,
+            this.password = user.success.password
+            this.loading= false
+
+        } else {
+            
+        }
+
+      
+     },
+  
   
   
   }
@@ -220,12 +259,12 @@
     .container{
       width:100%;
       /* height:100vh; */
-      border:1px solid red;
+      /* border:1px solid red; */
       display: flex;
       flex-direction: column;
       align-items: center;
-      background-color: #ccc;
-      margin-top: 20px;
+      background-color: #fafafa;
+
   
     }
 
@@ -236,7 +275,7 @@
     width: 100%;
     text-align: center;
     bottom: 0;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     width: 100%;
     height: 30vh;
     position: relative;
@@ -249,24 +288,33 @@
     color: white;
     font-size: 37px;
   }
+  .contenu{
+    /* border: 1Px solid red; */
+
+    width: 100%;
+    padding: 40px
+  }
   
     .content{
-      border: 1px solid blue;
+      /* border: 1px solid rgb(0, 255, 34); */
       width: 100%;
       /* height: 40vh; */
       padding: 70px 70px 70px;
       display: flex;
-      /* box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
-      background-color: white; */
+      justify-content: center;
+      box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+      background-color: white;
     }
   
     .cadre-profil{
-      border: 1px solid black;
-      max-width: 250px;
+      /* border: 1px solid black; */
+      max-width: 278px;
       width: 98%;
       height: 500px;
     
     }
+
+   
     .profil-header{
       color: white;
     background: #48a0dc;
@@ -285,6 +333,7 @@
     box-shadow: 0px 10px 25px rgb(0 0 0 / 16%);
     transition: all 0.4s;
     }
+  
   .body-text{
     display: flex;
     margin-bottom: 11px;
@@ -295,7 +344,7 @@
   }
   
     .info{
-      border: 1px solid red;
+      /* border: 1px solid red; */
       width: 100%;
       margin-left: 60px;
     }
@@ -304,14 +353,14 @@
       padding-bottom: 15px;
     }
     .tableau{
-      border: 1px solid black;
+      /* border: 1px solid black; */
       height: auto;
       padding: 10px;
       display: flex;
       justify-content: center;
     }
 
-    form{
+  form{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -375,7 +424,8 @@ button{
     background-color: #2288ff;
     color: white;
     border-radius: 5px;
-    font-size: 23px;
+    font-size: 20px;
+    margin-right: 20px;
     font-family: 'Roboto Serif',
         serif;
   }
@@ -417,33 +467,13 @@ button[disabled]{
           align-items: center;
           width: 100%;
           padding: 15px 0;
-          justify-content: space-evenly;
+          justify-content: center;
+          padding-left: 100px;
       
   
       }
-      .update {
-          width: 8rem;
-          height: 3rem;
-          text-align: center;
-          border: none;
-          background-color: #2288ff;
-          color: white;
-          border-radius: 5px;
-          font-size: 20px;
-          font-family: 'Roboto Serif',
-              serif;
-      }
-  
-      .update:hover {
-          background-color: white;
-          color: #2288ff;
-          border: 1px solid #2288ff;
-          cursor: pointer;
-      }
-  
       .delete {
-          width: 8rem;
-          height: 3rem;
+          padding: 10px;
           text-align: center;
           border: none;
           background-color: red;
@@ -459,6 +489,13 @@ button[disabled]{
           color: red;
           border: 1px solid red;
           cursor: pointer;
+      }
+
+      @media (max-width: 997px) {
+        .dow{
+          padding-left: 0px;
+        }
+
       }
 
   @media (max-width: 917px) {
@@ -479,20 +516,127 @@ button[disabled]{
       width:20rem;
     }
 
+    h3{
+    font-size: 25px;
+    padding: 15px 0;
+}
+.boutton{
+  padding-left: 16px;
+}
+
       }
 
-      @media (max-width: 768px) {
-        .content{
-          flex-direction: column;
-          align-items: center;
-          padding: 70px 0;
-        }
+@media (max-width: 768px) {
+  .content{
+    flex-direction: column;
+    align-items: center;
+    padding: 40px ;
+}
+.dow{
+    padding-left: 100px;
+}
 
         .info{
           margin-left: 0;
         }
 
+.cadre-profil{
+  max-width: none;
+    width: 100%;
+    height: auto;
+}
+
+.profil-header{
+  display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+.image img[data-v-4073cafd] {
+   
+  border-radius:0%;
+    width: 120px;
+    height: 120px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.body[data-v-4073cafd] {
+
+    width: 98%;
+    max-width: 300px;
+  
+
       }
+.body-text{
+  align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+
+}
+
+.boutton{
+  padding-left: 116px;
+}
+    }
+
+    @media (max-width: 768px) {
+      .container{
+        margin-top: 0px;
+      }
+    }
+
+    
+    @media (max-width: 650px) {
+     
+      .profil-header{
+        flex-direction: column;
+      }
+      .body{
+        margin-top: 30px;
+      }
+     
+     
+      
+     }
+
+     @media (max-width: 628px) {
+     .dow{
+      padding-left: 0px;
+     }
+   
+     .boutton{
+      padding-left: 0px;
+     }
+    
+     
+    }
+
+@media (max-width: 467px) {
+     
+.dow{
+    padding-left: 0px;
+}
+
+.boutton{
+  padding-left: 16px;
+}
+
+
+ 
+}
+
+
+@media (max-width: 520px) {
+  .form-control input {
+    width: 98%;
+    max-width: 300px;
+  }
+  .content{
+    padding: 0px;
+  }
+
+}
     
   
   </style>

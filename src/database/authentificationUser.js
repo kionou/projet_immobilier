@@ -1,6 +1,6 @@
 import { auth,usercollection } from "./Connect";
-import { doc, setDoc } from "firebase/firestore"; 
-import { createUserWithEmailAndPassword ,signInWithEmailAndPassword , signOut , onAuthStateChanged,updateProfile} from "firebase/auth";
+import { doc, setDoc ,getDoc,deleteDoc} from "firebase/firestore"; 
+import { createUserWithEmailAndPassword ,signInWithEmailAndPassword , signOut , onAuthStateChanged,updateProfile,deleteUser} from "firebase/auth";
 
 
 
@@ -17,7 +17,7 @@ const connectUser = class{
             .then(async (cred)=>{
                 updateProfile(cred.user,{displayName: 'user'})
                 await setDoc(doc(usercollection, cred.user.uid),into)
-                .then((user)=>{
+                .then(()=>{
                     signOut(auth)
                     next({success:"Enregistrer avec success"}) 
                 })
@@ -93,6 +93,87 @@ const connectUser = class{
         
       
    }
+
+   static GetUserId = (id)=>{
+    console.log(id)
+      return new Promise(async (next)=>{
+      const docRef = doc(usercollection, id);
+       await getDoc(docRef)
+      .then(docRef=>{
+               console.log('ss',docRef.data());
+               next({success:docRef.data()})
+      }).catch(error=>{
+               console.log("eee",error);
+               next ({ erreur:error})
+          })
+       })
+     
+  }
+
+  static DeleteUser = (id)=>{
+    console.log('sqfQSD',id);
+    return new Promise(async (next)=>{
+    await deleteDoc(doc(usercollection, id))
+    .then(resultat=>{
+        auth.deleteUser(id)
+            .then(() => {
+                console.log('Successfully deleted user');
+                console.log('ss',resultat);
+                // next({success:'supprimer avec success'})
+            })
+            .catch((error) => {
+                console.log('Error deleting user:', error);
+            });
+            
+    }).catch(error=>{
+             console.log("eee",error);
+             next ({ erreur:error})
+        })
+     })
+
+    }
+  static UpdateUser = (id,into)=>{
+    console.log('sqfQSD',id,into.image);
+    console.log('sqfQdgsgsgSD',into.image);
+    return new Promise(async (next)=>{
+      if (into.image === '') {
+        console.log('besion de image');
+
+        const docRef = doc(usercollection, id);
+        await getDoc(docRef)
+       .then(docRef=>{
+                 let data = docRef.data().image
+                 into.image = data
+                const update = doc(usercollection, id);
+                setDoc(update,into,{ merge:true })
+                .then(rs=>{
+                next({success:"reussis"})         
+                }).catch(err=>{
+                    console.log("eee",err);
+                    next ({ error:err})
+                })
+       }).catch(error=>{
+                console.log("eee",error);
+                next ({ erreur:error})
+           })
+        
+      } else {
+
+        const update = doc(usercollection, id);
+        setDoc(update,into,{ merge:true })
+        .then(docRef=>{
+                console.log('ss',docRef);
+                next({success:"reussis"})
+        }).catch(error=>{
+                console.log("eee",error);
+                next ({ erreur:error})
+            })
+          
+        
+      }
+     })
+   
+}
 
 
 

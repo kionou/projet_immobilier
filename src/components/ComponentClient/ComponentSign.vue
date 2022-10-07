@@ -109,6 +109,7 @@ methods: {
             if (this.v$.$errors.length == 0 ) {
                
              let   DataUser={
+                    email:this.email,
                     nom:this.nom,
                     prenom:this.prenom,
                     numero:this.numero,

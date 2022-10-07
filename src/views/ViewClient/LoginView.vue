@@ -1,7 +1,7 @@
 <template>
   <div>
     <Spinner/>
-    <ComponentNavbar/>
+    <ComponentNavbar />
     <ComponentLogin/>
   </div>
 </template>
@@ -15,8 +15,13 @@ export default {
     components:{
     ComponentNavbar,
     ComponentLogin,
-    Spinner
-}
+    Spinner,
+
+},
+  data(){
+
+  },
+
 
 }
 </script>
