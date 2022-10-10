@@ -1,5 +1,5 @@
 <template>
-    <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete" :texte="texte"></DeleteAgent>
+    <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete" :texte="texte" :email="email"></DeleteAgent>
 
   <div class="general" ref="scroll">
     <div class="loading" v-if="loading">
@@ -120,7 +120,8 @@
           users:"",
           agent:'',
          Iddelete:'',
-         texte:'Voulez-vous supprimez votre compte?'
+         email:'',
+         texte:'Voulez-vous supprimez votre compte ?'
       }
     },
     validations: {
@@ -155,7 +156,7 @@
          // this.v$.$validate()
          this.v$.$touch()
          if (this.v$.$errors.length == 0 ){
-           this.loading= true
+          //  this.loading= true
           let DataAgent={
              nom:this.nom,
              prenom:this.prenom,
@@ -166,14 +167,14 @@
           }
           console.log("gsdggf",DataAgent);
        let agent =  await dataAgent.UpdateAgent(this.id,DataAgent)
-       if (agent.success) {
-          this.$router.go()
+      //  if (agent.success) {
+      //     this.$router.go()
            
 
-       } else {
-          this.$router.push('/:pathMatch(.*)*')
+      //  } else {
+      //     this.$router.push('/:pathMatch(.*)*')
           
-       }
+      //  }
          }
 
       },

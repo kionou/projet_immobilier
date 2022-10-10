@@ -1,5 +1,8 @@
 <template>
     <div>
+      <div class="loading" v-if="loading">
+        <ComponentLoading/>
+      </div>
        <div class="modal-container" >
           <div class="modal">
              <h1>Modifier  </h1>
@@ -44,13 +47,19 @@
   import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
   import useVuelidate from '@vuelidate/core'
   import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
+  import ComponentLoading from '../ComponentClient/ComponentLoading.vue';
   export default {
       
       name:'UpdateBien',
       props:['id'],
+      components:{
+        ComponentLoading
+
+      },
      data() {
       return {
         isActive:false,
+        loading:false,
           nom:'',
           prenom:'',
           email:'',
@@ -85,11 +94,7 @@
                 lgmax:lgmax(12)
      
             },
-            password:{
-                require,
-                lgmin:lgmin(6),
-                lgmax:lgmax(12)
-            },
+          
      },
      methods: {
      async valider(){

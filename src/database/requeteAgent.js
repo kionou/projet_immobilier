@@ -1,5 +1,7 @@
-import { agentcollection} from "./Connect";
+import {auth, agentcollection} from "./Connect";
 import {  addDoc , getDocs ,getDoc,doc,setDoc,deleteDoc } from 'firebase/firestore'
+import {signInWithEmailAndPassword ,deleteUser} from "firebase/auth";
+import dataBien from "./requeteBien";
 
 const dataAgent = class{
 
@@ -62,20 +64,44 @@ const dataAgent = class{
     }
 
 
-    static DeleteAgent = (id)=>{
-      console.log('sqfQSD',id);
-      return new Promise(async (next)=>{
-      await deleteDoc(doc(agentcollection, id))
-      .then(resultat=>{
-               console.log('ss',resultat);
-               next({success:'supprimer avec success'})
-      }).catch(error=>{
-               console.log("eee",error);
-               next ({ erreur:error})
-          })
-       })
+    static DeleteAgent = (email,password,id)=>{
+      console.log('sqfQSD',email,password,id);
 
-      }
+
+      return new Promise(async (next)=>{
+        await  signInWithEmailAndPassword(auth,email,password)
+        .then((cred)=>{
+             deleteUser(auth.currentUser)
+            .then( async (rs) => {
+                await deleteDoc(doc(agentcollection, id))
+                .then(resultat=>{
+                  console.log("supprimer avec succes",rs);
+                  dataBien.DeleteBienAgent(id)
+                  .then(docRef=>{
+                    console.log('ss',docRef);
+                    // next({success:docRef})
+           }).catch(error=>{
+                    console.log("eee",error);
+                    next ({ erreur:error})
+               })
+                }).catch(error=>{
+                console.log("eee",error);
+                next ({ error:error})
+                })
+            })
+            .catch((error) => {
+             console.log(error);
+            });
+        
+        })
+        .catch((err)=>{
+             next ({ erreur:err.code})
+            console.log("eee",err.code);
+        })
+    })
+
+
+}
 
       static UpdateAgent = (id,into)=>{
         console.log('sqfQSD',id,into.image);

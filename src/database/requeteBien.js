@@ -1,5 +1,5 @@
 import { bienCollection} from "./Connect";
-import {  addDoc , getDocs,getDoc,doc,setDoc,deleteDoc ,updateDoc, query, where} from 'firebase/firestore'
+import { addDoc , getDocs,getDoc,doc,setDoc,deleteDoc ,updateDoc, query, where} from 'firebase/firestore'
 
 const dataBien = class{
 
@@ -173,6 +173,39 @@ const dataBien = class{
     
  }
 
+
+ static DeleteBienAgent = (id)=>{
+     console.log('sqfQSD',id);
+     return new Promise(async (next)=>{
+     const q = query(bienCollection, where("user_id", "==", id));
+     await getDocs(q)
+     .then(docRef=>{
+          console.log('rrf',docRef)
+          if (docRef.docs.length > 0) {
+               docRef.forEach( async (result) => {
+               let data = result.data()
+               data.id =result.id,
+                await deleteDoc(doc(bienCollection, data.id))
+                    .then(resultat=>{
+                             console.log('resultat :','supprimer avec success');
+                    }).catch(error=>{
+                             console.log("eee",error);
+                             next ({ erreur:error})
+                        })
+                   });
+                   next({success:'suppression de tous les biens  avec success'})
+          } else {
+               console.log('df<df');
+               next({alert: 'Vous n\'aviez pas de bien immobilier pour l\'instant!'})     
+          }
+             
+     }).catch(error=>{
+              console.log("eee",error);
+              next ({ erreur:error})
+         })
+      })
+    
+ }
 
  static UpdateBienVendu = async (id)=>{
      console.log('sqfQSD',id);

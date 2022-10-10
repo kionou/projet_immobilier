@@ -125,7 +125,15 @@ export default {
         },
       async  logout(){
         await connectUser.LogoutUser()
-        this.$router.push('/login')
+        .then(rs=>{
+          this.$router.push('/login')
+
+        })
+        .catch(err=>{
+            this.$router.push('/:pathMatch(.*)*')
+
+        })
+
 
         }
 

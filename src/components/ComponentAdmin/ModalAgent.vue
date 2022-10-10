@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="loading">
+      <ComponentLoading/>
+     </div>
     <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte" ></ComponentModal>
      <div class="modal-container" id="modal" v-if="revele" @click.self="submit">        
             <div class="container">
@@ -27,10 +30,7 @@
               
                   
                 <button  @click.prevent='valider' >Enregistrer</button>
-                <div v-if="loading">
-                <ComponentLoading/>
-
-                </div>
+               
             </form>
           
         </div>
@@ -64,7 +64,7 @@ export default {
               v$:useVuelidate(),
               erreur:'',
               success:false,
-              texte:'Enregistrement de l\'Agent éffectué avec success.',
+              texte:'',
               loading:false
             
         }
@@ -126,6 +126,7 @@ methods: {
                 let agent = await connectAgent.AddAgent(DataUser,auth)
                 console.log(agent);
                 if (agent.success) {
+                    this.texte = 'Enregistrement de l\'Agent éffectué avec success.'
                     this.success = !this.success
                     this.loading =false
 

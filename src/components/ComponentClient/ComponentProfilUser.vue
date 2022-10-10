@@ -1,5 +1,5 @@
 <template>
-    <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete" :texte="texte"></DeleteAgent>
+    <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete" :texte="texte" :email="email"></DeleteAgent>
 
   <div>
     <div class="loading" v-if="loading">
@@ -99,6 +99,9 @@
   import {storage} from '@/database/Connect'
   import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
   import DeleteAgent from '../ComponentAdmin/DeleteAgent.vue'
+  import { auth } from '@/database/Connect';
+   import { onAuthStateChanged } from '@firebase/auth';
+ 
 
   export default {
     components:{
@@ -155,7 +158,7 @@
          // this.v$.$validate()
          this.v$.$touch()
          if (this.v$.$errors.length == 0 ){
-      // this.loading= true
+         this.loading= true
           let DataUser={
              nom:this.nom,
              prenom:this.prenom,
@@ -168,7 +171,6 @@
        let user =  await connectUser.UpdateUser(this.id,DataUser)
        if (user.success) {
           this.$router.go()
-          // this.loading= false
 
        } else {
           this.$router.push('/:pathMatch(.*)*')
@@ -246,6 +248,22 @@
         } else {
             
         }
+
+
+        onAuthStateChanged(auth,(user)=>{
+        if (user != null) {
+            console.log('user connect',user);
+            console.log('password',user.displayName);
+            this.connect = user
+            
+            
+        } else {
+            console.log('user no connect');
+           
+        }
+            
+        })
+
 
       
      },

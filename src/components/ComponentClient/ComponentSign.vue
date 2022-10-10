@@ -1,5 +1,8 @@
 <template>
     <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte" ></ComponentModal>
+    <div class="loading" v-if="loading">
+                <ComponentLoading/>
+    </div>
   <div class="toi">
     <div class="ImageHeader">
           <div class="cadre">
@@ -48,14 +51,12 @@
                <div id="inputs">
                 <input type="password" class="input" name="confirmPassword" placeholder="Confirmer le Mot de passe" v-model="confirmPassword">
                 <small v-if="v$.confirmPassword.$error">{{v$.confirmPassword.$errors[0].$message}} </small>
+                <small v-if="error"> {{error}}</small>
                 
                </div>
               </div>
                 <button @click.prevent="valider" id="open" >Enregister</button>
             </form>
-              <div class="loading" v-if="loading">
-                <ComponentLoading/>
-            </div>
           </div>
        
     </div>
@@ -64,8 +65,8 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import {require, lgmin,lgmax,ValidEmail,ValidNumeri,sameAsPassword} from '@/functions/rules'
-import { sameAs} from "@vuelidate/validators";
+import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
+
 import connectUser from '@/database/authentificationUser'
 import ComponentModal from '../ComponentAdmin/ComponentModal.vue';
 import ComponentLoading from './ComponentLoading.vue';
@@ -84,6 +85,7 @@ export default {
                 password:'',
                 confirmPassword:'',
                 erreur:'',
+                error:'',
                 loading:false,
                 success:false,
                 texte:'',
@@ -119,49 +121,51 @@ export default {
        password:{
            require,
            lgmin:lgmin(6),
-           lgmax:lgmax(12)
+           lgmax:lgmax(12),
+          
        },
         confirmPassword:{
            require,
            lgmin:lgmin(6),
            lgmax:lgmax(12),
-        //    sameAsPassword: sameAs(function(){
-        //     console.log('fff',this.password);
-        //     this.password})
+      
        },
 },
 methods: {
-   async valider(){
-         
-            // this.v$.$validate()
-            console.log(this.v$.$errors);
+   async valider(){       
             this.v$.$touch()
             if (this.v$.$errors.length == 0 ) {
-                this.loading = true
-             let   DataUser={
-                    email:this.email,
-                    nom:this.nom,
-                    prenom:this.prenom,
-                    numero:this.numero,
-                    image:'https://previews.123rf.com/images/apoev/apoev1903/apoev190300009/124806570-personne-gris-espace-r%C3%A9serv%C3%A9-photo-homme-en-t-shirt-sur-fond-gris.jpg?fj=1'
-                }
-                let auth={
-                    email:this.email,
-                    password:this.password
-                }
-                console.log(DataUser,auth);
-                let user = await connectUser.AddUser(DataUser,auth)
-                
-                if (user.erreur == "auth/email-already-in-use") {
-                    this.erreur = "Votre Adresse Email existe  déjà donc veillez-vous connecté."
+                if (this.password != this.confirmPassword) {
+                    this.error = "mot de passe no identique"    
+                }else{
+                    this.error = ""
+                    this.loading = true
+                    let DataUser={
+                        email:this.email,
+                        nom:this.nom,
+                        prenom:this.prenom,
+                        numero:this.numero,
+                        image:'https://previews.123rf.com/images/apoev/apoev1903/apoev190300009/124806570-personne-gris-espace-r%C3%A9serv%C3%A9-photo-homme-en-t-shirt-sur-fond-gris.jpg?fj=1'
+                    }
+                    let auth={
+                        email:this.email,
+                        password:this.password
+                    }
+                        console.log(DataUser,auth);
+                        let user = await connectUser.AddUser(DataUser,auth)
                     
-                } else {
-                    this.loading = false
-                    this.texte = 'Inscription reçu avec success veillez-vous connecter merci!'
-                    this.success = !this.success
+                        if (user.erreur == "auth/email-already-in-use") {
+                          this.erreur = "Votre Adresse Email existe  déjà donc veillez-vous connecté."
+                        
+                        } else {
+                        this.loading = false
+                        this.texte = 'Inscription reçu avec success veillez-vous connecter merci!'
+                         this.success = !this.success
+
+                        }
 
                 }
-
+          
             }
            
 

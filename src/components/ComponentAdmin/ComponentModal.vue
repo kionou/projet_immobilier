@@ -29,7 +29,7 @@
       methods: {
     
         close(){
-          if( this.texte === 'Voulez-vous supprimez votre compte?'){
+          if( this.texte === 'Inscription reçu avec success veillez-vous connecter merci!'){
             this.$router.push('/login')
 
           }else{

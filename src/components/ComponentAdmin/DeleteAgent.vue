@@ -1,4 +1,7 @@
 <template>
+     <div class="loading" v-if="loading">
+       <ComponentLoading/>
+    </div>
     <div>
        <div class="modal-container" id="modal" v-if="toggle" @click.self="agentDelete">
         
@@ -6,11 +9,17 @@
               <div class="container">
                 <!-- vous voulez-vous supprimer ce agent ? -->
                 <p>{{texte}}</p>
-                <div class="boutton">
+
+                <!-- <div class="boutton">
                     <button @click="supp">Oui</button>
                     <button @click='close'>Non</button>
                    
-                </div>
+                </div> -->
+                <form action="">
+                    <input type="password" name="password" v-model="password" placeholder="Mot de passe">
+                    <small class="validation">{{error}}</small>
+                    <button @click.prevent="supp">valider</button>
+                </form>
 
           </div>
           
@@ -22,22 +31,58 @@
   <script>
     import dataAgent from '@/database/requeteAgent'
     import connectUser from '@/database/authentificationUser'
+    import ComponentLoading from '../ComponentClient/ComponentLoading.vue'
+    import { auth } from '@/database/Connect';
+   import { onAuthStateChanged } from '@firebase/auth';
   export default {
       name:'DeleteBien',
-      props:['toggle','agentDelete','Iddelete','texte'],
+      props:['toggle','agentDelete','Iddelete','texte','email'],
+      components:{
+        ComponentLoading
+      },
+      data() {
+        return {
+            password:'',
+            error:'',
+            loading:false,
+            displayName:''
+        }
+      },
       methods: {
      async supp(){
-        let user = await connectUser.DeleteUser(this.Iddelete)
+        // this.loading =true
+        if (this.displayName === "user") {
+            console.log('user');
+             let user = await connectUser.DeleteUser(this.email,this.password , this.Iddelete)
             if(user.success){
                this.$router.push('/login')
               
+            }else if (user.alert){
+               this.$router.push('/login')
+              
+            }else{
+                console.log('error',user.erreur);
+                this.error = 'le Mot de passe est incorrect !'
             }
 
-            // let Agent = await dataAgent.DeleteAgent(this.Iddelete)
-            // if(Agent.success){
-            //    location.reload()
+            
+        } else if (this.displayName != "agent") {
+            console.log('agent');
+            let agent = await dataAgent.DeleteAgent(this.email,this.password , this.Iddelete)
+            if(agent.success){
+               this.$router.go()
               
-            // }
+            }else if (agent.alert){
+                console.log('ok');
+               this.$router.go()
+              
+            }else{
+                console.log('error',user.erreur);
+                this.error = 'le Mot de passe est incorrect !'
+            }
+            
+        }
+       
 
         },
         close(){
@@ -46,6 +91,23 @@
 
         }
         
+      },
+      mounted() {
+        onAuthStateChanged(auth,(user)=>{
+        if (user != null) {
+            console.log('user connect',user);
+            console.log('password',user.displayName);
+            this.displayName = user.displayName
+            this.connect = user
+            
+            
+        } else {
+            console.log('user no connect');
+           
+        }
+            
+        })
+
       },
   
   }
@@ -72,8 +134,8 @@
 }
   
 button {
-      width: 4rem;
-      height: 3rem;
+    margin-top: 20px;
+      padding: 8px 12px;
       text-align: center;
       border: none;
       background-color: #2288ff;
@@ -111,7 +173,29 @@ button {
      
   }
 
-  
+  form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input{
+   
+    padding: 5px;
+    margin-top: 20px;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Roboto Serif', serif;
+    font-size: 17px;
+    outline: none;
+    border: 1px solid #ccc;
+  }
+
+  input:focus{
+      border: 1px solid #2288ff;
+      outline-offset: 0px;
+      outline: none;
+  }
   
   
   .validation {

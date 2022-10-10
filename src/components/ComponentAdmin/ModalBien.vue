@@ -197,7 +197,7 @@ export default {
      let bien =  await dataBien.InsertionBien(DataBien)
      if (bien.success) {
         this.$router.go()
-        this.loading = false
+        // this.loading = false
         
      } else {
         console.log('error 404');
@@ -210,6 +210,7 @@ export default {
    
 
 async upload (e)  {
+    this.isActive = true
     const promises = [];
    Object.values(e.target.files).forEach((element)=>{
     console.log(element.name);

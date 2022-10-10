@@ -4,6 +4,11 @@ import { createUserWithEmailAndPassword ,signInWithEmailAndPassword , signOut , 
 
 
 
+
+// const user = auth.currentUser;
+
+
+
 const connectUser = class{
 
     static AddUser  =async (into,authentification)=>{
@@ -67,7 +72,7 @@ const connectUser = class{
     static LogoutUser  =async ()=>{
     signOut(auth)
         .then(()=>{
-        console.log("user deconnecter");
+        return {rs:"user deconnecter"}
         })
         .catch((err)=>{
             console.log(err.message);
@@ -110,26 +115,60 @@ const connectUser = class{
      
   }
 
-  static DeleteUser = (id)=>{
-    console.log('sqfQSD',id);
-    return new Promise(async (next)=>{
-    await deleteDoc(doc(usercollection, id))
-    .then(resultat=>{
-        auth.deleteUser(id)
-            .then(() => {
-                console.log('Successfully deleted user');
-                console.log('ss',resultat);
-                // next({success:'supprimer avec success'})
-            })
-            .catch((error) => {
-                console.log('Error deleting user:', error);
-            });
+  static DeleteUser =  (email,password,id)=>{
+
+console.log(email,password,id);
+
+        return new Promise(async (next)=>{
+            await  signInWithEmailAndPassword(auth,email,password)
+            .then((cred)=>{
+                console.log(auth.currentUser);
+                 deleteUser(auth.currentUser)
+                .then( async (rs) => {
+                    await deleteDoc(doc(usercollection, id))
+                    .then(resultat=>{
+                 console.log("supprimer avec succes",rs);
+                 next ({ success:"supprimer avec success"})
             
-    }).catch(error=>{
-             console.log("eee",error);
-             next ({ erreur:error})
+                    }).catch(error=>{
+                    console.log("eee",error);
+                    next ({ error:error})
+                    })
+                })
+                .catch((error) => {
+                 console.log(error);
+                });
+            
+            })
+            .catch((err)=>{
+                 next ({ erreur:err.code})
+                console.log("eee",err.code);
+            })
         })
-     })
+
+ 
+
+
+
+    // console.log('sqfQSD',id);
+    // return new Promise(async (next)=>{
+    // await deleteDoc(doc(usercollection, id))
+    // .then(resultat=>{
+    //     auth.deleteUser(id)
+    //         .then(() => {
+    //             console.log('Successfully deleted user');
+    //             console.log('ss',resultat);
+    //              next({success:'supprimer avec success'})
+    //         })
+    //         .catch((error) => {
+    //             console.log('Error deleting user:', error);
+    //         });
+            
+    // }).catch(error=>{
+    //          console.log("eee",error);
+    //          next ({ erreur:error})
+    //     })
+    //  })
 
     }
   static UpdateUser = (id,into)=>{

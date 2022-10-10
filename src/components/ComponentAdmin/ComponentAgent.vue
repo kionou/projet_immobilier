@@ -1,7 +1,7 @@
 <template>
   <div ref="scroll">
     <ModalAgent v-bind:revele="revele" v-bind:submit="submit" ></ModalAgent>
-    <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete"></DeleteAgent>
+    <DeleteAgent v-bind:toggle="toggle" v-bind:agentDelete="agentDelete" :Iddelete="Iddelete" :texte="texte" :email="email"></DeleteAgent>
         <div class="loading" v-if="loading">
             <ComponentLoading/>
         </div>
@@ -34,7 +34,7 @@
                             </div>
                             <div class="icon">
                                 <i class="fa-solid fa-pen-to-square" @click="update(agent.id)"></i>
-                                <i class="fa-solid fa-trash" @click="agentDelete(agent.id)"></i>
+                                <i class="fa-solid fa-trash" @click="agentDelete(agent.id, agent.email)"></i>
                               
                        </div>
                         </div>
@@ -67,17 +67,21 @@ data(){
         alert:'',
         Iddelete:'',
         toggle:false,
-        loading:true
+        loading:true,
+        texte:'',
+        email:''
     }
 },
 methods:{
     submit(){
         this.revele = !this.revele
     },
-    agentDelete(id){
-        console.log(id);
+    agentDelete(id , email){
+        console.log(email);
         this.toggle = !this.toggle
         this.Iddelete = id
+        this.email = email
+        this.texte = 'Voulez-vous supprimez votre compte?'
 
     },
     update(id){
