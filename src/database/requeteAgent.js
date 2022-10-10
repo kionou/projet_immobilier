@@ -79,7 +79,7 @@ const dataAgent = class{
                   dataBien.DeleteBienAgent(id)
                   .then(docRef=>{
                     console.log('ss',docRef);
-                    // next({success:docRef})
+                     next({docRef})
            }).catch(error=>{
                     console.log("eee",error);
                     next ({ erreur:error})
