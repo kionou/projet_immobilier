@@ -1,4 +1,4 @@
-import { helpers, required,email , minLength ,minValue , maxLength ,maxValue ,numeric} from "@vuelidate/validators";
+import { helpers, required,email , minLength ,minValue , maxLength ,maxValue ,numeric,sameAs} from "@vuelidate/validators";
 
 
 
@@ -13,6 +13,8 @@ const vlmax =(max) =>helpers.withMessage(`Ce champs doit avoir au plus ${max} va
 
 const ValidEmail =helpers.withMessage(`la valeur n'est pas une adresse e-mail valide`,email)
 const ValidNumeri =helpers.withMessage('la valeur doit être numérique',numeric)
+const sameAsPassword =helpers.withMessage('Mot de passe non identique',sameAs)
+
 
 
 
@@ -25,6 +27,7 @@ export{
     ValidEmail,
     ValidNumeri,
     vlmin,
-    vlmax
+    vlmax,
+    sameAsPassword
 
 }

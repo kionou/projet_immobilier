@@ -78,7 +78,7 @@
                        <p>loyer {{bien.prix}} CFA/mois</p>
                    </div>
                    <div class="btn">
-                        <button class="btncard" :disabled="isActive"  @click="redirect(bien.id)">
+                        <button class="btncard" :disabled="isActive"  @click="redirect(bien.id)" >
                              Détail
                         </button>
                    </div>
@@ -87,8 +87,11 @@
 
             <div class="non-vendu" v-else>
                 <div class="card-image">
-               <img :src="bien.images[0]" alt="">   
-             
+                     <button  @click="toggle(bien.id)" :class="{active:Active}"  ref="favorite" class="favoris" >
+                             favoris
+                </button> 
+               <img :src="bien.images[0]" alt=""> 
+                 
            </div>
            <div class="card-body">
                <div class="body-text">
@@ -132,7 +135,7 @@
 
         </div >
 
-      
+     
      
         <!-- <div class="content-card">
             <div class="card-image">
@@ -245,14 +248,12 @@ export default {
             alert:'',
             isActive: true,
             loading:true,
-            isSelected:false,
+            Active:false,
             nom:'',
             piece:'',
             rech:false,
-            bien:''
-
- 
-  
+            bien:'',
+            
         }  
     },
     methods:{
@@ -269,8 +270,17 @@ export default {
             let bien = await dataBien.RechercheBien(recherche)
             this.bien = 'bien'
             this.$router.push(`/recherche`)
-
             console.log('recherche', this.bien);
+        },
+        toggle(id){
+            if (!this.Active) {
+                this.Active = true
+                console.log('bonjour',id);
+                
+            } else {
+                this.Active = false
+                console.log('bonsoir',id);
+            }
         }
     },
    async mounted(){
@@ -289,7 +299,8 @@ export default {
         console.log('erreur 404');
         
     }
-  
+  let ab = document.querySelectorAll('.content-card')
+  console.log('edf',ab)
 
 
     },
@@ -453,7 +464,7 @@ select{
 .icon-content{
     display: flex;
     font-size: 15px;
-    font-family: 'Roboto Serif',    serif;
+    font-family: 'Roboto Serif',serif;
     margin-right: 16px;
     width: 161px;
     height: 40px;
@@ -689,7 +700,7 @@ button{
     background-color: red;
     color: white;
 }
-button.selected{
+button.active{
     background-color: aqua;
 }
 

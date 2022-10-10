@@ -1,4 +1,5 @@
 <template>
+    <ComponentModal v-bind:success="success" v-bind:valider="valider" :texte="texte" ></ComponentModal>
   <div class="toi">
     <div class="ImageHeader">
           <div class="cadre">
@@ -39,12 +40,22 @@
                 </div>
               </div>
               <div class="name">
-                  <input type="password" class="input" name="password" placeholder="Mot de passe" v-model="password">
-                   <input type="password" class="input" name="confirmer_password" placeholder="Confirmer le Mot de passe">
+
+                <div id="inputs">
+                    <input type="password" class="input" name="password" placeholder="Mot de passe" v-model="password">
+                    <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>
+                </div>
+               <div id="inputs">
+                <input type="password" class="input" name="confirmPassword" placeholder="Confirmer le Mot de passe" v-model="confirmPassword">
+                <small v-if="v$.confirmPassword.$error">{{v$.confirmPassword.$errors[0].$message}} </small>
+                
+               </div>
               </div>
-              <small v-if="v$.password.$error">{{v$.password.$errors[0].$message}} </small>
-                <button @click.prevent="submit" id="open" >Enregister</button>
+                <button @click.prevent="valider" id="open" >Enregister</button>
             </form>
+              <div class="loading" v-if="loading">
+                <ComponentLoading/>
+            </div>
           </div>
        
     </div>
@@ -53,9 +64,17 @@
 
 <script>
 import useVuelidate from '@vuelidate/core'
-import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
+import {require, lgmin,lgmax,ValidEmail,ValidNumeri,sameAsPassword} from '@/functions/rules'
+import { sameAs} from "@vuelidate/validators";
 import connectUser from '@/database/authentificationUser'
+import ComponentModal from '../ComponentAdmin/ComponentModal.vue';
+import ComponentLoading from './ComponentLoading.vue';
 export default {
+    name:'ComponentSign',
+    components:{
+         ComponentModal,
+         ComponentLoading
+    },
     data() {
         return {
                 nom:'',
@@ -63,15 +82,17 @@ export default {
                 email:'',
                 numero:'',
                 password:'',
+                confirmPassword:'',
                 erreur:'',
-              v$:useVuelidate(),
+                loading:false,
+                success:false,
+                texte:'',
+                v$:useVuelidate(),
             
         }
     },
     validations: {
-        
-             
-          
+            
         nom:{
            require,
            lgmin:lgmin(4),
@@ -100,14 +121,23 @@ export default {
            lgmin:lgmin(6),
            lgmax:lgmax(12)
        },
+        confirmPassword:{
+           require,
+           lgmin:lgmin(6),
+           lgmax:lgmax(12),
+        //    sameAsPassword: sameAs(function(){
+        //     console.log('fff',this.password);
+        //     this.password})
+       },
 },
 methods: {
-   async submit(){
+   async valider(){
          
             // this.v$.$validate()
+            console.log(this.v$.$errors);
             this.v$.$touch()
             if (this.v$.$errors.length == 0 ) {
-               
+                this.loading = true
              let   DataUser={
                     email:this.email,
                     nom:this.nom,
@@ -126,7 +156,10 @@ methods: {
                     this.erreur = "Votre Adresse Email existe  déjà donc veillez-vous connecté."
                     
                 } else {
-                    
+                    this.loading = false
+                    this.texte = 'Inscription reçu avec success veillez-vous connecter merci!'
+                    this.success = !this.success
+
                 }
 
             }

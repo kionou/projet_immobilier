@@ -92,8 +92,8 @@
   </template>
   
   <script>
-    import ComponentLoading from './ComponentLoading.vue'
-    import useVuelidate from '@vuelidate/core'
+  import ComponentLoading from './ComponentLoading.vue'
+  import useVuelidate from '@vuelidate/core'
   import {require, lgmin,lgmax,ValidEmail,ValidNumeri} from '@/functions/rules'
   import connectUser from '@/database/authentificationUser'
   import {storage} from '@/database/Connect'
@@ -165,8 +165,8 @@
       
           }
           console.log("gsdggf",DataUser);
-       let agent =  await connectUser.UpdateUser(this.id,DataUser)
-       if (agent.success) {
+       let user =  await connectUser.UpdateUser(this.id,DataUser)
+       if (user.success) {
           this.$router.go()
           // this.loading= false
 
@@ -640,3 +640,6 @@ button[disabled]{
     
   
   </style>
+
+
+  

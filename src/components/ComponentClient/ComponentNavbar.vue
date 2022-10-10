@@ -33,12 +33,25 @@
             </div>
             <transition name="mobile-nav">
                 <ul v-show="mobileNav" class="dropdown-nav">
-                    <li>
-                    <router-link class="link" :to="{name:'home'}">Home</router-link>
-                </li>
-                <li>
+                 <div v-if="connect" class="links">
+                
+                <li >
                     <router-link class="link" :to="{name:'login'}">Mon Compte</router-link>
                 </li> 
+                <li >
+                    <p class="logout" @click="logout">Deconnter</p>
+                </li>
+               
+                </div>
+
+                <div v-else class="links">
+                    <li>
+                    <router-link class="link" :to="{name:'home'}">Accueil</router-link>
+                </li>
+                <li >
+                    <router-link class="link" :to="{name:'login'}">Mon Compte</router-link>
+                </li>
+                </div>
                 </ul>
             </transition>
         </nav>

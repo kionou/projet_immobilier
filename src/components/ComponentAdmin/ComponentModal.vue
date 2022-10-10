@@ -29,7 +29,12 @@
       methods: {
     
         close(){
-         this.$router.go()
+          if( this.texte === 'Voulez-vous supprimez votre compte?'){
+            this.$router.push('/login')
+
+          }else{
+           this.$router.go()
+          }
 
         }
         

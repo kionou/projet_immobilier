@@ -91,8 +91,12 @@ const dataAgent = class{
                      into.image = data
                     const update = doc(agentcollection, id);
                     setDoc(update,into,{ merge:true })
-                    console.log( setDoc(update,into,{ merge:true }));
-                    next({success:docRef.data()})         
+                      .then(rs=>{
+                        next({success:"reussis"})         
+                      }).catch(err=>{
+                          console.log("eee",err);
+                          next ({ error:err})
+                      })        
            }).catch(error=>{
                     console.log("eee",error);
                     next ({ erreur:error})
