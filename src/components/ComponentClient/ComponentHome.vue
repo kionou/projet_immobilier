@@ -9,8 +9,8 @@
        <form >
         <select id="biens" name="bien" class="input" v-model="nom">
             <option value="" disabled selected >-- TYPES DE BIENS --</option>
-            <option value="maison">Maisons</option>
-            <option value="appartement">Appartements</option>
+            <option value="Maison">Maisons</option>
+            <option value="Appartement">Appartements</option>
             <option value="Immeuble">Immeuble</option>
 
           </select>
@@ -26,17 +26,176 @@
        </form>
    </div>
    <div class="content">
-       <div class="content-texte">
-           <h2>Les biens qui pourraient vous intéresser</h2>
+    <div class="content-texte"  v-if="rechercher">
+           <h2>Resultat de votre recherche</h2>
        </div>
 
-       <div class="content-info">
+       <div class="content-texte" v-else>
+           <h2>Les biens qui pourraient vous intéresser</h2>
+       </div>
+       
+
+       <div class="content-info" v-if="rechercher">
         <div class="general">
             <div class="loading" v-if="loading">
            <ComponentLoading/>
 
             </div>
             <div class="cadre"  v-else>
+             
+                <div class="alert" v-if="alert">
+                      {{alert}}
+                </div>
+                <div class="content-card" v-for="biens in bien" :key="biens.id" v-else>
+            <div class="vendu" v-if="bien.status == 'true'">
+                <div class="card-image">
+               <img :src="biens.images" alt="">   
+             
+           </div>
+           <div class="vendu-text">
+            Bien déjà en location
+           </div>
+           <div class="card-body">
+               <div class="body-text">
+               <h3>{{biens.ville}} - {{biens.commune}}</h3>
+               </div>
+               <div class="body-text">
+                
+               <p>{{biens.nom_bien}} </p>
+               </div>
+               <div class="body-text">
+               <p> {{biens.piece}} pièces/ {{biens.superficie}} m²</p>
+               </div>
+               <div class="icon">
+                   <div class="icon-content">
+                       <i class="fas fa-door-closed"></i>
+                       <samp>{{biens.chambre}} chambres</samp>
+                   </div>
+                   <div class="icon-content">
+                       <i class="fas fa-bath"></i>
+                       <samp> {{biens.douche}} douches </samp>
+                   </div>
+               </div>
+                   <div class="">
+                       <div id="trait_dessus">
+                       </div>
+                   </div>
+                   <div class="">
+                       <p>loyer {{biens.prix}} CFA/mois</p>
+                   </div>
+                   <div class="btn">
+                        <button class="btncard" :disabled="isActive"  @click="redirect(biens.id)">
+                             Détail
+                        </button>
+                   </div>
+           </div>
+            </div>
+
+            <div class="non-vendu" v-else>
+                <div class="card-image">
+               <img :src="biens.images[0]" alt="">   
+             
+           </div>
+           <div class="card-body">
+               <div class="body-text">
+               <h3>{{biens.ville}} - {{biens.commune}}</h3>
+               </div>
+               <div class="body-text">
+                
+               <p>{{biens.nom_bien}} </p>
+               </div>
+               <div class="body-text">
+               <p> {{biens.piece}} pièces/ {{biens.superficie}} m2</p>
+               </div>
+               <div class="icon">
+                   <div class="icon-content">
+                       <i class="fas fa-door-closed"></i>
+                       <samp>{{biens.chambre}} chambres</samp>
+                   </div>
+                   <div class="icon-content">
+                       <i class="fas fa-bath"></i>
+                       <samp> {{biens.douche}} douches</samp>
+                   </div>
+               </div>
+                   <div class="">
+                       <div id="trait_dessus">
+                       </div>
+                   </div>
+                   <div class="">
+                       <p>loyer {{biens.prix}} CFA/mois</p>
+                   </div>
+                   <div class="btn">
+                        <button class="btncard">
+                             <p @click="redirect(biens.id)">Détail</p>
+                        </button>
+                   </div>
+           </div>
+            </div>
+           
+        </div>
+
+            </div>
+
+        </div >
+
+      
+     
+        <!-- <div class="content-card">
+            <div class="card-image">
+               
+                <img src="@/assets/images/1.jpg" alt="">   
+                 
+            </div>
+            <div class="card-body">
+                <div class="body-text">
+                <h3>fsqgjhqg</h3>
+                </div>
+                <div class="body-text">
+                <p>fdjkbdkb</p>
+                </div>
+                <div class="body-text">
+                <p> 4/300m</p>
+                </div>
+                <div class="icon">
+                    <div class="icon-content">
+                        <i class="fas fa-door-closed"></i>
+                        <samp>4</samp>
+                    </div>
+                    <div class="icon-content">
+                        <i class="fas fa-bath"></i>
+                        <samp> 2</samp>
+                    </div>
+                </div>
+                    <div class="">
+                        <div id="trait_dessus">
+                          
+                        </div>
+                    </div>
+                    <div class="">
+                        <p>loyer 1000F CFA/mois</p>
+                    </div>
+                    <div class="btn">
+                         <button class="btncard">
+                              <p @click="redirect">Détail</p>
+                         </button>
+                    </div>
+            </div>
+        </div> -->
+       
+       
+        
+       
+       
+        </div>
+
+        <div class="content-info" v-else>
+        <div class="general">
+            <div class="loading" v-if="loading">
+           <ComponentLoading/>
+
+            </div>
+            <div class="cadre"  v-else>
+             
                 <div class="alert" v-if="alert">
                       {{alert}}
                 </div>
@@ -78,7 +237,7 @@
                        <p>loyer {{bien.prix}} CFA/mois</p>
                    </div>
                    <div class="btn">
-                        <button class="btncard" :disabled="isActive"  @click="redirect(bien.id)" >
+                        <button class="btncard" :disabled="isActive"  @click="redirect(bien.id)">
                              Détail
                         </button>
                    </div>
@@ -87,11 +246,8 @@
 
             <div class="non-vendu" v-else>
                 <div class="card-image">
-                     <button  @click="toggle(bien.id)" :class="{active:Active}"  ref="favorite" class="favoris" >
-                             favoris
-                </button> 
-               <img :src="bien.images[0]" alt=""> 
-                 
+               <img :src="bien.images[0]" alt="">   
+             
            </div>
            <div class="card-body">
                <div class="body-text">
@@ -135,7 +291,7 @@
 
         </div >
 
-     
+      
      
         <!-- <div class="content-card">
             <div class="card-image">
@@ -248,17 +404,17 @@ export default {
             alert:'',
             isActive: true,
             loading:true,
-            Active:false,
             nom:'',
             piece:'',
-            rech:false,
-            bien:'',
+            loading:true,
+            rechercher:false,
+            bien:''
+            
             
         }  
     },
     methods:{
         redirect(id){
-            console.log(id);
             this.$router.push(`/detail/${id}`)
 
         },
@@ -268,14 +424,19 @@ export default {
                 piece:this.piece
             }
             let bien = await dataBien.RechercheBien(recherche)
-            this.bien = 'bien'
-            this.$router.push(`/recherche`)
-            console.log('recherche', this.bien);
+            if (bien.success) {
+                this.bien=bien.success
+                this.rechercher = true
+            } else {
+                this.alert = bien.alert
+                this.rechercher = true
+            }
         },
         toggle(id){
-            if (!this.Active) {
-                this.Active = true
+            if (!this.color) {
+               this.color = 'red'
                 console.log('bonjour',id);
+               
                 
             } else {
                 this.Active = false
@@ -286,11 +447,10 @@ export default {
    async mounted(){
    
     let bien = await dataBien.AfficherBien()
-    console.log(bien);
     if (bien.success) {
-        console.log(bien.success)
         this.biens=bien.success
         this.loading=false
+        
         
     }else if (bien.alert) {
         this.alert = bien.alert
@@ -299,11 +459,10 @@ export default {
         console.log('erreur 404');
         
     }
-  let ab = document.querySelectorAll('.content-card')
-  console.log('edf',ab)
-
+   
 
     },
+  
 
 }
 </script>

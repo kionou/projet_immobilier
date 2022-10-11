@@ -186,7 +186,6 @@ import {require, lgmin,lgmax,ValidNumeri} from '@/functions/rules'
              user_id:this.user_id,
              status:this.status
           }
-          console.log(DataBien);
        let bien =  await dataBien.UpdateBien(this.id,DataBien)
        if (bien.success) {
           this.$router.go(-1)
@@ -203,9 +202,9 @@ import {require, lgmin,lgmax,ValidNumeri} from '@/functions/rules'
      
   
   async upload (e)  {
+    this.isActive = true
       const promises = [];
      Object.values(e.target.files).forEach((element)=>{
-      console.log(element.name);
       const file=element
       const metadata = {
         contentType: "image/jpeg",
@@ -219,17 +218,12 @@ import {require, lgmin,lgmax,ValidNumeri} from '@/functions/rules'
     if (photos) {
         this.isActive = false
     } 
-    this.image = photos
-    console.log(this.image);
-  
-  
-  
+    this.image = photos  
     }
      
      },
     async mounted() {
         let bien = await dataBien.GetBienId(this.id)
-        console.log(bien.success.prix);
         if (bien.success) {
             
             this.nom_bien = bien.success.nom_bien,
@@ -252,9 +246,7 @@ import {require, lgmin,lgmax,ValidNumeri} from '@/functions/rules'
             
         }
 
-        this.$refs.input.addEventListener('click',()=>{
-            this.isActive = true
-        })
+      
      },
   
   

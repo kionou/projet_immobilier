@@ -209,7 +209,6 @@ export default {
  async valider(){
 
   this.loading = true
-  console.log('fsqjfblqkf',this.v$.$errors.length);
   this.v$.$touch()
   if (this.v$.$errors.length == 0 ) {
    let   DataUser={
@@ -221,7 +220,6 @@ export default {
           user_id:this.user_id
          
       }
-      console.log(DataUser);
       let user = await dataUser.InsertionUser(DataUser)
         if (user.resultat) {
             this.success = !this.success
@@ -240,13 +238,11 @@ export default {
         this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
 
         let bien = await dataBien.GetBienId(this.id)
-        console.log(bien.success.user_id);
         if (bien.success) {
             this.bien = bien.success
             this.user_id =  bien.success.user_id
             let id_agent = bien.success.user_id
             let agent = await  dataAgent.GetAgnetId(id_agent)
-            console.log('agent',agent.success);
             this.agent = agent.success
             this.loading=false
            

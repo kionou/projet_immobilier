@@ -25,11 +25,6 @@ const routes = [
     name: 'sign',
     component: () => import('../views/ViewClient/SignView.vue')
   },
-  {
-    path: '/agentlogin',
-    name: 'agentlogin',
-    component: () => import('../views/ViewClient/LoginAgent.vue')
-  },
     {
     path: '/agent/:id',
     name: 'agent',

@@ -3,12 +3,11 @@
   <div>
     <div class="ImageHeader">
        <div class="tete">Pour trouver la location qui vous ressemble</div>
-       {{bien}}
        <form >
         <select id="biens" name="bien" class="input" v-model="nom">
             <option value="" disabled selected >-- TYPES DE BIENS --</option>
-            <option value="maison">Maisons</option>
-            <option value="appartement">Appartements</option>
+            <option value="Maison">Maisons</option>
+            <option value="Appartement">Appartements</option>
             <option value="Immeuble">Immeuble</option>
 
           </select>
@@ -27,9 +26,161 @@
        <div class="content-texte">
            <h2>Resultat de votre recherche</h2>
        </div>
-       {{bien}}
 
-       <div class="content-info">
+        <div class="content-info" v-if="rechercher">
+        <div class="general">
+            <div class="loading" v-if="loading">
+           <ComponentLoading/>
+
+            </div>
+            <div class="cadre"  v-else>
+             
+                <div class="alert" v-if="alert">
+                      {{alert}}
+                </div>
+                <div class="content-card" v-for="biens in bien" :key="biens.id" v-else>
+            <div class="vendu" v-if="bien.status == 'true'">
+                <div class="card-image">
+               <img :src="biens.images" alt="">   
+             
+           </div>
+           <div class="vendu-text">
+            Bien déjà en location
+           </div>
+           <div class="card-body">
+               <div class="body-text">
+               <h3>{{biens.ville}} - {{biens.commune}}</h3>
+               </div>
+               <div class="body-text">
+                
+               <p>{{biens.nom_bien}} </p>
+               </div>
+               <div class="body-text">
+               <p> {{biens.piece}} pièces/ {{biens.superficie}} m²</p>
+               </div>
+               <div class="icon">
+                   <div class="icon-content">
+                       <i class="fas fa-door-closed"></i>
+                       <samp>{{biens.chambre}} chambres</samp>
+                   </div>
+                   <div class="icon-content">
+                       <i class="fas fa-bath"></i>
+                       <samp> {{biens.douche}} douches </samp>
+                   </div>
+               </div>
+                   <div class="">
+                       <div id="trait_dessus">
+                       </div>
+                   </div>
+                   <div class="">
+                       <p>loyer {{biens.prix}} CFA/mois</p>
+                   </div>
+                   <div class="btn">
+                        <button class="btncard" :disabled="isActive"  @click="redirect(biens.id)">
+                             Détail
+                        </button>
+                   </div>
+           </div>
+            </div>
+
+            <div class="non-vendu" v-else>
+                <div class="card-image">
+               <img :src="biens.images[0]" alt="">   
+             
+           </div>
+           <div class="card-body">
+               <div class="body-text">
+               <h3>{{biens.ville}} - {{biens.commune}}</h3>
+               </div>
+               <div class="body-text">
+                
+               <p>{{biens.nom_bien}} </p>
+               </div>
+               <div class="body-text">
+               <p> {{biens.piece}} pièces/ {{biens.superficie}} m2</p>
+               </div>
+               <div class="icon">
+                   <div class="icon-content">
+                       <i class="fas fa-door-closed"></i>
+                       <samp>{{biens.chambre}} chambres</samp>
+                   </div>
+                   <div class="icon-content">
+                       <i class="fas fa-bath"></i>
+                       <samp> {{biens.douche}} douches</samp>
+                   </div>
+               </div>
+                   <div class="">
+                       <div id="trait_dessus">
+                       </div>
+                   </div>
+                   <div class="">
+                       <p>loyer {{biens.prix}} CFA/mois</p>
+                   </div>
+                   <div class="btn">
+                        <button class="btncard">
+                             <p @click="redirect(biens.id)">Détail</p>
+                        </button>
+                   </div>
+           </div>
+            </div>
+           
+        </div>
+
+            </div>
+
+        </div >
+
+      
+     
+        <!-- <div class="content-card">
+            <div class="card-image">
+               
+                <img src="@/assets/images/1.jpg" alt="">   
+                 
+            </div>
+            <div class="card-body">
+                <div class="body-text">
+                <h3>fsqgjhqg</h3>
+                </div>
+                <div class="body-text">
+                <p>fdjkbdkb</p>
+                </div>
+                <div class="body-text">
+                <p> 4/300m</p>
+                </div>
+                <div class="icon">
+                    <div class="icon-content">
+                        <i class="fas fa-door-closed"></i>
+                        <samp>4</samp>
+                    </div>
+                    <div class="icon-content">
+                        <i class="fas fa-bath"></i>
+                        <samp> 2</samp>
+                    </div>
+                </div>
+                    <div class="">
+                        <div id="trait_dessus">
+                          
+                        </div>
+                    </div>
+                    <div class="">
+                        <p>loyer 1000F CFA/mois</p>
+                    </div>
+                    <div class="btn">
+                         <button class="btncard">
+                              <p @click="redirect">Détail</p>
+                         </button>
+                    </div>
+            </div>
+        </div> -->
+       
+       
+        
+       
+       
+        </div>
+
+        <div class="content-info" v-else>
         <div class="general">
             <div class="loading" v-if="loading">
            <ComponentLoading/>
@@ -181,6 +332,7 @@
        
        
         </div>
+        
        </div>
        
         <div class="content-texte">
@@ -246,7 +398,9 @@ export default {
             loading:true,
             isSelected:false,
             nom:'',
-            piece:''
+            piece:'',
+            rechercher:false,
+            bien:''
 
         }  
     },
@@ -263,6 +417,14 @@ export default {
             }
             let bien = await dataBien.RechercheBien(recherche)
             console.log(bien);
+
+            if (bien.success) {
+                this.bien=bien.success
+                this.rechercher = true
+            } else {
+                this.alert = bien.alert
+                this.rechercher = true
+            }
         }
     },
    async mounted(){
@@ -288,9 +450,6 @@ export default {
 
     },
 
-    created() {
-        console.log('')
-    },
 
 }
 </script>

@@ -133,9 +133,7 @@ methods:{
 },
 async mounted(){
     let bien = await dataBien.AfficherBien()
-    console.log(bien);
     if (bien.success) {
-        console.log(bien.success)
         this.biens=bien.success
         this.loading  = false
 

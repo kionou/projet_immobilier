@@ -111,7 +111,7 @@
              image:this.image
       
           }
-          console.log(DataAgent);
+
        let agent =  await dataAgent.UpdateAgent(this.id,DataAgent)
        if (agent.success) {
           this.$router.go(-1)
@@ -127,11 +127,11 @@
      
   
   async upload (e)  {
-
+    this.isActive = true
       let file =e.target.files[0]
         const name = new Date().getTime() + file.name;
   
-        console.log(name);
+
         const storageRef = ref(storage, file.name)
         const uploadTask = uploadBytesResumable(storageRef,file);
   
@@ -139,13 +139,13 @@
        (snapshot) => {
      
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
+
       switch (snapshot.state) {
         case 'paused':
-          console.log('Upload is paused');
+
           break;
         case 'running':
-          console.log('Upload is running');
+
           break;
       }
     }, 
@@ -159,7 +159,7 @@
         this.isActive = false
     } 
         this.image = downloadURL
-        console.log('File available at', downloadURL);
+
       });
     }
   );
@@ -169,9 +169,8 @@
      
      },
     async mounted() {
-      console.log(this.id)
+
         let agent = await dataAgent.GetAgnetId(this.id)
-        console.log(agent.success);
         if (agent.success) {
             
             this.nom = agent.success.nom,
@@ -183,9 +182,7 @@
             
         }
 
-        this.$refs.input.addEventListener('click',()=>{
-            this.isActive = true
-        })
+      
      },
   
   

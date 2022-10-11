@@ -12,7 +12,6 @@
                 <div class="modifier" v-if="bien.status == 'true'">
                     <div class="boutton">
                     <p class="text">Ce bien est déjà en location</p>
-
                     </div>
                 </div>
                 <div class="container">
@@ -83,7 +82,7 @@
               </div>
 
               <div v-else class="modifier">
-                <div  class="boutton" v-if="bien.status != 'true'">
+                <div  class="boutton" v-if="bien.status === false ">
                     <button class="update"  @click="valider()"> En location</button>
                     <button class="update" @click="update()">Modifier</button>
                     <button class="delete" @click="bienDelete(bien.id)"  >Supprimer</button>

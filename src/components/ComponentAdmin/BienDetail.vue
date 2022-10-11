@@ -9,7 +9,7 @@
             <div class="containers">
                 <div class="modifier" v-if="bien.status == 'true'">
                     <div class="boutton">
-                    <p class="text">Ce bien est déjà vendu</p>
+                    <p class="text">Ce bien est déjà en location</p>
 
                     </div>
                 </div>
@@ -148,11 +148,11 @@
       },
       methods: {
       async  valider(){
-          this.loading = false
+          this.loading = true
             let bien = await dataBien.UpdateBienVendu(this.id)
-            console.log('sdd',bien)
             if(bien){
                 this.loading = false
+                this.success = !this.success
 
             }
 
@@ -171,7 +171,6 @@
 
        
         let bien = await dataBien.GetBienId(this.id)
-        console.log(bien.success.user_id);
         if (bien.success) {
             this.bien = bien.success
             let id_agent = bien.success.user_id

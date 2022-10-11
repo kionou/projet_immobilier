@@ -156,7 +156,7 @@
          // this.v$.$validate()
          this.v$.$touch()
          if (this.v$.$errors.length == 0 ){
-          //  this.loading= true
+           this.loading= true
           let DataAgent={
              nom:this.nom,
              prenom:this.prenom,
@@ -165,22 +165,20 @@
              image:this.image
       
           }
-          console.log("gsdggf",DataAgent);
+
        let agent =  await dataAgent.UpdateAgent(this.id,DataAgent)
-      //  if (agent.success) {
-      //     this.$router.go()
+       if (agent.success) {
+          this.$router.go()
            
 
-      //  } else {
-      //     this.$router.push('/:pathMatch(.*)*')
+       } else {
+          this.$router.push('/:pathMatch(.*)*')
           
-      //  }
+       }
          }
 
       },
-      agentDelete(){
-      console.log(this.id);
-        
+      agentDelete(){    
         this.toggle = !this.toggle
         this.Iddelete = this.id
 
@@ -193,7 +191,7 @@
       let file =e.target.files[0]
         const name = new Date().getTime() + file.name;
   
-        console.log(name);
+
         const storageRef = ref(storage, file.name)
         const uploadTask = uploadBytesResumable(storageRef,file);
   
@@ -201,13 +199,13 @@
        (snapshot) => {
      
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
+ 
       switch (snapshot.state) {
         case 'paused':
-          console.log('Upload is paused');
+
           break;
         case 'running':
-          console.log('Upload is running');
+
           break;
       }
     }, 
@@ -221,7 +219,6 @@
         this.isActive = false
     } 
         this.image = downloadURL
-        console.log('File available at', downloadURL);
       });
     }
   );
@@ -236,9 +233,7 @@
     this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
 
 
-      console.log(this.id);
         let agent = await dataAgent.GetAgnetId(this.id)
-        console.log(agent.success);
         if (agent.success) {
           this.agent = agent.success
             

@@ -77,7 +77,6 @@ methods:{
         this.revele = !this.revele
     },
     agentDelete(id , email){
-        console.log(email);
         this.toggle = !this.toggle
         this.Iddelete = id
         this.email = email
@@ -96,7 +95,6 @@ async mounted() {
 
 
     let agent = await dataAgent.AfficherAgent()
-    console.log(agent);
     if (agent.success) {
         this.agents=agent.success  
         this.loading = false 

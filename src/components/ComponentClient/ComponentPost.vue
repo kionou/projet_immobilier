@@ -1,9 +1,13 @@
 <template>
     <div>
-        <div class="contenu">
-                  <div class="contenu_card">
+      
+        <div class="contenu"   ref="scroll">
+            <div class="loading" v-if="loading" >
+            <ComponentLoading/>
+        </div>
+                  <div class="contenu_card" v-else>
 
-                           <div class="carnet" ref="scroll">
+                           <div class="carnet">
                             <div class="alert" v-if="alert">
                                     {{alert}}
                             </div>
@@ -55,7 +59,7 @@
                   </div>
                   
   
-              </div>
+        </div>
               
     </div>
   </template>
@@ -68,7 +72,7 @@
   export default {
       name:'ComponentProfil',
       props:['id'],
-      component:{
+      components:{
       ComponentLoading
     },
       data(){
@@ -85,7 +89,6 @@
     
       redirect(id){
         this.$router.push(`/agent/bien/detail/${id}`)
-              console.log(id);
          
       },
    
@@ -99,9 +102,12 @@
       let user = await dataUser.GetClientId(this.id)
 
       if (user.success) {
-          this.users=user.success   
+          this.users=user.success  
+          this.loading = false 
       }else if (user.alert) {
         this.alert = user.alert
+        this.loading = false 
+
         
       } else {
         console.log('eeeq');

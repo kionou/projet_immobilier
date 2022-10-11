@@ -21,12 +21,12 @@ const connectAgent = class{
                     next({success:"Enregistrer avec success"}) 
                 })
                 .catch((err)=>{
-                    console.log(err.message);
+
                 })
                 
             })
             .catch((err)=>{
-                console.log(err.code);
+
                 next ({ erreur:err.code})
             })
         
@@ -56,7 +56,6 @@ const connectAgent = class{
         .catch((err)=>{
 
             next ({ erreur:err.code})
-            console.log("eee",err.code);
         })
          })
    
@@ -65,7 +64,7 @@ const connectAgent = class{
     static LogoutAgent  =async ()=>{
     signOut(auth)
         .then(()=>{
-        console.log("user deconnecter");
+
         })
         .catch((err)=>{
             console.log(err.message);

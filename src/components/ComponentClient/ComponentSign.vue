@@ -151,7 +151,6 @@ methods: {
                         email:this.email,
                         password:this.password
                     }
-                        console.log(DataUser,auth);
                         let user = await connectUser.AddUser(DataUser,auth)
                     
                         if (user.erreur == "auth/email-already-in-use") {

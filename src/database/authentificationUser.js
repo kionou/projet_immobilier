@@ -32,7 +32,6 @@ const connectUser = class{
                 
             })
             .catch((err)=>{
-                console.log(err.code);
                 next ({ erreur:err.code})
             })
         
@@ -63,7 +62,6 @@ const connectUser = class{
         .catch((err)=>{
 
             next ({ erreur:err.code})
-            console.log("eee",err.code);
         })
          })
    
@@ -75,7 +73,6 @@ const connectUser = class{
         return {rs:"user deconnecter"}
         })
         .catch((err)=>{
-            console.log(err.message);
         })
 
    }
@@ -83,12 +80,12 @@ const connectUser = class{
      static EtatUser  = async ()=>{
       await  onAuthStateChanged(auth,(user)=>{
         if (user != null) {
-            console.log('user connect',user);
+
             return user
             
             
         } else {
-            console.log('user');
+
             return 
         }
             
@@ -100,15 +97,15 @@ const connectUser = class{
    }
 
    static GetUserId = (id)=>{
-    console.log(id)
+
       return new Promise(async (next)=>{
       const docRef = doc(usercollection, id);
        await getDoc(docRef)
       .then(docRef=>{
-               console.log('ss',docRef.data());
+            //    console.log('ss',docRef.data());
                next({success:docRef.data()})
       }).catch(error=>{
-               console.log("eee",error);
+            //    console.log("eee",error);
                next ({ erreur:error})
           })
        })
@@ -117,26 +114,23 @@ const connectUser = class{
 
   static DeleteUser =  (email,password,id)=>{
 
-console.log(email,password,id);
+
 
         return new Promise(async (next)=>{
             await  signInWithEmailAndPassword(auth,email,password)
             .then((cred)=>{
-                console.log(auth.currentUser);
                  deleteUser(auth.currentUser)
                 .then( async (rs) => {
                     await deleteDoc(doc(usercollection, id))
                     .then(resultat=>{
-                 console.log("supprimer avec succes",rs);
+
                  next ({ success:"supprimer avec success"})
             
                     }).catch(error=>{
-                    console.log("eee",error);
                     next ({ error:error})
                     })
                 })
                 .catch((error) => {
-                 console.log(error);
                 });
             
             })
@@ -148,35 +142,11 @@ console.log(email,password,id);
 
  
 
-
-
-    // console.log('sqfQSD',id);
-    // return new Promise(async (next)=>{
-    // await deleteDoc(doc(usercollection, id))
-    // .then(resultat=>{
-    //     auth.deleteUser(id)
-    //         .then(() => {
-    //             console.log('Successfully deleted user');
-    //             console.log('ss',resultat);
-    //              next({success:'supprimer avec success'})
-    //         })
-    //         .catch((error) => {
-    //             console.log('Error deleting user:', error);
-    //         });
-            
-    // }).catch(error=>{
-    //          console.log("eee",error);
-    //          next ({ erreur:error})
-    //     })
-    //  })
-
     }
   static UpdateUser = (id,into)=>{
-    console.log('sqfQSD',id,into.image);
-    console.log('sqfQdgsgsgSD',into.image);
+
     return new Promise(async (next)=>{
       if (into.image === '') {
-        console.log('besion de image');
 
         const docRef = doc(usercollection, id);
         await getDoc(docRef)
@@ -188,11 +158,11 @@ console.log(email,password,id);
                 .then(rs=>{
                 next({success:"reussis"})         
                 }).catch(err=>{
-                    console.log("eee",err);
+
                     next ({ error:err})
                 })
        }).catch(error=>{
-                console.log("eee",error);
+
                 next ({ erreur:error})
            })
         
@@ -201,10 +171,8 @@ console.log(email,password,id);
         const update = doc(usercollection, id);
         setDoc(update,into,{ merge:true })
         .then(docRef=>{
-                console.log('ss',docRef);
                 next({success:"reussis"})
         }).catch(error=>{
-                console.log("eee",error);
                 next ({ erreur:error})
             })
           

@@ -61,11 +61,10 @@ export default {
     methods: {
         MessageErreur(into){
             if (into === "auth/wrong-password") {
-                console.log('pazssword');
                 this.erreur = 'Mot de passe incorrect'
                 
             } else {
-                console.log('email');
+
                 this.erreur = "Email ou le Mot de passe est incorrect !"
             } 
 
@@ -74,8 +73,6 @@ export default {
             this.$router.push('/sign')
         },
           async  submit(){
-            console.log('rrr')
-            console.log('fsqjfblqkf',this.v$.$errors.length);
             // this.v$.$validate()
             this.v$.$touch()
             if (this.v$.$errors.length == 0 ) {
@@ -84,7 +81,6 @@ export default {
                     email:this.email,
                     password:this.password
                 }
-                console.log(DataUser);
                 let connection = await connectUser.Userconnect(DataUser)
                 if (connection.erreur ) {
                   this.MessageErreur(connection.erreur)

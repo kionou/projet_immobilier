@@ -105,9 +105,7 @@ async mounted() {
     this.$refs.scroll.scrollTo(0,document.body.scrollHeight)
 
     let bien = await dataBien.GetBienUser(this.id)
-    console.log(bien);
     if (bien.success) {
-        console.log(bien.success);
         this.biens = bien.success
          this.loading = false
         

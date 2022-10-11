@@ -92,7 +92,6 @@
     
       redirect(id){
           this.$router.push(`/dashbord/bien/${id}`)
-              console.log(id);
          
       },
    

@@ -193,7 +193,6 @@ export default {
            user_id:this.agentId,
            status:false
         }
-        console.log(DataBien);
      let bien =  await dataBien.InsertionBien(DataBien)
      if (bien.success) {
         this.$router.go()
@@ -213,7 +212,6 @@ async upload (e)  {
     this.isActive = true
     const promises = [];
    Object.values(e.target.files).forEach((element)=>{
-    console.log(element.name);
     const file=element
     const metadata = {
       contentType: "image/jpeg",
@@ -229,7 +227,6 @@ async upload (e)  {
     
   }
   this.image = photos
-  console.log(this.image);
 
     }
    

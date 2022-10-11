@@ -2,7 +2,8 @@
   <div>
     <Spinner/>
     <ComponentNavbar/>
-    <ComponentRech/>
+    <ComponentRech :bien="bien" />
+    {{bien}}
 
   </div>
 </template>
@@ -13,6 +14,7 @@
   import Spinner from '@/components/ComponentClient/Spinner.vue';
 export default {
   name:"HomeView",
+  props:['bien'],
   components:{
     ComponentNavbar,
     ComponentRech,

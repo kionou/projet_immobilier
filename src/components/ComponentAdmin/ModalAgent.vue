@@ -122,9 +122,8 @@ methods: {
                     password:this.password,
 
                 }
-                console.log(DataUser,auth);
+   
                 let agent = await connectAgent.AddAgent(DataUser,auth)
-                console.log(agent);
                 if (agent.success) {
                     this.texte = 'Enregistrement de l\'Agent éffectué avec success.'
                     this.success = !this.success

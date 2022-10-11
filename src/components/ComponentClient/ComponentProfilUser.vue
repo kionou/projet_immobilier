@@ -167,7 +167,6 @@
              image:this.image
       
           }
-          console.log("gsdggf",DataUser);
        let user =  await connectUser.UpdateUser(this.id,DataUser)
        if (user.success) {
           this.$router.go()
@@ -180,7 +179,6 @@
 
       },
       agentDelete(){
-      console.log(this.id);
         
         this.toggle = !this.toggle
         this.Iddelete = this.id
@@ -193,8 +191,7 @@
       this.isActive = true
       let file =e.target.files[0]
         const name = new Date().getTime() + file.name;
-  
-        console.log(name);
+
         const storageRef = ref(storage, file.name)
         const uploadTask = uploadBytesResumable(storageRef,file);
   
@@ -202,13 +199,13 @@
        (snapshot) => {
      
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('Upload is ' + progress + '% done');
+
       switch (snapshot.state) {
         case 'paused':
-          console.log('Upload is paused');
+
           break;
         case 'running':
-          console.log('Upload is running');
+
           break;
       }
     }, 
@@ -222,7 +219,7 @@
         this.isActive = false
     } 
         this.image = downloadURL
-        console.log('File available at', downloadURL);
+
       });
     }
   );
@@ -232,9 +229,9 @@
      
      },
      async mounted() {
-      console.log(this.id);
+
         let user = await connectUser.GetUserId(this.id)
-        console.log(user.success);
+
         if (user.success) {
           this.users = user.success
             
@@ -252,8 +249,7 @@
 
         onAuthStateChanged(auth,(user)=>{
         if (user != null) {
-            console.log('user connect',user);
-            console.log('password',user.displayName);
+
             this.connect = user
             
             

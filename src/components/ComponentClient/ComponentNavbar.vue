@@ -84,12 +84,10 @@ export default {
         
         onAuthStateChanged(auth,(user)=>{
         if (user != null) {
-            console.log('user connect',user);
             this.connect = user
             
             
         } else {
-            console.log('user no connect');
            
         }
             

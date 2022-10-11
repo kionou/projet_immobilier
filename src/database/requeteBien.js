@@ -4,14 +4,13 @@ import { addDoc , getDocs,getDoc,doc,setDoc,deleteDoc ,updateDoc, query, where} 
 const dataBien = class{
 
     static InsertionBien = (into)=>{
-        console.log('sqfQSD',{...into});
         return new Promise(async (next)=>{
         await addDoc(bienCollection,into)
         .then(docRef=>{
-                 console.log('ss',docRef);
+               //   console.log('ss',docRef);
                  next({success:docRef})
         }).catch(error=>{
-                 console.log("eee",error);
+               //   console.log("eee",error);
                  next ({ erreur:error})
             })
          })
@@ -28,7 +27,6 @@ const dataBien = class{
                let data = doc.data()
                data.id =doc.id,
                array.push(data)
-               console.log('ssss',array);
                next({success:array})
                    });
           } else {
@@ -38,7 +36,6 @@ const dataBien = class{
          
                
         }).catch(error=>{
-                 console.log("eee",error);
                  next ({ erreur:error})
             })
          })
@@ -46,15 +43,14 @@ const dataBien = class{
     }
 
     static GetBienId = (id)=>{
-        console.log('sqfQSD',id);
         return new Promise(async (next)=>{
         const docRef = doc(bienCollection, id);
          await getDoc(docRef)
         .then(docRef=>{
-                 console.log('ss',docRef.data());
+               //   console.log('ss',docRef.data());
                  next({success:docRef.data()})
         }).catch(error=>{
-                 console.log("eee",error);
+               //   console.log("eee",error);
                  next ({ erreur:error})
             })
          })
@@ -62,27 +58,23 @@ const dataBien = class{
     }
     static GetBienUser = (id)=>{
      let array =[]
-     console.log('sqfQSD',id);
      return new Promise(async (next)=>{
      const q = query(bienCollection, where("user_id", "==", id));
      await getDocs(q)
      .then(docRef=>{
-          console.log('rrf',docRef)
           if (docRef.docs.length > 0) {
                docRef.forEach((doc) => {
                let data = doc.data()
                data.id =doc.id,
                array.push(data)
-               console.log('ssss',array);
                next({success:array})
                    });
           } else {
-               console.log('df<df');
                next({alert: 'Vous n\'aviez pas de bien immobilier pour l\'instant!'})     
           }
              
      }).catch(error=>{
-              console.log("eee",error);
+          //     console.log("eee",error);
               next ({ erreur:error})
          })
       })
@@ -91,27 +83,23 @@ const dataBien = class{
 
     static RechercheBien = (into)=>{
        let array =[]
-     console.log('sqfQSD',into);
      return new Promise(async (next)=>{
      const q = query(bienCollection, where("nom_bien", "==", into.nom));
      await getDocs(q)
      .then(docRef=>{
-          console.log('rrf',docRef)
           if (docRef.docs.length > 0) {
                docRef.forEach((doc) => {
                let data = doc.data()
                data.id =doc.id,
                array.push(data)
-               console.log('ssss',array);
                next({success:array})
                    });
           } else {
-               console.log('df<df');
                next({alert: 'Aucun resultat trouvé'})     
           }
              
      }).catch(error=>{
-              console.log("eee",error);
+          //     console.log("eee",error);
               next ({ erreur:error})
          })
       })
@@ -120,12 +108,8 @@ const dataBien = class{
 
 
     static UpdateBien = (id,into)=>{
-     console.log('sqfQSD',id,into.images);
-     console.log('sqfQdgsgsgSD',into.images);
      return new Promise(async (next)=>{
        if (into.images === '') {
-         console.log('besion de image');
-
          const docRef = doc(bienCollection, id);
          await getDoc(docRef)
         .then(docRef=>{
@@ -133,7 +117,6 @@ const dataBien = class{
                   into.images = data
                  const update = doc(bienCollection, id);
                  setDoc(update,into,{ merge:true })
-                 console.log( setDoc(update,into,{ merge:true }));
                  next({success:"reussi"})         
         }).catch(error=>{
                  console.log("eee",error);
@@ -145,10 +128,9 @@ const dataBien = class{
          const update = doc(bienCollection, id);
          setDoc(update,into,{ merge:true })
          .then(docRef=>{
-                 console.log('ss',docRef);
                  next({success:"reussis"})
          }).catch(error=>{
-                 console.log("eee",error);
+               //   console.log("eee",error);
                  next ({ erreur:error})
              })
            
@@ -159,14 +141,12 @@ const dataBien = class{
  }
 
     static DeleteBien = (id)=>{
-     console.log('sqfQSD',id);
      return new Promise(async (next)=>{
      await deleteDoc(doc(bienCollection, id))
      .then(resultat=>{
-              console.log('ss',resultat);
               next({success:'supprimer avec success'})
      }).catch(error=>{
-              console.log("eee",error);
+          //     console.log("eee",error);
               next ({ erreur:error})
          })
       })
@@ -174,33 +154,31 @@ const dataBien = class{
  }
 
 
- static DeleteBienAgent = (id)=>{
-     console.log('sqfQSD',id);
+static DeleteBienAgent = (id)=>{
      return new Promise(async (next)=>{
      const q = query(bienCollection, where("user_id", "==", id));
      await getDocs(q)
      .then(docRef=>{
-          console.log('rrf',docRef)
           if (docRef.docs.length > 0) {
                docRef.forEach( async (result) => {
                let data = result.data()
                data.id =result.id,
                 await deleteDoc(doc(bienCollection, data.id))
                     .then(resultat=>{
-                             console.log('resultat :','supprimer avec success');
                     }).catch(error=>{
                              console.log("eee",error);
                              next ({ erreur:error})
                         })
-                   });
-                   next({success:'suppression de tous les biens  avec success'})
+
+                   })
+               next({success:'suppression de tous les biens  avec success'})
+
           } else {
-               console.log('df<df');
                next({alert: 'Vous n\'aviez pas de bien immobilier pour l\'instant!'})     
           }
              
      }).catch(error=>{
-              console.log("eee",error);
+          //     console.log("eee",error);
               next ({ erreur:error})
          })
       })
@@ -208,7 +186,7 @@ const dataBien = class{
  }
 
  static UpdateBienVendu = async (id)=>{
-     console.log('sqfQSD',id);
+
 
      return new Promise(async (next)=>{
           const docRef = doc(bienCollection, id);
@@ -220,7 +198,7 @@ const dataBien = class{
                     setDoc(update,data,{ merge:true })
                     next({success:docRef.data()})
           }).catch(error=>{
-                   console.log("eee",error);
+               //     console.log("eee",error);
                    next ({ erreur:error})
               })
            })

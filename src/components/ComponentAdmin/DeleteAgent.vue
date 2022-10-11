@@ -52,7 +52,6 @@
      async supp(){
          this.loading =true
         if (this.displayName === "user") {
-            console.log('user');
              let user = await connectUser.DeleteUser(this.email,this.password , this.Iddelete)
              
             if(user.success){
@@ -62,26 +61,26 @@
                this.$router.push('/login')
               
             }else{
-                console.log('error',user.erreur);
                 this.error = 'le Mot de passe est incorrect !'
             }
 
             
-        } else if (this.displayName != "agent") {
+        } else if (this.displayName === "agent" || this.displayName === "admin"  ) {
             let agent = await dataAgent.DeleteAgent(this.email,this.password , this.Iddelete)
-            console.log('agent',agent);
 
-            if(agent.success){
-               this.$router.go()
-              
-            }else if (agent.alert){
-                console.log('ok');
-               this.$router.go()
-              
-            }else{
-                console.log('error',agent.erreur);
+            if(agent.erreur){
+    
                 this.error = 'le Mot de passe est incorrect !'
             }
+
+            if(agent.docRef.success){
+               this.$router.go()
+              
+            }else if (agent.docRef.alert){
+               this.$router.go()
+              
+            }
+            
             
         }
        
@@ -89,16 +88,12 @@
         },
         close(){
             this.toggle = false
-            console.log('ddd')
-
         }
         
       },
       mounted() {
         onAuthStateChanged(auth,(user)=>{
         if (user != null) {
-            console.log('user connect',user);
-            console.log('password',user.displayName);
             this.displayName = user.displayName
             this.connect = user
             
