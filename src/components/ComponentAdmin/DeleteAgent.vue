@@ -1,11 +1,11 @@
 <template>
      <div class="loading" v-if="loading">
        <ComponentLoading/>
-    </div>
+     </div>
     <div>
        <div class="modal-container" id="modal" v-if="toggle" @click.self="agentDelete">
         
-           
+
               <div class="container">
                 <!-- vous voulez-vous supprimer ce agent ? -->
                 <p>{{texte}}</p>
@@ -33,7 +33,7 @@
     import connectUser from '@/database/authentificationUser'
     import ComponentLoading from '../ComponentClient/ComponentLoading.vue'
     import { auth } from '@/database/Connect';
-   import { onAuthStateChanged } from '@firebase/auth';
+    import { onAuthStateChanged } from '@firebase/auth';
   export default {
       name:'DeleteBien',
       props:['toggle','agentDelete','Iddelete','texte','email'],
@@ -50,10 +50,11 @@
       },
       methods: {
      async supp(){
-        // this.loading =true
+         this.loading =true
         if (this.displayName === "user") {
             console.log('user');
              let user = await connectUser.DeleteUser(this.email,this.password , this.Iddelete)
+             
             if(user.success){
                this.$router.push('/login')
               
@@ -67,8 +68,9 @@
 
             
         } else if (this.displayName != "agent") {
-            console.log('agent');
             let agent = await dataAgent.DeleteAgent(this.email,this.password , this.Iddelete)
+            console.log('agent',agent);
+
             if(agent.success){
                this.$router.go()
               
