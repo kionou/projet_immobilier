@@ -74,10 +74,10 @@
             }
 
             if(agent.docRef.success){
-               this.$router.go()
+                this.$router.push('/login')
               
             }else if (agent.docRef.alert){
-               this.$router.go()
+                this.$router.push('/login')
               
             }
             
