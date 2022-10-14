@@ -53,7 +53,7 @@ import ComponentLoading from '../ComponentClient/ComponentLoading.vue';
 export default {
     name:'ComponentAgent',
     
-    props:['Iddelete'],
+    props:['Iddelete','search'],
     components:{
     ModalAgent,
     DeleteAgent,
@@ -69,7 +69,8 @@ data(){
         toggle:false,
         loading:true,
         texte:'',
-        email:''
+        email:'',
+        recherche:''
     }
 },
 methods:{
@@ -96,7 +97,8 @@ async mounted() {
 
     let agent = await dataAgent.AfficherAgent()
     if (agent.success) {
-        this.agents=agent.success  
+        this.agents=agent.success 
+        this.recherche = agent.success   
         this.loading = false 
     }else if (agent.alert) {
         this.alert =agent.alert
@@ -109,6 +111,19 @@ async mounted() {
     }
     
 },
+watch:{
+        search(){
+            this.agents =  this.recherche.filter(
+            (el)=>
+            el.nom.toLowerCase().includes(this.search.toLowerCase()) ||
+            el.prenom.toLowerCase().includes(this.search.toLowerCase()) ||
+            el.email.toLowerCase().includes(this.search.toLowerCase())
+
+            )
+       
+           
+        }
+    }
 
 }
 </script>

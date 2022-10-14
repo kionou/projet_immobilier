@@ -16,14 +16,14 @@
         <div class="content">
             <div class="search">
                 <form action="">
-                    <input type="text" placeholder="Recherchez">
+                    <input type="text" placeholder="Recherchez" v-model="search">
                 </form>  
                 <div class="btn">
                     <p @click="logout" >Deconnecter</p>
                 </div>
             </div>
             
-            <component v-bind:is="component" :id="id"  ></component>
+            <component v-bind:is="component" :id="id" :search="search" ></component>
            
             
            
@@ -53,6 +53,7 @@ export default {
     return{
         component:'bien',
         idUser:'',
+        search:""
      
     }
   },

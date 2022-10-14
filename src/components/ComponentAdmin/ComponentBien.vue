@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{search}}
+    
     <ModalBien v-bind:revele="revele" v-bind:submit="submit" :agentId="agentId"></ModalBien>
     <DeleteBien v-bind:toggle="toggle" v-bind:bienDelete="bienDelete" :Iddelete="Iddelete"></DeleteBien>
 
@@ -71,7 +71,6 @@
                                      </table>
                              </div>
                              
-                                 
                         </div>
                     
                     
@@ -109,7 +108,8 @@ export default {
         Iddelete:'',
         alert:'',
         agentId:'',
-        loading:true
+        loading:true,
+        recherche:''
        
     }
 },
@@ -136,6 +136,7 @@ async mounted(){
     let bien = await dataBien.AfficherBien()
     if (bien.success) {
         this.biens=bien.success
+        this.recherche = bien.success
         this.loading  = false
 
         
@@ -148,6 +149,19 @@ async mounted(){
         
     }
    
+    },
+    watch:{
+        search(){
+            this.biens =  this.recherche.filter(
+            (el)=>
+            el.nom_bien.toLowerCase().includes(this.search.toLowerCase()) ||
+            el.ville.toLowerCase().includes(this.search.toLowerCase()) ||
+            el.commune.toLowerCase().includes(this.search.toLowerCase())
+
+            )
+           return
+           
+        }
     }
 
 }

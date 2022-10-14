@@ -17,7 +17,6 @@
                             </div>
                         </div>
                       
-
                     </div>
                    
         <div class="content-card" v-for="bien in biens" :key="bien.id" v-else>
@@ -72,7 +71,7 @@ import ModalBien from '../ComponentAdmin/ModalBien.vue';
  import ComponentLoading from './ComponentLoading.vue';
 export default {
     name:'ComponentBien',
-    props:['agentId','id'],
+    props:['agentId','id','search'],
     components:{
         ModalBien,
          ComponentLoading
@@ -85,7 +84,8 @@ data(){
         agentId:'',
         biens:'',
         alert:'',
-         loading:true
+         loading:true,
+         recherche:""
 
     }
 },
@@ -107,6 +107,7 @@ async mounted() {
     let bien = await dataBien.GetBienUser(this.id)
     if (bien.success) {
         this.biens = bien.success
+        this.recherche = bien.success
          this.loading = false
         
     }else if(bien.alert){
@@ -120,6 +121,19 @@ async mounted() {
     }
     
 },
+watch:{
+        search(){
+            this.biens =  this.recherche.filter(
+            (el)=>
+            el.nom_bien.toLowerCase().includes(this.search.toLowerCase()) ||
+            el.ville.toLowerCase().includes(this.search.toLowerCase()) ||
+            el.commune.toLowerCase().includes(this.search.toLowerCase())
+
+            )
+       
+           
+        }
+    }
 
 }
 </script>

@@ -1,13 +1,12 @@
 <template>
   <div>
-   
         <div class="container">
         <div class="menu">
             <div class="image">
                 <img src="@/assets/images/logopng.png" alt="">
             </div>
             <nav>
-                <p v-on:click="component='bien'" :search="search" >Liste des Biens</p>
+                <p v-on:click="component='bien'"  >Liste des Biens</p>
                 <p v-on:click="component='agent'">Liste des Agents</p>
                 <p v-on:click="component='client'">Liste des Clients</p>
             </nav>
@@ -22,7 +21,7 @@
                     <p @click="logout">Deconnecter</p>
                 </div>
             </div>
-            <component v-bind:is="component"></component>
+            <component v-bind:is="component" :search="search"></component>
            
             
            
