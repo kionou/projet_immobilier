@@ -278,7 +278,7 @@
     }
 
   .images{
-    background: url('@/assets/images/3.jpg') no-repeat center;
+    background: url('@/assets/images/profil.jpg') no-repeat center;
     background-size: cover;
     height: 100vh;
     width: 100%;

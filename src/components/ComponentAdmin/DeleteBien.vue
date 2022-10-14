@@ -39,9 +39,7 @@
         this.loading = true
             let bien = await dataBien.DeleteBien(this.Iddelete)
             if(bien.success){
-               location.reload()
-               this.loading = false
-              
+               location.reload()            
             }
 
         },
