@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{search}}
     <ModalBien v-bind:revele="revele" v-bind:submit="submit" :agentId="agentId"></ModalBien>
     <DeleteBien v-bind:toggle="toggle" v-bind:bienDelete="bienDelete" :Iddelete="Iddelete"></DeleteBien>
 
@@ -91,7 +92,7 @@ import ComponentLoading from '../ComponentClient/ComponentLoading.vue';
 
 export default {
     name:'ComponentBien',
-    props:['bien','Iddelete','agentId'],
+    props:['bien','Iddelete','agentId','search'],
     components:{
     ModalBien,
     UpdateBien,

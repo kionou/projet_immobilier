@@ -7,7 +7,7 @@
                 <img src="@/assets/images/logopng.png" alt="">
             </div>
             <nav>
-                <p v-on:click="component='bien'">Liste des Biens</p>
+                <p v-on:click="component='bien'" :search="search" >Liste des Biens</p>
                 <p v-on:click="component='agent'">Liste des Agents</p>
                 <p v-on:click="component='client'">Liste des Clients</p>
             </nav>
@@ -16,7 +16,7 @@
         <div class="content">
             <div class="search">
                 <form action="">
-                    <input type="text" placeholder="Recherchez">
+                    <input type="text" placeholder="Recherchez" v-model="search">
                 </form>  
                 <div class="btn">
                     <p @click="logout">Deconnecter</p>
@@ -45,12 +45,14 @@ export default {
   components:{
     "bien": ComponentBien,
     "agent": ComponentAgent,
-    "client":ComponentClient
+    "client":ComponentClient,
+    
    
 },
   data (){
     return{
-      component:'bien'
+      component:'bien',
+      search:""
     }
   },
   methods: {
